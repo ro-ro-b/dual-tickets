@@ -43,7 +43,7 @@ export default function TicketsLayout({
             <Link href="/" className="flex items-center gap-2 group">
               <DualIcon size={26} className="text-[#e8a838]" />
               <span className="text-xl font-bold text-white tracking-tight">DUAL</span>
-              <span className="text-sm text-gray-500 font-light">Tickets</span>
+              <span className="text-xl font-bold text-gray-500">Tickets</span>
             </Link>
 
             {/* Desktop Navigation */}
