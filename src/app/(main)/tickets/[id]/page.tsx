@@ -529,7 +529,7 @@ export default function EventDetailPage({
             <span className="material-symbols-outlined text-9xl text-white/20">confirmation_number</span>
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a1a] via-[#0a0a1a]/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0d0b08] via-[#0d0b08]/40 to-transparent" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -670,14 +670,14 @@ export default function EventDetailPage({
                     ))}
                   </div>
 
-                  <div className="mb-6 p-3 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
+                  <div className="mb-6 p-3 rounded-lg bg-[#151210] border border-[#2a2420]">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-xs font-semibold text-gray-400">Available</span>
                       <span className="text-sm font-bold text-[#e8a838]">
                         {tier.remaining} / {tier.total}
                       </span>
                     </div>
-                    <div className="w-full h-1.5 rounded-full bg-[#0f0f25] overflow-hidden">
+                    <div className="w-full h-1.5 rounded-full bg-[#151210] overflow-hidden">
                       <div
                         className="h-full bg-gradient-to-r from-[#e8a838] to-[#39ff14]"
                         style={{
@@ -861,21 +861,21 @@ export default function EventDetailPage({
       {purchase.isOpen && purchase.tier && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={closePurchase} />
-          <div className="relative w-full max-w-lg rounded-2xl border border-[#1a1a3a] bg-[#0a0a1a] p-8 shadow-[0_0_60px_rgba(0,240,255,0.15)]">
+          <div className="relative w-full max-w-lg rounded-2xl border border-[#2a2420] bg-[#0d0b08] p-8 shadow-[0_0_60px_rgba(0,240,255,0.15)]">
             {purchase.step === 'confirm' && (
               <>
                 <h3 className="text-2xl font-black mb-6 bg-gradient-to-r from-[#e8a838] to-[#d4632a] bg-clip-text text-transparent">Confirm Purchase</h3>
                 <div className="space-y-4 mb-8">
-                  <div className="p-4 rounded-xl bg-[#0f0f25] border border-[#1a1a3a]">
+                  <div className="p-4 rounded-xl bg-[#151210] border border-[#2a2420]">
                     <p className="text-sm text-gray-400 mb-1">Event</p>
                     <p className="font-bold text-white">{event?.name}</p>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 rounded-xl bg-[#0f0f25] border border-[#1a1a3a]">
+                    <div className="p-4 rounded-xl bg-[#151210] border border-[#2a2420]">
                       <p className="text-sm text-gray-400 mb-1">Tier</p>
                       <p className="font-bold text-[#e8a838]">{purchase.tier.name}</p>
                     </div>
-                    <div className="p-4 rounded-xl bg-[#0f0f25] border border-[#1a1a3a]">
+                    <div className="p-4 rounded-xl bg-[#151210] border border-[#2a2420]">
                       <p className="text-sm text-gray-400 mb-1">Price</p>
                       <p className="font-bold text-[#39ff14] text-2xl">${purchase.tier.price}</p>
                     </div>
@@ -886,7 +886,7 @@ export default function EventDetailPage({
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  <button onClick={closePurchase} className="flex-1 py-3 rounded-xl border border-[#2a2a5a] text-gray-400 hover:text-white hover:border-white/40 transition-all font-bold">Cancel</button>
+                  <button onClick={closePurchase} className="flex-1 py-3 rounded-xl border border-[#3a332c] text-gray-400 hover:text-white hover:border-white/40 transition-all font-bold">Cancel</button>
                   <button onClick={executeMint} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-white font-bold hover:shadow-[0_0_30px_rgba(0,240,255,0.4)] transition-all flex items-center justify-center gap-2">
                     <span className="material-symbols-outlined text-sm">token</span>
                     MINT ON-CHAIN
@@ -902,7 +902,7 @@ export default function EventDetailPage({
                 <div className="space-y-4 text-left">
                   {['Initiating transaction...', 'Minting on DUAL Network...', 'Recording on Blockscout...', 'Finalising ownership...'].map((step, i) => (
                     <div key={i} className="flex items-center gap-3 text-sm">
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center ${i < 3 ? 'bg-[#39ff14]/20' : 'bg-[#1a1a3a]'}`}>
+                      <div className={`w-6 h-6 rounded-full flex items-center justify-center ${i < 3 ? 'bg-[#39ff14]/20' : 'bg-[#2a2420]'}`}>
                         {i < 3 ? <span className="text-[#39ff14] text-xs">✓</span> : <span className="w-3 h-3 border-2 border-[#e8a838]/30 border-t-[#e8a838] rounded-full animate-spin" />}
                       </div>
                       <span className={i < 3 ? 'text-gray-400' : 'text-white'}>{step}</span>
@@ -921,7 +921,7 @@ export default function EventDetailPage({
                 <h3 className="text-2xl font-black mb-2 text-[#39ff14]">TICKET MINTED</h3>
                 <p className="text-gray-400 mb-6">Your ticket has been minted on the DUAL Network</p>
                 {purchase.transactionHash && (
-                  <div className="p-3 rounded-lg bg-[#0f0f25] border border-[#1a1a3a] mb-6">
+                  <div className="p-3 rounded-lg bg-[#151210] border border-[#2a2420] mb-6">
                     <p className="text-xs text-gray-500 mb-1">Transaction Hash</p>
                     <p className="text-xs text-[#e8a838] font-mono break-all">{purchase.transactionHash}</p>
                   </div>
@@ -941,7 +941,7 @@ export default function EventDetailPage({
                 <h3 className="text-2xl font-black mb-2 text-[#d4632a]">MINT FAILED</h3>
                 <p className="text-gray-400 mb-6">{purchase.error || 'An unexpected error occurred'}</p>
                 <div className="flex gap-3">
-                  <button onClick={closePurchase} className="flex-1 py-3 rounded-xl border border-[#2a2a5a] text-gray-400 font-bold hover:text-white transition-all">Close</button>
+                  <button onClick={closePurchase} className="flex-1 py-3 rounded-xl border border-[#3a332c] text-gray-400 font-bold hover:text-white transition-all">Close</button>
                   <button onClick={executeMint} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#d4632a] to-[#6c2bd9] text-white font-bold hover:shadow-[0_0_20px_rgba(255,45,120,0.4)] transition-all">Try Again</button>
                 </div>
               </div>

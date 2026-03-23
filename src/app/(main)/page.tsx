@@ -85,16 +85,16 @@ export default function TicketsPage() {
             <path d="M0 256L0 220L100 190L250 210L400 170L550 200L700 160L850 195L1000 175L1150 200L1300 185L1440 210L1440 256Z" fill="url(#mountain-front)" />
             <defs>
               <linearGradient id="mountain-far" x1="0" y1="60" x2="0" y2="256">
-                <stop offset="0%" stopColor="#3d1a6e" stopOpacity="0.6" />
-                <stop offset="100%" stopColor="#0a0a1a" stopOpacity="0" />
+                <stop offset="0%" stopColor="#4a2040" stopOpacity="0.6" />
+                <stop offset="100%" stopColor="#0d0b08" stopOpacity="0" />
               </linearGradient>
               <linearGradient id="mountain-mid" x1="0" y1="100" x2="0" y2="256">
-                <stop offset="0%" stopColor="#5a1e8a" stopOpacity="0.4" />
-                <stop offset="100%" stopColor="#0a0a1a" stopOpacity="0" />
+                <stop offset="0%" stopColor="#5c2848" stopOpacity="0.4" />
+                <stop offset="100%" stopColor="#0d0b08" stopOpacity="0" />
               </linearGradient>
               <linearGradient id="mountain-front" x1="0" y1="160" x2="0" y2="256">
-                <stop offset="0%" stopColor="#2a0f4e" stopOpacity="0.5" />
-                <stop offset="100%" stopColor="#0a0a1a" stopOpacity="0" />
+                <stop offset="0%" stopColor="#2e1425" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="#0d0b08" stopOpacity="0" />
               </linearGradient>
             </defs>
           </svg>
@@ -119,7 +119,7 @@ export default function TicketsPage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search events, artists, venues"
-                  className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#12122a] border border-[#2a2a5a] text-white text-sm placeholder-gray-600 focus:border-[#e8a838]/50 focus:outline-none focus:shadow-[0_0_15px_rgba(232,168,56,0.1)] transition-all"
+                  className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#1a1612] border border-[#3a332c] text-white text-sm placeholder-gray-600 focus:border-[#e8a838]/50 focus:outline-none focus:shadow-[0_0_15px_rgba(232,168,56,0.1)] transition-all"
                 />
               </div>
             </div>
@@ -133,7 +133,7 @@ export default function TicketsPage() {
                   className={`px-5 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
                     selectedCategory === category.id
                       ? 'bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-white font-semibold shadow-[0_0_15px_rgba(232,168,56,0.3)]'
-                      : 'text-gray-500 border border-[#2a2a5a] hover:border-[#e8a838]/30 hover:text-gray-300'
+                      : 'text-gray-500 border border-[#3a332c] hover:border-[#e8a838]/30 hover:text-gray-300'
                   }`}
                 >
                   {category.label}
@@ -149,7 +149,7 @@ export default function TicketsPage() {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="rounded-2xl border border-[#1a1a3a] bg-[#0f0f25] overflow-hidden">
+              <div key={i} className="rounded-2xl border border-[#2a2420] bg-[#151210] overflow-hidden">
                 <div className="h-48 shimmer" />
                 <div className="p-5 space-y-3">
                   <div className="h-5 w-3/4 rounded shimmer" />
@@ -166,13 +166,13 @@ export default function TicketsPage() {
               return (
                 <Link key={event.id} href={`/tickets/${event.id}`}>
                   <div className="h-full group cursor-pointer">
-                    <div className="card-glow relative overflow-hidden rounded-2xl border border-[#1a1a3a] bg-[#0f0f25] h-full flex flex-col transition-all duration-300 hover:border-[#2a2a5a] hover:-translate-y-1">
+                    <div className="card-glow relative overflow-hidden rounded-2xl border border-[#2a2420] bg-[#151210] h-full flex flex-col transition-all duration-300 hover:border-[#3a332c] hover:-translate-y-1">
                       {/* Image */}
                       <div className="h-48 relative overflow-hidden rounded-t-2xl">
                         {event.imageUrl && (
                           <img src={event.imageUrl} alt={event.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                         )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f25] via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#151210] via-transparent to-transparent" />
 
                         {/* LIVE ON-CHAIN Badge */}
                         {event.isLive && (
@@ -208,7 +208,7 @@ export default function TicketsPage() {
                             <span className="text-[#e8a838]">Ticket availability for {availPct}%</span>
                             <span className="text-gray-600">Price availability</span>
                           </div>
-                          <div className="w-full h-1 rounded-full bg-[#1a1a3a] overflow-hidden">
+                          <div className="w-full h-1 rounded-full bg-[#2a2420] overflow-hidden">
                             <div
                               className="h-full rounded-full bg-gradient-to-r from-[#e8a838] to-[#39ff14]"
                               style={{ width: `${availPct}%` }}
@@ -217,7 +217,7 @@ export default function TicketsPage() {
                         </div>
 
                         {/* View Event Button */}
-                        <button className="w-full py-2.5 rounded-xl border border-[#2a2a5a] text-white text-sm font-medium hover:border-[#e8a838]/40 hover:shadow-[0_0_12px_rgba(232,168,56,0.1)] transition-all duration-200 mt-auto">
+                        <button className="w-full py-2.5 rounded-xl border border-[#3a332c] text-white text-sm font-medium hover:border-[#e8a838]/40 hover:shadow-[0_0_12px_rgba(232,168,56,0.1)] transition-all duration-200 mt-auto">
                           View Event
                         </button>
                       </div>
@@ -231,7 +231,7 @@ export default function TicketsPage() {
 
         {!loading && filteredEvents.length === 0 && (
           <div className="text-center py-20">
-            <span className="material-symbols-outlined text-6xl text-[#1a1a3a] block mb-4">search_off</span>
+            <span className="material-symbols-outlined text-6xl text-[#2a2420] block mb-4">search_off</span>
             <h2 className="text-xl font-bold text-gray-500 mb-2">No events found</h2>
             <p className="text-gray-700 text-sm">Try adjusting your search or filter criteria</p>
           </div>
