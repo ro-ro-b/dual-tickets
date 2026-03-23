@@ -30,6 +30,7 @@ interface Event {
   isLive?: boolean
   blockchainTxHash?: string
   explorerUrl?: string
+  category?: string
 }
 
 // Event images keyed by mock event ID
