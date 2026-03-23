@@ -47,7 +47,8 @@ export async function POST() {
         });
         results.push({ id: ticket.id, name, status: 'updated' });
       } catch (err: any) {
-        results.push({ id: ticket.id, name, status: 'error', error: err.message });
+        const errorDetail = err.body ? JSON.stringify(err.body) : err.message;
+        results.push({ id: ticket.id, name, status: 'error', error: `${err.status || '?'}: ${errorDetail}` });
       }
     }
 
