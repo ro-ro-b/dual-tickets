@@ -37,11 +37,14 @@ export async function POST(req: NextRequest) {
 
     const mintData: Record<string, any> = {};
 
-    if (rawData.name || rawData.description) {
-      mintData.metadata = {
-        ...(rawData.name ? { name: rawData.name } : {}),
-        ...(rawData.description ? { description: rawData.description } : {}),
-      };
+    // Build metadata block with ERC-721 standard fields (name, description, image)
+    const metadataBlock: Record<string, any> = {};
+    if (rawData.name) metadataBlock.name = rawData.name;
+    if (rawData.description) metadataBlock.description = rawData.description;
+    if (rawData.imageUrl) metadataBlock.image = { url: rawData.imageUrl };
+
+    if (Object.keys(metadataBlock).length > 0) {
+      mintData.metadata = metadataBlock;
     }
 
     const { name: _n, description: _d, ...customFields } = rawData;
@@ -64,12 +67,28 @@ export async function POST(req: NextRequest) {
     };
 
     const result = await client.ebus.execute(actionPayload);
+    const objectIds = result.steps?.[0]?.output?.ids || [];
+
+    // Post-mint: set token_uri on each minted object so Blockscout can read metadata
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://dual-tickets.vercel.app';
+    for (const objId of objectIds) {
+      try {
+        await client.objects.updateObject(objId, {
+          metadata: {
+            token_uri: `${appUrl}/api/metadata/${objId}`,
+            ...(rawData.imageUrl ? { image: { url: rawData.imageUrl } } : {}),
+          },
+        });
+      } catch {
+        // Non-critical — metadata endpoint still works via data provider lookup
+      }
+    }
 
     return NextResponse.json({
       success: true,
       actionId: result.action_id,
       steps: result.steps,
-      objectIds: result.steps?.[0]?.output?.ids || [],
+      objectIds,
     }, { status: 201 });
   } catch (err: any) {
     const status = err.status || 500;
