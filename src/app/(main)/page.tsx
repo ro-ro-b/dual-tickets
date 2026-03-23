@@ -109,8 +109,8 @@ export default function TicketsPage() {
             {/* DUAL Logo + Tagline */}
             <div className="flex flex-col items-center gap-4 mb-8">
               <DualLogo height={48} className="text-white" />
-              <p className="text-xl md:text-2xl italic font-light tracking-wide">
-                <span className="bg-gradient-to-r from-[#e8a838] via-[#f0c040] to-[#d4632a] bg-clip-text text-transparent">The Tokenised Future of Events and Tickets</span>
+              <p className="text-lg md:text-xl font-light tracking-[0.2em] uppercase text-white/90">
+                The Tokenised Future of Events and Tickets
               </p>
             </div>
 
