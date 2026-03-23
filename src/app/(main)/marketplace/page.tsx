@@ -240,7 +240,7 @@ export default function MarketplacePage() {
     <div className="min-h-screen relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 mb-12">
         <div className="mb-8">
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-4 bg-gradient-to-r from-[#00f0ff] via-[#ff2d78] to-[#39ff14] bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-4 bg-gradient-to-r from-[#e8a838] via-[#f0c040] to-[#d4632a] bg-clip-text text-transparent">
             Ticket Marketplace
           </h1>
           <p className="text-lg text-gray-300 max-w-2xl">
@@ -272,7 +272,7 @@ export default function MarketplacePage() {
                   className={`px-5 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
                     filterTier === tier
                       ? 'bg-white text-[#0a0a1a] font-semibold'
-                      : 'text-gray-500 border border-[#2a2a5a] hover:border-[#ff2d78]/40 hover:text-gray-300'
+                      : 'text-gray-500 border border-[#2a2a5a] hover:border-[#d4632a]/40 hover:text-gray-300'
                   }`}
                 >
                   {tier === 'all' ? 'All Tiers' : tier}
@@ -350,12 +350,12 @@ export default function MarketplacePage() {
 
                   <div className="mb-4 px-6 pt-4">
                     <div className="flex items-start justify-between gap-2 mb-3">
-                      <h3 className="font-bold text-lg leading-tight group-hover:text-[#00f0ff] transition-colors flex-1">
+                      <h3 className="font-bold text-lg leading-tight group-hover:text-[#e8a838] transition-colors flex-1">
                         {listing.ticketName}
                       </h3>
                     </div>
-                    <div className="inline-flex px-2 py-1 rounded-full bg-[#00f0ff]/10 border border-[#00f0ff]/30">
-                      <span className="text-xs font-semibold text-[#00f0ff]">{listing.tier}</span>
+                    <div className="inline-flex px-2 py-1 rounded-full bg-[#e8a838]/10 border border-[#e8a838]/30">
+                      <span className="text-xs font-semibold text-[#e8a838]">{listing.tier}</span>
                     </div>
                   </div>
 
@@ -385,15 +385,15 @@ export default function MarketplacePage() {
                     <div>
                       <p className="text-xs text-gray-500 mb-1">Current Listing</p>
                       <div className="flex items-baseline justify-between">
-                        <p className="text-2xl font-black text-[#00f0ff]">
+                        <p className="text-2xl font-black text-[#e8a838]">
                           ${listing.listingPrice}
                         </p>
                         <span
                           className={`text-xs font-bold ${
                             isViolatingCeiling
-                              ? 'text-[#ff2d78]'
+                              ? 'text-[#d4632a]'
                               : priceChange > 0
-                                ? 'text-[#ff2d78]'
+                                ? 'text-[#d4632a]'
                                 : priceChange < 0
                                   ? 'text-[#39ff14]'
                                   : 'text-gray-400'
@@ -411,7 +411,7 @@ export default function MarketplacePage() {
                       <p className="text-xs text-gray-500 mb-1">Anti-Scalp Max Price</p>
                       <p className="font-bold text-[#39ff14]">${listing.maxResalePrice}</p>
                       {isViolatingCeiling && (
-                        <p className="text-xs text-[#ff2d78] mt-2 flex items-center gap-1">
+                        <p className="text-xs text-[#d4632a] mt-2 flex items-center gap-1">
                           <span className="material-symbols-outlined text-xs">warning</span>
                           Above ceiling (will auto-reject on-chain)
                         </p>
@@ -422,7 +422,7 @@ export default function MarketplacePage() {
                   <div className="mt-auto px-6 pb-6">
                     <button
                       onClick={() => handleBuyClick(listing)}
-                      className="w-full py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition-all bg-gradient-to-r from-[#00f0ff]/20 to-[#ff2d78]/20 border border-[#00f0ff]/30 text-[#00f0ff] hover:from-[#00f0ff]/40 hover:to-[#ff2d78]/40 hover:shadow-[0_0_20px_rgba(0,240,255,0.3)]"
+                      className="w-full py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition-all bg-gradient-to-r from-[#e8a838]/20 to-[#d4632a]/20 border border-[#e8a838]/30 text-[#e8a838] hover:from-[#e8a838]/40 hover:to-[#d4632a]/40 hover:shadow-[0_0_20px_rgba(0,240,255,0.3)]"
                     >
                       <span className="material-symbols-outlined text-sm">swap_horiz</span>
                       Buy via ebus
@@ -436,7 +436,7 @@ export default function MarketplacePage() {
 
         {!loading && sortedListings.length === 0 && (
           <div className="text-center py-20">
-            <span className="material-symbols-outlined text-8xl text-[#00f0ff]/30 block mb-6">
+            <span className="material-symbols-outlined text-8xl text-[#e8a838]/30 block mb-6">
               search
             </span>
             <h2 className="text-3xl font-bold text-white mb-4">No Listings Found</h2>
@@ -525,7 +525,7 @@ export default function MarketplacePage() {
             }
           `}</style>
 
-          <div className="max-w-2xl w-full rounded-2xl border border-[#00f0ff]/30 bg-gradient-to-br from-[#08080f] to-[#1a0033] p-8">
+          <div className="max-w-2xl w-full rounded-2xl border border-[#e8a838]/30 bg-gradient-to-br from-[#08080f] to-[#1a0033] p-8">
             {purchaseModal.step === 'confirm' && (
               <>
                 <div className="mb-8">
@@ -534,7 +534,7 @@ export default function MarketplacePage() {
                 </div>
 
                 <div className="space-y-6 mb-8">
-                  <div className="p-6 rounded-xl border border-[#00f0ff]/30 bg-[#00f0ff]/5">
+                  <div className="p-6 rounded-xl border border-[#e8a838]/30 bg-[#e8a838]/5">
                     <h3 className="font-bold text-lg text-white mb-4">
                       {purchaseModal.listing.ticketName}
                     </h3>
@@ -554,13 +554,13 @@ export default function MarketplacePage() {
                       </div>
                       <div>
                         <p className="text-gray-500 mb-1">Tier</p>
-                        <p className="font-semibold text-[#ff2d78]">
+                        <p className="font-semibold text-[#d4632a]">
                           {purchaseModal.listing.tier}
                         </p>
                       </div>
                       <div>
                         <p className="text-gray-500 mb-1">Seller</p>
-                        <p className="font-mono text-[#00f0ff] text-xs">
+                        <p className="font-mono text-[#e8a838] text-xs">
                           {purchaseModal.listing.seller}
                         </p>
                       </div>
@@ -575,9 +575,9 @@ export default function MarketplacePage() {
                       </p>
                     </div>
 
-                    <div className="p-4 rounded-lg bg-[#00f0ff]/10 border border-[#00f0ff]/30">
+                    <div className="p-4 rounded-lg bg-[#e8a838]/10 border border-[#e8a838]/30">
                       <p className="text-xs text-gray-500 mb-1">Purchase Price</p>
-                      <p className="text-2xl font-black text-[#00f0ff]">
+                      <p className="text-2xl font-black text-[#e8a838]">
                         ${purchaseModal.listing.listingPrice}
                       </p>
                     </div>
@@ -603,7 +603,7 @@ export default function MarketplacePage() {
 
                   <button
                     onClick={handleExecutePurchase}
-                    className="flex-1 py-3 rounded-lg font-bold bg-gradient-to-r from-[#00f0ff] to-[#ff2d78] text-black hover:shadow-[0_0_30px_rgba(0,240,255,0.5)] transition-all flex items-center justify-center gap-2"
+                    className="flex-1 py-3 rounded-lg font-bold bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black hover:shadow-[0_0_30px_rgba(0,240,255,0.5)] transition-all flex items-center justify-center gap-2"
                   >
                     <span className="material-symbols-outlined">flash_on</span>
                     EXECUTE ON-CHAIN PURCHASE
@@ -621,9 +621,9 @@ export default function MarketplacePage() {
 
                 <div className="space-y-6 mb-8">
                   {/* Step 1 */}
-                  <div className="flex items-start gap-4 p-4 rounded-lg bg-[#0f0f25] border border-[#00f0ff]/30">
-                    <div className="settle-pulse w-8 h-8 rounded-full bg-[#00f0ff]/30 border border-[#00f0ff] flex items-center justify-center flex-shrink-0">
-                      <div className="w-4 h-4 border-2 border-[#00f0ff]/30 border-t-[#00f0ff] rounded-full animate-spin" />
+                  <div className="flex items-start gap-4 p-4 rounded-lg bg-[#0f0f25] border border-[#e8a838]/30">
+                    <div className="settle-pulse w-8 h-8 rounded-full bg-[#e8a838]/30 border border-[#e8a838] flex items-center justify-center flex-shrink-0">
+                      <div className="w-4 h-4 border-2 border-[#e8a838]/30 border-t-[#e8a838] rounded-full animate-spin" />
                     </div>
                     <div>
                       <p className="font-semibold text-white">Initiating transaction...</p>
@@ -632,9 +632,9 @@ export default function MarketplacePage() {
                   </div>
 
                   {/* Step 2 */}
-                  <div className="flex items-start gap-4 p-4 rounded-lg bg-[#0f0f25] border border-[#ff2d78]/30">
-                    <div className="settle-pulse w-8 h-8 rounded-full bg-[#ff2d78]/30 border border-[#ff2d78] flex items-center justify-center flex-shrink-0">
-                      <div className="w-4 h-4 border-2 border-[#ff2d78]/30 border-t-[#ff2d78] rounded-full animate-spin" />
+                  <div className="flex items-start gap-4 p-4 rounded-lg bg-[#0f0f25] border border-[#d4632a]/30">
+                    <div className="settle-pulse w-8 h-8 rounded-full bg-[#d4632a]/30 border border-[#d4632a] flex items-center justify-center flex-shrink-0">
+                      <div className="w-4 h-4 border-2 border-[#d4632a]/30 border-t-[#d4632a] rounded-full animate-spin" />
                     </div>
                     <div>
                       <p className="font-semibold text-white">Settling on DUAL Network...</p>
@@ -684,7 +684,7 @@ export default function MarketplacePage() {
                 <div className="space-y-4 mb-8">
                   <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-xs text-gray-500 mb-1">Transaction Hash</p>
-                    <p className="font-mono text-[#00f0ff] text-sm break-all">
+                    <p className="font-mono text-[#e8a838] text-sm break-all">
                       {purchaseModal.transactionHash}
                     </p>
                   </div>
@@ -715,7 +715,7 @@ export default function MarketplacePage() {
 
                   <Link
                     href="/tickets/my-tickets"
-                    className="flex-1 py-3 rounded-lg font-bold bg-gradient-to-r from-[#00f0ff] to-[#ff2d78] text-black hover:shadow-[0_0_30px_rgba(0,240,255,0.5)] transition-all flex items-center justify-center gap-2"
+                    className="flex-1 py-3 rounded-lg font-bold bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black hover:shadow-[0_0_30px_rgba(0,240,255,0.5)] transition-all flex items-center justify-center gap-2"
                   >
                     <span className="material-symbols-outlined">card_membership</span>
                     View My Ticket
@@ -727,15 +727,15 @@ export default function MarketplacePage() {
             {purchaseModal.step === 'error' && (
               <>
                 <div className="mb-8 text-center">
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#ff2d78]/20 border-2 border-[#ff2d78] mb-4">
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#d4632a]/20 border-2 border-[#d4632a] mb-4">
                     <span className="text-5xl">✗</span>
                   </div>
-                  <h2 className="text-3xl font-black text-[#ff2d78] mb-2">PURCHASE FAILED</h2>
+                  <h2 className="text-3xl font-black text-[#d4632a] mb-2">PURCHASE FAILED</h2>
                   <p className="text-gray-400">Something went wrong with your transaction</p>
                 </div>
 
-                <div className="mb-8 p-4 rounded-lg bg-[#ff2d78]/10 border border-[#ff2d78]/30">
-                  <p className="text-sm text-[#ff2d78]">{purchaseModal.error || 'Unknown error'}</p>
+                <div className="mb-8 p-4 rounded-lg bg-[#d4632a]/10 border border-[#d4632a]/30">
+                  <p className="text-sm text-[#d4632a]">{purchaseModal.error || 'Unknown error'}</p>
                 </div>
 
                 <div className="flex gap-4">
@@ -750,7 +750,7 @@ export default function MarketplacePage() {
                     onClick={() =>
                       setPurchaseModal((prev) => ({ ...prev, step: 'confirm', error: undefined }))
                     }
-                    className="flex-1 py-3 rounded-lg font-bold bg-gradient-to-r from-[#00f0ff]/20 to-[#ff2d78]/20 border border-[#00f0ff]/30 text-[#00f0ff] hover:from-[#00f0ff]/40 hover:to-[#ff2d78]/40 transition-all"
+                    className="flex-1 py-3 rounded-lg font-bold bg-gradient-to-r from-[#e8a838]/20 to-[#d4632a]/20 border border-[#e8a838]/30 text-[#e8a838] hover:from-[#e8a838]/40 hover:to-[#d4632a]/40 transition-all"
                   >
                     Try Again
                   </button>

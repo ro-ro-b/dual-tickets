@@ -17,7 +17,7 @@ interface Event {
 }
 
 const MOCK_EVENTS: Event[] = [
-  { id: '1', name: 'Neon Dreams Festival', date: '2026-04-15', venue: 'San Francisco Bay Area', type: 'concert', priceRange: { min: 89, max: 299 }, available: 340, total: 500, imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&q=80', isLive: true },
+  { id: '1', name: 'Neon Dreams Festival 2026', date: '2026-04-15', venue: 'San Francisco Bay Area', type: 'concert', priceRange: { min: 89, max: 299 }, available: 340, total: 500, imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&q=80', isLive: true },
   { id: '2', name: 'Virtual Reality Concert', date: '2026-05-22', venue: 'Los Angeles Convention Center', type: 'concert', priceRange: { min: 65, max: 199 }, available: 156, total: 400, imageUrl: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=80', isLive: true },
   { id: '3', name: 'Crypto Cup', date: '2026-06-10', venue: 'MetaStadium NYC', type: 'sports', priceRange: { min: 149, max: 799 }, available: 1250, total: 2000, imageUrl: 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=800&q=80', isLive: true },
   { id: '4', name: 'The Holographic Opera', date: '2026-07-08', venue: 'Miami Art Deco Theater', type: 'theater', priceRange: { min: 49, max: 249 }, available: 89, total: 300, imageUrl: 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=800&q=80', isLive: true },
@@ -68,48 +68,78 @@ export default function TicketsPage() {
           animation: shimmer 1.5s infinite;
         }
         .card-glow:hover {
-          box-shadow: 0 0 30px rgba(108, 43, 217, 0.15), 0 0 60px rgba(0, 240, 255, 0.05);
+          box-shadow: 0 0 30px rgba(232, 168, 56, 0.1), 0 0 60px rgba(108, 43, 217, 0.05);
         }
       `}</style>
 
-      {/* Hero Section */}
-      <div className="relative pt-14 pb-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Two-tone hero title matching screenshot */}
-          <h1 className="text-5xl md:text-7xl font-black mb-8 tracking-tight leading-tight">
-            <span className="text-[#00f0ff]">The Future of </span>
-            <span className="italic bg-gradient-to-r from-[#ff2d78] to-[#ff6b35] bg-clip-text text-transparent">Live Events</span>
-          </h1>
+      {/* Mountain Landscape Header */}
+      <div className="relative overflow-hidden">
+        {/* Purple mountain silhouettes */}
+        <div className="absolute inset-x-0 top-0 h-80 pointer-events-none">
+          <svg className="absolute bottom-0 w-full h-64" viewBox="0 0 1440 256" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            {/* Far mountains - darkest purple */}
+            <path d="M0 256L0 180L120 130L240 160L360 100L480 140L600 80L720 120L840 60L960 100L1080 70L1200 110L1320 90L1440 130L1440 256Z" fill="url(#mountain-far)" />
+            {/* Mid mountains */}
+            <path d="M0 256L0 200L180 150L300 180L420 120L540 170L660 110L780 160L900 100L1020 150L1140 120L1260 160L1380 140L1440 170L1440 256Z" fill="url(#mountain-mid)" />
+            {/* Front mountains */}
+            <path d="M0 256L0 220L100 190L250 210L400 170L550 200L700 160L850 195L1000 175L1150 200L1300 185L1440 210L1440 256Z" fill="url(#mountain-front)" />
+            <defs>
+              <linearGradient id="mountain-far" x1="0" y1="60" x2="0" y2="256">
+                <stop offset="0%" stopColor="#3d1a6e" stopOpacity="0.6" />
+                <stop offset="100%" stopColor="#0a0a1a" stopOpacity="0" />
+              </linearGradient>
+              <linearGradient id="mountain-mid" x1="0" y1="100" x2="0" y2="256">
+                <stop offset="0%" stopColor="#5a1e8a" stopOpacity="0.4" />
+                <stop offset="100%" stopColor="#0a0a1a" stopOpacity="0" />
+              </linearGradient>
+              <linearGradient id="mountain-front" x1="0" y1="160" x2="0" y2="256">
+                <stop offset="0%" stopColor="#2a0f4e" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="#0a0a1a" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+          </svg>
+          {/* Warm glow at the peaks */}
+          <div className="absolute top-8 left-1/2 -translate-x-1/2 w-[800px] h-[200px] rounded-full bg-gradient-to-b from-[#e8a838]/8 via-[#d4632a]/5 to-transparent blur-[60px]" />
+        </div>
 
-          {/* Search Bar with neon border */}
-          <div className="max-w-lg mx-auto mb-8">
-            <div className="relative">
-              <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 text-lg">search</span>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search events, artists, venues"
-                className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#12122a] border border-[#2a2a5a] text-white text-sm placeholder-gray-600 focus:border-[#6c2bd9]/60 focus:outline-none focus:shadow-[0_0_15px_rgba(108,43,217,0.15)] transition-all"
-              />
+        {/* Hero Section */}
+        <div className="relative pt-14 pb-8 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            {/* Hero title - warm gold gradient italic */}
+            <h1 className="text-5xl md:text-7xl font-black mb-8 tracking-tight leading-tight italic">
+              <span className="bg-gradient-to-r from-[#e8a838] via-[#f0c040] to-[#d4632a] bg-clip-text text-transparent">The Future of Live Events</span>
+            </h1>
+
+            {/* Search Bar */}
+            <div className="max-w-lg mx-auto mb-8">
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 text-lg">search</span>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search events, artists, venues"
+                  className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#12122a] border border-[#2a2a5a] text-white text-sm placeholder-gray-600 focus:border-[#e8a838]/50 focus:outline-none focus:shadow-[0_0_15px_rgba(232,168,56,0.1)] transition-all"
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Category Filters - matching screenshot pill style */}
-          <div className="flex flex-wrap justify-center gap-2">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`px-5 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
-                  selectedCategory === category.id
-                    ? 'bg-white text-[#0a0a1a] font-semibold'
-                    : 'text-gray-500 border border-[#2a2a5a] hover:border-[#ff2d78]/40 hover:text-gray-300'
-                }`}
-              >
-                {category.label}
-              </button>
-            ))}
+            {/* Category Filters */}
+            <div className="flex flex-wrap justify-center gap-2">
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
+                  className={`px-5 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                    selectedCategory === category.id
+                      ? 'bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-white font-semibold shadow-[0_0_15px_rgba(232,168,56,0.3)]'
+                      : 'text-gray-500 border border-[#2a2a5a] hover:border-[#e8a838]/30 hover:text-gray-300'
+                  }`}
+                >
+                  {category.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -156,7 +186,7 @@ export default function TicketsPage() {
                       {/* Content */}
                       <div className="px-5 pt-4 pb-5 flex flex-col flex-1">
                         {/* Event Name */}
-                        <h3 className="font-bold text-[15px] text-white mb-2 leading-snug group-hover:text-[#00f0ff] transition-colors">
+                        <h3 className="font-bold text-[15px] text-white mb-2 leading-snug group-hover:text-[#e8a838] transition-colors">
                           {event.name}
                         </h3>
 
@@ -167,7 +197,7 @@ export default function TicketsPage() {
                             {new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                           </div>
                           <div className="flex items-center gap-1">
-                            <span className="material-symbols-outlined text-[11px] text-[#ff2d78]">location_on</span>
+                            <span className="material-symbols-outlined text-[11px] text-[#e8a838]">location_on</span>
                             <span className="truncate max-w-[120px]">{event.venue}</span>
                           </div>
                         </div>
@@ -175,19 +205,19 @@ export default function TicketsPage() {
                         {/* Availability */}
                         <div className="mb-4">
                           <div className="flex items-center justify-between text-[10px] mb-1">
-                            <span className="text-[#00f0ff]">Ticket availability for {availPct}%</span>
+                            <span className="text-[#e8a838]">Ticket availability for {availPct}%</span>
                             <span className="text-gray-600">Price availability</span>
                           </div>
                           <div className="w-full h-1 rounded-full bg-[#1a1a3a] overflow-hidden">
                             <div
-                              className="h-full rounded-full bg-gradient-to-r from-[#00f0ff] to-[#39ff14]"
+                              className="h-full rounded-full bg-gradient-to-r from-[#e8a838] to-[#39ff14]"
                               style={{ width: `${availPct}%` }}
                             />
                           </div>
                         </div>
 
                         {/* View Event Button */}
-                        <button className="w-full py-2.5 rounded-xl border border-[#2a2a5a] text-white text-sm font-medium hover:border-[#00f0ff]/40 hover:shadow-[0_0_12px_rgba(0,240,255,0.1)] transition-all duration-200 mt-auto">
+                        <button className="w-full py-2.5 rounded-xl border border-[#2a2a5a] text-white text-sm font-medium hover:border-[#e8a838]/40 hover:shadow-[0_0_12px_rgba(232,168,56,0.1)] transition-all duration-200 mt-auto">
                           View Event
                         </button>
                       </div>

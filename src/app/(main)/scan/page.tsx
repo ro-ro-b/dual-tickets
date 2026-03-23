@@ -24,8 +24,8 @@ interface ScanStats {
 }
 
 const tierColors: Record<string, { bg: string; text: string; border: string }> = {
-  general: { bg: 'from-[#00f0ff]/10 to-transparent', text: 'text-[#00f0ff]', border: 'border-[#00f0ff]/30' },
-  vip: { bg: 'from-[#ff2d78]/10 to-transparent', text: 'text-[#ff2d78]', border: 'border-[#ff2d78]/30' },
+  general: { bg: 'from-[#e8a838]/10 to-transparent', text: 'text-[#e8a838]', border: 'border-[#e8a838]/30' },
+  vip: { bg: 'from-[#d4632a]/10 to-transparent', text: 'text-[#d4632a]', border: 'border-[#d4632a]/30' },
   backstage: { bg: 'from-[#6c2bd9]/10 to-transparent', text: 'text-[#6c2bd9]', border: 'border-[#6c2bd9]/30' },
   premium: { bg: 'from-[#ff00e5]/10 to-transparent', text: 'text-[#ff00e5]', border: 'border-[#ff00e5]/30' },
 }
@@ -249,13 +249,13 @@ export default function ScannerPage() {
         <div className="mb-12">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-[#00f0ff] hover:text-white transition-colors mb-6"
+            className="inline-flex items-center gap-2 text-[#e8a838] hover:text-white transition-colors mb-6"
           >
             <span className="material-symbols-outlined text-sm">arrow_back</span>
             Back to Events
           </Link>
 
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-3 bg-gradient-to-r from-[#00f0ff] via-[#ff2d78] to-[#39ff14] bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-3 bg-gradient-to-r from-[#e8a838] via-[#f0c040] to-[#d4632a] bg-clip-text text-transparent">
             VENUE SCANNER
           </h1>
           <p className="text-lg text-gray-300">DUAL TICKET VERIFICATION SYSTEM</p>
@@ -265,19 +265,19 @@ export default function ScannerPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Scanner Area */}
           <div className="lg:col-span-2">
-            <div className="border border-[#00f0ff]/30 rounded-2xl p-8 bg-gradient-to-br from-[#00f0ff]/5 to-transparent">
+            <div className="border border-[#e8a838]/30 rounded-2xl p-8 bg-gradient-to-br from-[#e8a838]/5 to-transparent">
               {/* QR Scan Area */}
               <div className="mb-8">
-                <div className="scan-pulse border-2 border-[#00f0ff] rounded-xl p-12 bg-[#00f0ff]/5 flex flex-col items-center justify-center min-h-80 relative overflow-hidden">
+                <div className="scan-pulse border-2 border-[#e8a838] rounded-xl p-12 bg-[#e8a838]/5 flex flex-col items-center justify-center min-h-80 relative overflow-hidden">
                   <div className="absolute inset-0 opacity-20">
-                    <div className="absolute top-0 left-1/4 w-32 h-32 border-2 border-[#00f0ff]/50 rounded" />
-                    <div className="absolute top-0 right-1/4 w-32 h-32 border-2 border-[#00f0ff]/50 rounded" />
-                    <div className="absolute bottom-0 left-1/4 w-32 h-32 border-2 border-[#00f0ff]/50 rounded" />
-                    <div className="absolute bottom-0 right-1/4 w-32 h-32 border-2 border-[#00f0ff]/50 rounded" />
+                    <div className="absolute top-0 left-1/4 w-32 h-32 border-2 border-[#e8a838]/50 rounded" />
+                    <div className="absolute top-0 right-1/4 w-32 h-32 border-2 border-[#e8a838]/50 rounded" />
+                    <div className="absolute bottom-0 left-1/4 w-32 h-32 border-2 border-[#e8a838]/50 rounded" />
+                    <div className="absolute bottom-0 right-1/4 w-32 h-32 border-2 border-[#e8a838]/50 rounded" />
                   </div>
 
                   <div className="relative z-10 text-center">
-                    <span className="material-symbols-outlined text-8xl text-[#00f0ff] mb-4 block">
+                    <span className="material-symbols-outlined text-8xl text-[#e8a838] mb-4 block">
                       {loading ? 'sync' : 'qr_code_2'}
                     </span>
                     <p className="text-lg text-gray-300 mb-2">
@@ -302,12 +302,12 @@ export default function ScannerPage() {
                   onKeyPress={(e) => e.key === 'Enter' && !loading && handleScanTicket()}
                   placeholder="Enter ticket ID (e.g., demo-1)"
                   disabled={loading}
-                  className="w-full px-4 py-3 rounded-lg bg-[#0f0f25] border border-[#00f0ff]/30 text-white placeholder-gray-500 focus:border-[#00f0ff] focus:outline-none transition-colors disabled:opacity-50"
+                  className="w-full px-4 py-3 rounded-lg bg-[#0f0f25] border border-[#e8a838]/30 text-white placeholder-gray-500 focus:border-[#e8a838] focus:outline-none transition-colors disabled:opacity-50"
                 />
                 <div className="mt-2 flex flex-wrap gap-2">
                   <span className="text-xs text-gray-500">Quick scan:</span>
                   {Object.keys(DEMO_TICKETS).map(id => (
-                    <button key={id} onClick={() => setTicketIdInput(id)} className="text-xs px-2 py-1 rounded bg-[#0f0f25] border border-[#1a1a3a] text-gray-400 hover:text-[#00f0ff] hover:border-[#00f0ff]/30 transition-colors">{id}</button>
+                    <button key={id} onClick={() => setTicketIdInput(id)} className="text-xs px-2 py-1 rounded bg-[#0f0f25] border border-[#1a1a3a] text-gray-400 hover:text-[#e8a838] hover:border-[#e8a838]/30 transition-colors">{id}</button>
                   ))}
                 </div>
               </div>
@@ -316,7 +316,7 @@ export default function ScannerPage() {
               <button
                 onClick={handleScanTicket}
                 disabled={loading || !ticketIdInput.trim()}
-                className="w-full py-4 rounded-lg font-bold flex items-center justify-center gap-2 transition-all bg-gradient-to-r from-[#00f0ff]/30 to-[#39ff14]/30 border border-[#00f0ff]/50 text-[#00f0ff] hover:from-[#00f0ff]/50 hover:to-[#39ff14]/50 hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-4 rounded-lg font-bold flex items-center justify-center gap-2 transition-all bg-gradient-to-r from-[#e8a838]/30 to-[#39ff14]/30 border border-[#e8a838]/50 text-[#e8a838] hover:from-[#e8a838]/50 hover:to-[#39ff14]/50 hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <span className="material-symbols-outlined text-lg">
                   {loading ? 'hourglass_top' : 'center_focus_strong'}
@@ -332,14 +332,14 @@ export default function ScannerPage() {
                     <div
                       className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                         verificationStep >= 1
-                          ? 'bg-[#00f0ff]/30 border border-[#00f0ff]'
+                          ? 'bg-[#e8a838]/30 border border-[#e8a838]'
                           : 'bg-[#0f0f25] border border-[#1a1a3a]'
                       }`}
                     >
                       {verificationStep > 1 ? (
-                        <span className="text-[#00f0ff] material-symbols-outlined text-sm">check</span>
+                        <span className="text-[#e8a838] material-symbols-outlined text-sm">check</span>
                       ) : verificationStep === 1 ? (
-                        <div className="w-4 h-4 border-2 border-[#00f0ff]/30 border-t-[#00f0ff] rounded-full animate-spin" />
+                        <div className="w-4 h-4 border-2 border-[#e8a838]/30 border-t-[#e8a838] rounded-full animate-spin" />
                       ) : (
                         <span className="text-white/50">1</span>
                       )}
@@ -355,15 +355,15 @@ export default function ScannerPage() {
                     <div
                       className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                         verificationStep >= 2
-                          ? 'bg-[#00f0ff]/30 border border-[#00f0ff]'
+                          ? 'bg-[#e8a838]/30 border border-[#e8a838]'
                           : 'bg-[#0f0f25] border border-[#1a1a3a]'
                       }`}
                     >
                       {verificationStep > 2 ? (
-                        <span className="text-[#00f0ff] material-symbols-outlined text-sm">check</span>
+                        <span className="text-[#e8a838] material-symbols-outlined text-sm">check</span>
                       ) : verificationStep === 2 ? (
                         <div
-                          className="w-4 h-4 rounded-full bg-[#00f0ff] network-pulse"
+                          className="w-4 h-4 rounded-full bg-[#e8a838] network-pulse"
                           style={{ boxShadow: '0 0 10px rgba(0, 240, 255, 0.8)' }}
                         />
                       ) : (
@@ -381,14 +381,14 @@ export default function ScannerPage() {
                     <div
                       className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                         verificationStep >= 3
-                          ? 'bg-[#ff2d78]/30 border border-[#ff2d78]'
+                          ? 'bg-[#d4632a]/30 border border-[#d4632a]'
                           : 'bg-[#0f0f25] border border-[#1a1a3a]'
                       }`}
                     >
                       {verificationStep > 3 ? (
-                        <span className="text-[#ff2d78] material-symbols-outlined text-sm">check</span>
+                        <span className="text-[#d4632a] material-symbols-outlined text-sm">check</span>
                       ) : verificationStep === 3 ? (
-                        <div className="w-4 h-4 border-2 border-[#ff2d78]/30 border-t-[#ff2d78] rounded-full animate-spin" />
+                        <div className="w-4 h-4 border-2 border-[#d4632a]/30 border-t-[#d4632a] rounded-full animate-spin" />
                       ) : (
                         <span className="text-white/50">3</span>
                       )}
@@ -437,9 +437,9 @@ export default function ScannerPage() {
               </h3>
 
               <div className="space-y-6">
-                <div className="text-center p-4 rounded-lg bg-[#00f0ff]/10 border border-[#00f0ff]/30">
+                <div className="text-center p-4 rounded-lg bg-[#e8a838]/10 border border-[#e8a838]/30">
                   <p className="text-xs text-gray-400 mb-1">SCANNED TODAY</p>
-                  <p className="text-4xl font-black text-[#00f0ff]">{stats.scannedToday}</p>
+                  <p className="text-4xl font-black text-[#e8a838]">{stats.scannedToday}</p>
                 </div>
 
                 <div className="text-center p-4 rounded-lg bg-[#39ff14]/10 border border-[#39ff14]/30">
@@ -447,9 +447,9 @@ export default function ScannerPage() {
                   <p className="text-4xl font-black text-[#39ff14]">{stats.validScans}</p>
                 </div>
 
-                <div className="text-center p-4 rounded-lg bg-[#ff2d78]/10 border border-[#ff2d78]/30">
+                <div className="text-center p-4 rounded-lg bg-[#d4632a]/10 border border-[#d4632a]/30">
                   <p className="text-xs text-gray-400 mb-1">REJECTED</p>
-                  <p className="text-4xl font-black text-[#ff2d78]">{stats.rejectedScans}</p>
+                  <p className="text-4xl font-black text-[#d4632a]">{stats.rejectedScans}</p>
                 </div>
               </div>
             </div>
@@ -472,7 +472,7 @@ export default function ScannerPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                   <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Ticket ID</p>
-                    <p className="font-mono text-[#00f0ff] break-all">{result.ticketId}</p>
+                    <p className="font-mono text-[#e8a838] break-all">{result.ticketId}</p>
                   </div>
 
                   <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
@@ -504,7 +504,7 @@ export default function ScannerPage() {
 
                   <div className="md:col-span-2 p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Holder Address</p>
-                    <p className="font-mono text-[#00f0ff] break-all text-sm">{result.holder}</p>
+                    <p className="font-mono text-[#e8a838] break-all text-sm">{result.holder}</p>
                   </div>
 
                   <div className="md:col-span-2 p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
@@ -533,7 +533,7 @@ export default function ScannerPage() {
 
                   <button
                     onClick={handleScanNext}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#00f0ff]/20 border border-[#00f0ff]/50 text-[#00f0ff] font-semibold hover:bg-[#00f0ff]/30 transition-all"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#e8a838]/20 border border-[#e8a838]/50 text-[#e8a838] font-semibold hover:bg-[#e8a838]/30 transition-all"
                   >
                     <span className="material-symbols-outlined text-sm">chevron_right</span>
                     Scan Next
@@ -541,19 +541,19 @@ export default function ScannerPage() {
                 </div>
               </div>
             ) : result.status === 'duplicate' ? (
-              <div className="border-2 border-[#ff2d78] rounded-2xl p-8 bg-gradient-to-br from-[#ff2d78]/10 to-transparent">
+              <div className="border-2 border-[#d4632a] rounded-2xl p-8 bg-gradient-to-br from-[#d4632a]/10 to-transparent">
                 <div className="text-center mb-8">
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#ff2d78]/20 border-2 border-[#ff2d78] mb-4">
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#d4632a]/20 border-2 border-[#d4632a] mb-4">
                     <span className="text-5xl">⚠</span>
                   </div>
-                  <h2 className="text-4xl font-black text-[#ff2d78] mb-2">DUPLICATE SCAN</h2>
+                  <h2 className="text-4xl font-black text-[#d4632a] mb-2">DUPLICATE SCAN</h2>
                   <p className="text-gray-400">This ticket has already been scanned</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                   <div className="md:col-span-2 p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Ticket ID</p>
-                    <p className="font-mono text-[#00f0ff] break-all">{result.ticketId}</p>
+                    <p className="font-mono text-[#e8a838] break-all">{result.ticketId}</p>
                   </div>
 
                   <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
@@ -572,7 +572,7 @@ export default function ScannerPage() {
                 <div className="flex gap-4 justify-center">
                   <button
                     onClick={handleScanNext}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#00f0ff]/20 border border-[#00f0ff]/50 text-[#00f0ff] font-semibold hover:bg-[#00f0ff]/30 transition-all"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#e8a838]/20 border border-[#e8a838]/50 text-[#e8a838] font-semibold hover:bg-[#e8a838]/30 transition-all"
                   >
                     <span className="material-symbols-outlined text-sm">chevron_right</span>
                     Scan Next
@@ -580,24 +580,24 @@ export default function ScannerPage() {
                 </div>
               </div>
             ) : (
-              <div className="border-2 border-[#ff2d78] rounded-2xl p-8 bg-gradient-to-br from-[#ff2d78]/10 to-transparent">
+              <div className="border-2 border-[#d4632a] rounded-2xl p-8 bg-gradient-to-br from-[#d4632a]/10 to-transparent">
                 <div className="text-center mb-8">
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#ff2d78]/20 border-2 border-[#ff2d78] mb-4">
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#d4632a]/20 border-2 border-[#d4632a] mb-4">
                     <span className="text-5xl">✗</span>
                   </div>
-                  <h2 className="text-4xl font-black text-[#ff2d78] mb-2">ENTRY DENIED</h2>
+                  <h2 className="text-4xl font-black text-[#d4632a] mb-2">ENTRY DENIED</h2>
                   <p className="text-gray-400">This ticket could not be verified</p>
                 </div>
 
                 <div className="grid grid-cols-1 gap-6 mb-8">
                   <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Ticket ID</p>
-                    <p className="font-mono text-[#00f0ff] break-all">{result.ticketId}</p>
+                    <p className="font-mono text-[#e8a838] break-all">{result.ticketId}</p>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-[#ff2d78]/20 border border-[#ff2d78]/30">
+                  <div className="p-4 rounded-lg bg-[#d4632a]/20 border border-[#d4632a]/30">
                     <p className="text-sm text-gray-400 mb-1">Rejection Reason</p>
-                    <p className="font-bold text-[#ff2d78]">{result.reason || 'Unknown error'}</p>
+                    <p className="font-bold text-[#d4632a]">{result.reason || 'Unknown error'}</p>
                   </div>
 
                   <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
@@ -611,7 +611,7 @@ export default function ScannerPage() {
                 <div className="flex gap-4 justify-center">
                   <button
                     onClick={handleScanNext}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#00f0ff]/20 border border-[#00f0ff]/50 text-[#00f0ff] font-semibold hover:bg-[#00f0ff]/30 transition-all"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#e8a838]/20 border border-[#e8a838]/50 text-[#e8a838] font-semibold hover:bg-[#e8a838]/30 transition-all"
                   >
                     <span className="material-symbols-outlined text-sm">chevron_right</span>
                     Scan Next

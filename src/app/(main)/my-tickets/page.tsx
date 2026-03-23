@@ -327,7 +327,7 @@ export default function MyTicketsPage() {
           className={`fixed top-6 right-6 z-50 px-6 py-4 rounded-xl border backdrop-blur-xl shadow-2xl flex items-center gap-3 transition-all ${
             actionResult.success
               ? 'bg-[#39ff14]/10 border-[#39ff14]/50 text-[#39ff14]'
-              : 'bg-[#ff2d78]/10 border-[#ff2d78]/50 text-[#ff2d78]'
+              : 'bg-[#d4632a]/10 border-[#d4632a]/50 text-[#d4632a]'
           }`}
         >
           <span className="material-symbols-outlined">
@@ -339,7 +339,7 @@ export default function MyTicketsPage() {
 
       {transferModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
-          <div className="bg-[#0a0a1a] border border-[#00f0ff]/30 rounded-2xl p-8 max-w-md w-full mx-4 shadow-[0_0_60px_rgba(0,240,255,0.2)]">
+          <div className="bg-[#0a0a1a] border border-[#e8a838]/30 rounded-2xl p-8 max-w-md w-full mx-4 shadow-[0_0_60px_rgba(0,240,255,0.2)]">
             <h3 className="text-2xl font-black text-white mb-2">Transfer Ticket</h3>
             <p className="text-gray-400 mb-6">Transfer this NFT ticket to another wallet via email</p>
             <input
@@ -347,7 +347,7 @@ export default function MyTicketsPage() {
               placeholder="Recipient email address"
               value={transferEmail}
               onChange={(e) => setTransferEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg bg-[#0f0f25] border border-[#1a1a3a] text-white placeholder-gray-500 focus:border-[#00f0ff] focus:outline-none mb-4"
+              className="w-full px-4 py-3 rounded-lg bg-[#0f0f25] border border-[#1a1a3a] text-white placeholder-gray-500 focus:border-[#e8a838] focus:outline-none mb-4"
             />
             <div className="flex gap-3">
               <button
@@ -362,7 +362,7 @@ export default function MyTicketsPage() {
               <button
                 onClick={() => handleTransfer(transferModal)}
                 disabled={transferring || !transferEmail}
-                className="flex-1 py-3 rounded-lg bg-gradient-to-r from-[#00f0ff] to-[#ff2d78] text-black font-bold hover:shadow-[0_0_20px_rgba(0,240,255,0.5)] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex-1 py-3 rounded-lg bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold hover:shadow-[0_0_20px_rgba(0,240,255,0.5)] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {transferring ? (
                   <>
@@ -385,7 +385,7 @@ export default function MyTicketsPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-12">
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-4 bg-gradient-to-r from-[#00f0ff] via-[#ff2d78] to-[#39ff14] bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-4 bg-gradient-to-r from-[#e8a838] via-[#f0c040] to-[#d4632a] bg-clip-text text-transparent">
             My Tickets
           </h1>
           <p className="text-lg text-gray-300">
@@ -395,7 +395,7 @@ export default function MyTicketsPage() {
 
         {!loading && allTickets.length === 0 ? (
           <div className="text-center py-20">
-            <span className="material-symbols-outlined text-8xl text-[#00f0ff]/30 block mb-6">
+            <span className="material-symbols-outlined text-8xl text-[#e8a838]/30 block mb-6">
               confirmation_number
             </span>
             <h2 className="text-3xl font-bold text-white mb-4">No Tickets Yet</h2>
@@ -405,7 +405,7 @@ export default function MyTicketsPage() {
             </p>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00f0ff] to-[#ff2d78] text-black font-bold rounded-lg hover:shadow-[0_0_20px_rgba(0,240,255,0.5)] transition-all"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold rounded-lg hover:shadow-[0_0_20px_rgba(0,240,255,0.5)] transition-all"
             >
               <span className="material-symbols-outlined">explore</span>
               Browse Events
@@ -414,9 +414,9 @@ export default function MyTicketsPage() {
         ) : (
           <>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-12">
-              <div className="p-4 rounded-xl border border-[#00f0ff]/30 bg-[#00f0ff]/5">
+              <div className="p-4 rounded-xl border border-[#e8a838]/30 bg-[#e8a838]/5">
                 <p className="text-sm text-gray-400 mb-2">Total Tickets</p>
-                <p className="text-3xl font-black text-[#00f0ff]">{allTickets.length}</p>
+                <p className="text-3xl font-black text-[#e8a838]">{allTickets.length}</p>
               </div>
               <div className="p-4 rounded-xl border border-[#39ff14]/30 bg-[#39ff14]/5">
                 <p className="text-sm text-gray-400 mb-2">On-Chain</p>
@@ -491,7 +491,7 @@ export default function MyTicketsPage() {
                               </h3>
                               <div className="space-y-1 text-sm text-gray-300">
                                 <div className="flex items-center gap-2">
-                                  <span className="material-symbols-outlined text-sm text-[#00f0ff]">
+                                  <span className="material-symbols-outlined text-sm text-[#e8a838]">
                                     calendar_month
                                   </span>
                                   {new Date(ticket.date).toLocaleDateString('en-US', {
@@ -501,7 +501,7 @@ export default function MyTicketsPage() {
                                   })}
                                 </div>
                                 <div className="flex items-center gap-2">
-                                  <span className="material-symbols-outlined text-sm text-[#ff2d78]">
+                                  <span className="material-symbols-outlined text-sm text-[#d4632a]">
                                     location_on
                                   </span>
                                   {ticket.venue}
@@ -513,10 +513,10 @@ export default function MyTicketsPage() {
                               <span
                                 className={`px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wide ${
                                   ticket.tier === 'backstage'
-                                    ? 'bg-gradient-to-r from-[#ff2d78] to-[#6c2bd9] text-white'
+                                    ? 'bg-gradient-to-r from-[#d4632a] to-[#6c2bd9] text-white'
                                     : ticket.tier === 'vip'
-                                      ? 'bg-[#ff2d78]/30 border border-[#ff2d78]/50 text-[#ff2d78]'
-                                      : 'bg-[#00f0ff]/30 border border-[#00f0ff]/50 text-[#00f0ff]'
+                                      ? 'bg-[#d4632a]/30 border border-[#d4632a]/50 text-[#d4632a]'
+                                      : 'bg-[#e8a838]/30 border border-[#e8a838]/50 text-[#e8a838]'
                                 }`}
                               >
                                 {ticket.tier === 'backstage'
@@ -530,7 +530,7 @@ export default function MyTicketsPage() {
                             <div className="grid grid-cols-2 gap-4 mb-6">
                               <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                                 <p className="text-xs text-gray-400 mb-1">Section</p>
-                                <p className="font-black text-lg text-[#00f0ff]">{ticket.section}</p>
+                                <p className="font-black text-lg text-[#e8a838]">{ticket.section}</p>
                               </div>
                               <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                                 <p className="text-xs text-gray-400 mb-1">Seat</p>
@@ -539,9 +539,9 @@ export default function MyTicketsPage() {
                             </div>
 
                             <div className="mb-6 flex justify-center">
-                              <div className="w-32 h-32 rounded-xl bg-[#1a1a3a] border-2 border-dashed border-[#00f0ff]/50 flex items-center justify-center">
+                              <div className="w-32 h-32 rounded-xl bg-[#1a1a3a] border-2 border-dashed border-[#e8a838]/50 flex items-center justify-center">
                                 <div className="text-center">
-                                  <span className="material-symbols-outlined text-4xl text-[#00f0ff]/50">
+                                  <span className="material-symbols-outlined text-4xl text-[#e8a838]/50">
                                     qr_code
                                   </span>
                                   <p className="text-xs text-gray-500 mt-2">{ticket.qrCode}</p>
@@ -552,7 +552,7 @@ export default function MyTicketsPage() {
                             <div className="grid grid-cols-3 gap-3" onClick={(e) => e.stopPropagation()}>
                               <button
                                 onClick={() => (ticket.isLive ? setTransferModal(ticket.id) : null)}
-                                className={`px-4 py-2 rounded-lg bg-[#00f0ff]/20 border border-[#00f0ff]/50 text-[#00f0ff] font-bold text-sm hover:bg-[#00f0ff]/30 transition-all flex items-center justify-center gap-2 ${
+                                className={`px-4 py-2 rounded-lg bg-[#e8a838]/20 border border-[#e8a838]/50 text-[#e8a838] font-bold text-sm hover:bg-[#e8a838]/30 transition-all flex items-center justify-center gap-2 ${
                                   !ticket.isLive ? 'opacity-50 cursor-not-allowed' : ''
                                 }`}
                               >
@@ -573,7 +573,7 @@ export default function MyTicketsPage() {
                                 )}
                                 Verify
                               </button>
-                              <button className="px-4 py-2 rounded-lg bg-[#ff2d78]/20 border border-[#ff2d78]/50 text-[#ff2d78] font-bold text-sm hover:bg-[#ff2d78]/30 transition-all flex items-center justify-center gap-2">
+                              <button className="px-4 py-2 rounded-lg bg-[#d4632a]/20 border border-[#d4632a]/50 text-[#d4632a] font-bold text-sm hover:bg-[#d4632a]/30 transition-all flex items-center justify-center gap-2">
                                 <span className="material-symbols-outlined text-sm">sell</span>
                                 List
                               </button>
@@ -583,7 +583,7 @@ export default function MyTicketsPage() {
                       </div>
 
                       <div className="ticket-back absolute inset-0 rounded-2xl border-2 border-[#6c2bd9]/50">
-                        <div className="h-full rounded-2xl overflow-hidden bg-gradient-to-br from-[#6c2bd9]/20 to-[#00f0ff]/10 p-8 flex flex-col justify-between border border-[#6c2bd9]/50">
+                        <div className="h-full rounded-2xl overflow-hidden bg-gradient-to-br from-[#6c2bd9]/20 to-[#e8a838]/10 p-8 flex flex-col justify-between border border-[#6c2bd9]/50">
                           <div
                             className="absolute inset-0"
                             style={{
@@ -607,12 +607,12 @@ export default function MyTicketsPage() {
                                 {ticket.transactionHash}
                               </p>
                             </div>
-                            <div className="mb-6 p-4 rounded-lg border border-[#00f0ff]/30 bg-[#00f0ff]/5">
+                            <div className="mb-6 p-4 rounded-lg border border-[#e8a838]/30 bg-[#e8a838]/5">
                               <p className="text-xs text-gray-400 mb-2">On-Chain Details</p>
                               <div className="space-y-2 text-sm text-gray-300">
                                 <div className="flex items-center justify-between">
                                   <span>Contract:</span>
-                                  <span className="font-mono text-[#00f0ff]">
+                                  <span className="font-mono text-[#e8a838]">
                                     {DUAL_CONTRACT.slice(0, 6)}...{DUAL_CONTRACT.slice(-4)}
                                   </span>
                                 </div>
@@ -622,7 +622,7 @@ export default function MyTicketsPage() {
                                 </div>
                                 <div className="flex items-center justify-between">
                                   <span>Chain:</span>
-                                  <span className="font-mono text-[#ff2d78]">DUAL Network</span>
+                                  <span className="font-mono text-[#d4632a]">DUAL Network</span>
                                 </div>
                                 {ticket.ownerId && (
                                   <div className="flex items-center justify-between">
@@ -650,7 +650,7 @@ export default function MyTicketsPage() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={(e) => e.stopPropagation()}
-                                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#00f0ff]/10 border border-[#00f0ff]/30 text-[#00f0ff] text-sm font-semibold hover:bg-[#00f0ff]/20 transition-colors"
+                                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#e8a838]/10 border border-[#e8a838]/30 text-[#e8a838] text-sm font-semibold hover:bg-[#e8a838]/20 transition-colors"
                               >
                                 <span className="material-symbols-outlined text-sm">open_in_new</span>
                                 View on Blockscout
@@ -678,7 +678,7 @@ export default function MyTicketsPage() {
                 </div>
                 <Link
                   href="/tickets/marketplace"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-[#39ff14]/30 to-[#00f0ff]/30 border border-[#39ff14]/50 hover:border-[#39ff14] text-[#39ff14] font-bold hover:shadow-[0_0_20px_rgba(57,255,20,0.3)] transition-all whitespace-nowrap"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-[#39ff14]/30 to-[#e8a838]/30 border border-[#39ff14]/50 hover:border-[#39ff14] text-[#39ff14] font-bold hover:shadow-[0_0_20px_rgba(57,255,20,0.3)] transition-all whitespace-nowrap"
                 >
                   <span className="material-symbols-outlined">storefront</span>
                   Explore Marketplace

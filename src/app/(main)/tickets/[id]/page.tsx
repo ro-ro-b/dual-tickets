@@ -411,7 +411,7 @@ export default function EventDetailPage({
               time: td.eventTime || 'TBA',
               venue: td.venue || 'DUAL Network',
               description: td.description || 'An on-chain verified ticket on the DUAL Network.',
-              imageGradient: 'from-[#00f0ff]/40 to-[#39ff14]/40',
+              imageGradient: 'from-[#e8a838]/40 to-[#39ff14]/40',
               tiers: [{
                 id: 'general',
                 name: td.tier ? td.tier.charAt(0).toUpperCase() + td.tier.slice(1) : 'General Admission',
@@ -464,10 +464,10 @@ export default function EventDetailPage({
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-[#00f0ff] mb-4">Event not found</h1>
+          <h1 className="text-4xl font-bold text-[#e8a838] mb-4">Event not found</h1>
           <Link
             href="/"
-            className="inline-block px-6 py-3 bg-gradient-to-r from-[#00f0ff] to-[#ff2d78] text-black font-bold rounded-lg hover:shadow-[0_0_20px_rgba(0,240,255,0.5)] transition-all"
+            className="inline-block px-6 py-3 bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold rounded-lg hover:shadow-[0_0_20px_rgba(0,240,255,0.5)] transition-all"
           >
             Back to Events
           </Link>
@@ -536,13 +536,13 @@ export default function EventDetailPage({
         <div className="mb-16">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-[#00f0ff] hover:text-white transition-colors mb-6"
+            className="inline-flex items-center gap-2 text-[#e8a838] hover:text-white transition-colors mb-6"
           >
             <span className="material-symbols-outlined text-sm">arrow_back</span>
             Back to Events
           </Link>
 
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-6 bg-gradient-to-r from-[#00f0ff] via-[#ff2d78] to-[#39ff14] bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-6 bg-gradient-to-r from-[#e8a838] via-[#f0c040] to-[#d4632a] bg-clip-text text-transparent">
             {event.name}
           </h1>
 
@@ -555,7 +555,7 @@ export default function EventDetailPage({
                   href={event.explorerUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="ml-2 text-xs text-[#00f0ff] hover:text-white transition-colors flex items-center gap-1"
+                  className="ml-2 text-xs text-[#e8a838] hover:text-white transition-colors flex items-center gap-1"
                 >
                   <span className="material-symbols-outlined text-xs">open_in_new</span>
                 </a>
@@ -565,7 +565,7 @@ export default function EventDetailPage({
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="flex items-start gap-3">
-              <span className="material-symbols-outlined text-[#00f0ff]">calendar_month</span>
+              <span className="material-symbols-outlined text-[#e8a838]">calendar_month</span>
               <div>
                 <p className="text-sm text-gray-400 mb-1">Date & Time</p>
                 <p className="font-semibold">
@@ -580,7 +580,7 @@ export default function EventDetailPage({
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <span className="material-symbols-outlined text-[#ff2d78]">location_on</span>
+              <span className="material-symbols-outlined text-[#d4632a]">location_on</span>
               <div>
                 <p className="text-sm text-gray-400 mb-1">Venue</p>
                 <p className="font-semibold">{event.venue}</p>
@@ -608,7 +608,7 @@ export default function EventDetailPage({
                   tier.tier === 'premium' ? 'md:scale-105 md:origin-bottom' : ''
                 } ${
                   selectedTier === tier.id
-                    ? 'ring-2 ring-[#00f0ff] scale-105'
+                    ? 'ring-2 ring-[#e8a838] scale-105'
                     : 'hover:scale-105'
                 }`}
                 onClick={() => setSelectedTier(tier.id)}
@@ -616,35 +616,35 @@ export default function EventDetailPage({
                 <div
                   className={`absolute inset-0 -z-10 transition-all duration-300 ${
                     tier.tier === 'premium'
-                      ? 'holographic bg-gradient-to-br from-[#ff2d78]/30 via-[#00f0ff]/20 to-[#6c2bd9]/30'
+                      ? 'holographic bg-gradient-to-br from-[#d4632a]/30 via-[#e8a838]/20 to-[#6c2bd9]/30'
                       : tier.tier === 'vip'
-                        ? 'bg-gradient-to-br from-[#ff2d78]/20 to-[#6c2bd9]/20'
-                        : 'bg-gradient-to-br from-[#00f0ff]/10 to-[#39ff14]/10'
+                        ? 'bg-gradient-to-br from-[#d4632a]/20 to-[#6c2bd9]/20'
+                        : 'bg-gradient-to-br from-[#e8a838]/10 to-[#39ff14]/10'
                   }`}
                 />
 
                 <div
                   className={`absolute inset-0 rounded-2xl pointer-events-none transition-all duration-300 ${
                     tier.tier === 'premium'
-                      ? 'border-2 border-transparent bg-gradient-to-r from-[#ff2d78] via-[#00f0ff] to-[#6c2bd9] bg-clip-border'
+                      ? 'border-2 border-transparent bg-gradient-to-r from-[#d4632a] via-[#e8a838] to-[#6c2bd9] bg-clip-border'
                       : tier.tier === 'vip'
-                        ? 'border-2 border-[#ff2d78]/50 group-hover:border-[#ff2d78]'
-                        : 'border border-[#00f0ff]/30 group-hover:border-[#00f0ff]/70'
+                        ? 'border-2 border-[#d4632a]/50 group-hover:border-[#d4632a]'
+                        : 'border border-[#e8a838]/30 group-hover:border-[#e8a838]/70'
                   }`}
                 />
 
                 <div className="relative p-8 flex flex-col h-full">
                   {tier.tier === 'premium' && (
-                    <div className="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-[#ff2d78] to-[#6c2bd9] w-fit">
+                    <div className="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-[#d4632a] to-[#6c2bd9] w-fit">
                       <span className="material-symbols-outlined text-sm">crown</span>
                       <span className="text-xs font-bold">PREMIUM</span>
                     </div>
                   )}
 
                   {tier.tier === 'vip' && (
-                    <div className="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ff2d78]/20 border border-[#ff2d78]/50 w-fit">
-                      <span className="material-symbols-outlined text-sm text-[#ff2d78]">star</span>
-                      <span className="text-xs font-bold text-[#ff2d78]">VIP</span>
+                    <div className="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#d4632a]/20 border border-[#d4632a]/50 w-fit">
+                      <span className="material-symbols-outlined text-sm text-[#d4632a]">star</span>
+                      <span className="text-xs font-bold text-[#d4632a]">VIP</span>
                     </div>
                   )}
 
@@ -653,7 +653,7 @@ export default function EventDetailPage({
 
                   <div className="mb-6">
                     <p className="text-sm text-gray-500 mb-1">Starting at</p>
-                    <p className="text-4xl font-black text-[#00f0ff]">
+                    <p className="text-4xl font-black text-[#e8a838]">
                       ${tier.price}
                       <span className="text-sm text-gray-400 font-normal ml-2">per ticket</span>
                     </p>
@@ -673,13 +673,13 @@ export default function EventDetailPage({
                   <div className="mb-6 p-3 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-xs font-semibold text-gray-400">Available</span>
-                      <span className="text-sm font-bold text-[#00f0ff]">
+                      <span className="text-sm font-bold text-[#e8a838]">
                         {tier.remaining} / {tier.total}
                       </span>
                     </div>
                     <div className="w-full h-1.5 rounded-full bg-[#0f0f25] overflow-hidden">
                       <div
-                        className="h-full bg-gradient-to-r from-[#00f0ff] to-[#39ff14]"
+                        className="h-full bg-gradient-to-r from-[#e8a838] to-[#39ff14]"
                         style={{
                           width: `${(tier.remaining / tier.total) * 100}%`,
                         }}
@@ -695,10 +695,10 @@ export default function EventDetailPage({
                     disabled={minting}
                     className={`w-full py-3 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
                       tier.tier === 'premium'
-                        ? 'bg-gradient-to-r from-[#ff2d78] to-[#6c2bd9] hover:shadow-[0_0_30px_rgba(255,45,120,0.5)] text-white'
+                        ? 'bg-gradient-to-r from-[#d4632a] to-[#6c2bd9] hover:shadow-[0_0_30px_rgba(255,45,120,0.5)] text-white'
                         : tier.tier === 'vip'
-                          ? 'bg-gradient-to-r from-[#ff2d78]/80 to-[#6c2bd9]/80 hover:shadow-[0_0_20px_rgba(255,45,120,0.4)] text-white'
-                          : 'bg-gradient-to-r from-[#00f0ff]/30 to-[#39ff14]/30 border border-[#00f0ff]/50 hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] text-[#00f0ff]'
+                          ? 'bg-gradient-to-r from-[#d4632a]/80 to-[#6c2bd9]/80 hover:shadow-[0_0_20px_rgba(255,45,120,0.4)] text-white'
+                          : 'bg-gradient-to-r from-[#e8a838]/30 to-[#39ff14]/30 border border-[#e8a838]/50 hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] text-[#e8a838]'
                     } disabled:opacity-50`}
                   >
                     {minting ? (
@@ -720,9 +720,9 @@ export default function EventDetailPage({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          <div className="border border-[#ff2d78]/30 rounded-2xl p-8 bg-gradient-to-br from-[#ff2d78]/10 to-transparent">
+          <div className="border border-[#d4632a]/30 rounded-2xl p-8 bg-gradient-to-br from-[#d4632a]/10 to-transparent">
             <div className="flex items-start gap-4">
-              <span className="material-symbols-outlined text-[#ff2d78] text-3xl">
+              <span className="material-symbols-outlined text-[#d4632a] text-3xl">
                 verified_user
               </span>
               <div>
@@ -732,19 +732,19 @@ export default function EventDetailPage({
                 </p>
                 <div className="space-y-2 text-sm text-gray-400">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#ff2d78]" />
+                    <span className="w-2 h-2 rounded-full bg-[#d4632a]" />
                     <span>
                       <strong className="text-white">Price Floor:</strong> ${event.priceFloor}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#ff2d78]" />
+                    <span className="w-2 h-2 rounded-full bg-[#d4632a]" />
                     <span>
                       <strong className="text-white">Price Ceiling:</strong> ${event.priceCeiling}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#ff2d78]" />
+                    <span className="w-2 h-2 rounded-full bg-[#d4632a]" />
                     <span>
                       <strong className="text-white">Enforcement:</strong> Automatic blockchain
                       verification
@@ -755,9 +755,9 @@ export default function EventDetailPage({
             </div>
           </div>
 
-          <div className="border border-[#00f0ff]/30 rounded-2xl p-8 bg-gradient-to-br from-[#00f0ff]/10 to-transparent">
+          <div className="border border-[#e8a838]/30 rounded-2xl p-8 bg-gradient-to-br from-[#e8a838]/10 to-transparent">
             <div className="flex items-start gap-4">
-              <span className="material-symbols-outlined text-[#00f0ff] text-3xl">checklist</span>
+              <span className="material-symbols-outlined text-[#e8a838] text-3xl">checklist</span>
               <div>
                 <h3 className="text-xl font-black mb-3 text-white">On-Chain Guarantee</h3>
                 <p className="text-gray-300 mb-4 leading-relaxed">
@@ -765,19 +765,19 @@ export default function EventDetailPage({
                 </p>
                 <div className="space-y-2 text-sm text-gray-400">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#00f0ff]" />
+                    <span className="w-2 h-2 rounded-full bg-[#e8a838]" />
                     <span>Transparent transaction history</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#00f0ff]" />
+                    <span className="w-2 h-2 rounded-full bg-[#e8a838]" />
                     <span>Immutable ownership records</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#00f0ff]" />
+                    <span className="w-2 h-2 rounded-full bg-[#e8a838]" />
                     <span>Transferable with built-in royalties</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#00f0ff]" />
+                    <span className="w-2 h-2 rounded-full bg-[#e8a838]" />
                     <span>Collectible after event</span>
                   </div>
                 </div>
@@ -812,7 +812,7 @@ export default function EventDetailPage({
                 <div className="space-y-3 text-gray-300 text-sm">
                   <p>
                     <strong className="text-white">Address:</strong>{' '}
-                    <span className="font-mono text-[#00f0ff]">0x41Cf...FF06</span>
+                    <span className="font-mono text-[#e8a838]">0x41Cf...FF06</span>
                   </p>
                   <p>
                     <strong className="text-white">Standard:</strong>{' '}
@@ -820,7 +820,7 @@ export default function EventDetailPage({
                   </p>
                   <p>
                     <strong className="text-white">Chain:</strong>{' '}
-                    <span className="font-mono text-[#ff2d78]">DUAL Network</span>
+                    <span className="font-mono text-[#d4632a]">DUAL Network</span>
                   </p>
                 </div>
               </div>
@@ -864,7 +864,7 @@ export default function EventDetailPage({
           <div className="relative w-full max-w-lg rounded-2xl border border-[#1a1a3a] bg-[#0a0a1a] p-8 shadow-[0_0_60px_rgba(0,240,255,0.15)]">
             {purchase.step === 'confirm' && (
               <>
-                <h3 className="text-2xl font-black mb-6 bg-gradient-to-r from-[#00f0ff] to-[#ff2d78] bg-clip-text text-transparent">Confirm Purchase</h3>
+                <h3 className="text-2xl font-black mb-6 bg-gradient-to-r from-[#e8a838] to-[#d4632a] bg-clip-text text-transparent">Confirm Purchase</h3>
                 <div className="space-y-4 mb-8">
                   <div className="p-4 rounded-xl bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Event</p>
@@ -873,21 +873,21 @@ export default function EventDetailPage({
                   <div className="grid grid-cols-2 gap-4">
                     <div className="p-4 rounded-xl bg-[#0f0f25] border border-[#1a1a3a]">
                       <p className="text-sm text-gray-400 mb-1">Tier</p>
-                      <p className="font-bold text-[#00f0ff]">{purchase.tier.name}</p>
+                      <p className="font-bold text-[#e8a838]">{purchase.tier.name}</p>
                     </div>
                     <div className="p-4 rounded-xl bg-[#0f0f25] border border-[#1a1a3a]">
                       <p className="text-sm text-gray-400 mb-1">Price</p>
                       <p className="font-bold text-[#39ff14] text-2xl">${purchase.tier.price}</p>
                     </div>
                   </div>
-                  <div className="p-3 rounded-lg bg-[#00f0ff]/5 border border-[#00f0ff]/20 text-xs text-gray-400">
-                    <span className="material-symbols-outlined text-[#00f0ff] text-sm align-middle mr-1">info</span>
+                  <div className="p-3 rounded-lg bg-[#e8a838]/5 border border-[#e8a838]/20 text-xs text-gray-400">
+                    <span className="material-symbols-outlined text-[#e8a838] text-sm align-middle mr-1">info</span>
                     This ticket will be minted as an ERC-721 token on the DUAL Network and stored in your wallet.
                   </div>
                 </div>
                 <div className="flex gap-3">
                   <button onClick={closePurchase} className="flex-1 py-3 rounded-xl border border-[#2a2a5a] text-gray-400 hover:text-white hover:border-white/40 transition-all font-bold">Cancel</button>
-                  <button onClick={executeMint} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#00f0ff] to-[#ff2d78] text-white font-bold hover:shadow-[0_0_30px_rgba(0,240,255,0.4)] transition-all flex items-center justify-center gap-2">
+                  <button onClick={executeMint} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-white font-bold hover:shadow-[0_0_30px_rgba(0,240,255,0.4)] transition-all flex items-center justify-center gap-2">
                     <span className="material-symbols-outlined text-sm">token</span>
                     MINT ON-CHAIN
                   </button>
@@ -897,13 +897,13 @@ export default function EventDetailPage({
 
             {purchase.step === 'processing' && (
               <div className="text-center py-4">
-                <div className="w-16 h-16 mx-auto mb-6 rounded-full border-4 border-[#00f0ff]/20 border-t-[#00f0ff] animate-spin" />
+                <div className="w-16 h-16 mx-auto mb-6 rounded-full border-4 border-[#e8a838]/20 border-t-[#e8a838] animate-spin" />
                 <h3 className="text-xl font-black mb-8 text-white">Minting Your Ticket</h3>
                 <div className="space-y-4 text-left">
                   {['Initiating transaction...', 'Minting on DUAL Network...', 'Recording on Blockscout...', 'Finalising ownership...'].map((step, i) => (
                     <div key={i} className="flex items-center gap-3 text-sm">
                       <div className={`w-6 h-6 rounded-full flex items-center justify-center ${i < 3 ? 'bg-[#39ff14]/20' : 'bg-[#1a1a3a]'}`}>
-                        {i < 3 ? <span className="text-[#39ff14] text-xs">✓</span> : <span className="w-3 h-3 border-2 border-[#00f0ff]/30 border-t-[#00f0ff] rounded-full animate-spin" />}
+                        {i < 3 ? <span className="text-[#39ff14] text-xs">✓</span> : <span className="w-3 h-3 border-2 border-[#e8a838]/30 border-t-[#e8a838] rounded-full animate-spin" />}
                       </div>
                       <span className={i < 3 ? 'text-gray-400' : 'text-white'}>{step}</span>
                     </div>
@@ -923,26 +923,26 @@ export default function EventDetailPage({
                 {purchase.transactionHash && (
                   <div className="p-3 rounded-lg bg-[#0f0f25] border border-[#1a1a3a] mb-6">
                     <p className="text-xs text-gray-500 mb-1">Transaction Hash</p>
-                    <p className="text-xs text-[#00f0ff] font-mono break-all">{purchase.transactionHash}</p>
+                    <p className="text-xs text-[#e8a838] font-mono break-all">{purchase.transactionHash}</p>
                   </div>
                 )}
                 <div className="flex gap-3">
-                  <a href={`https://32f.blockv.io/token/0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06`} target="_blank" rel="noopener noreferrer" className="flex-1 py-3 rounded-xl border border-[#00f0ff]/30 text-[#00f0ff] font-bold hover:bg-[#00f0ff]/10 transition-all text-center text-sm">View on Blockscout</a>
-                  <Link href="/my-tickets" className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#00f0ff] to-[#39ff14] text-black font-bold hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-all text-center text-sm">View My Tickets</Link>
+                  <a href={`https://32f.blockv.io/token/0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06`} target="_blank" rel="noopener noreferrer" className="flex-1 py-3 rounded-xl border border-[#e8a838]/30 text-[#e8a838] font-bold hover:bg-[#e8a838]/10 transition-all text-center text-sm">View on Blockscout</a>
+                  <Link href="/my-tickets" className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#e8a838] to-[#39ff14] text-black font-bold hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-all text-center text-sm">View My Tickets</Link>
                 </div>
               </div>
             )}
 
             {purchase.step === 'error' && (
               <div className="text-center py-4">
-                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[#ff2d78]/20 flex items-center justify-center">
-                  <span className="material-symbols-outlined text-[#ff2d78] text-4xl">error</span>
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[#d4632a]/20 flex items-center justify-center">
+                  <span className="material-symbols-outlined text-[#d4632a] text-4xl">error</span>
                 </div>
-                <h3 className="text-2xl font-black mb-2 text-[#ff2d78]">MINT FAILED</h3>
+                <h3 className="text-2xl font-black mb-2 text-[#d4632a]">MINT FAILED</h3>
                 <p className="text-gray-400 mb-6">{purchase.error || 'An unexpected error occurred'}</p>
                 <div className="flex gap-3">
                   <button onClick={closePurchase} className="flex-1 py-3 rounded-xl border border-[#2a2a5a] text-gray-400 font-bold hover:text-white transition-all">Close</button>
-                  <button onClick={executeMint} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#ff2d78] to-[#6c2bd9] text-white font-bold hover:shadow-[0_0_20px_rgba(255,45,120,0.4)] transition-all">Try Again</button>
+                  <button onClick={executeMint} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#d4632a] to-[#6c2bd9] text-white font-bold hover:shadow-[0_0_20px_rgba(255,45,120,0.4)] transition-all">Try Again</button>
                 </div>
               </div>
             )}
