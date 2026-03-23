@@ -9,24 +9,27 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ticket: {
-          cyan: '#00f0ff',
-          purple: '#6c2bd9',
-          pink: '#ff2d78',
-          dark: '#0a0a1a',
-          surface: '#12122a',
-          border: '#1e1e3f',
+        // ── DUAL Tickets Design System ──
+        // Warm dark base palette
+        dual: {
+          base: '#0d0b08',       // Page background
+          surface: '#151210',    // Card/panel background
+          elevated: '#1a1612',   // Elevated surface (inputs, hover)
+          border: '#2a2420',     // Primary border
+          'border-light': '#3a332c', // Lighter border
         },
+        // Brand accents
         gold: {
-          DEFAULT: '#c9a84c',
-          dim: '#c9a84c',
-          light: '#e8d48b',
+          DEFAULT: '#e8a838',    // Primary accent
+          light: '#f0c040',      // Lighter gold (gradients)
+          dim: '#b8862b',        // Muted gold
         },
-        vault: {
-          bg: '#0a0a1a',
-          surface: '#12122a',
-          border: '#1e1e3f',
+        amber: {
+          DEFAULT: '#d4632a',    // Secondary accent / warm orange
         },
+        // Semantic accents
+        neon: '#39ff14',         // Success, live, on-chain
+        purple: '#6c2bd9',      // Premium tier, special
       },
       fontFamily: {
         serif: ['"Playfair Display"', 'serif'],
@@ -49,8 +52,8 @@ const config: Config = {
           '100%': { opacity: '1' },
         },
         glowPulse: {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(0, 240, 255, 0.1)' },
-          '50%': { boxShadow: '0 0 40px rgba(0, 240, 255, 0.3)' },
+          '0%, 100%': { boxShadow: '0 0 20px rgba(232, 168, 56, 0.1)' },
+          '50%': { boxShadow: '0 0 40px rgba(232, 168, 56, 0.25)' },
         },
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },

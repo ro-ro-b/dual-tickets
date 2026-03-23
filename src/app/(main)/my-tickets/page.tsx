@@ -283,7 +283,7 @@ export default function MyTicketsPage() {
 
       {transferModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
-          <div className="bg-[#0d0b08] border border-[#e8a838]/30 rounded-2xl p-8 max-w-md w-full mx-4 shadow-[0_0_60px_rgba(0,240,255,0.2)]">
+          <div className="bg-[#0d0b08] border border-[#e8a838]/30 rounded-2xl p-8 max-w-md w-full mx-4 shadow-[0_0_60px_rgba(232,168,56,0.15)]">
             <h3 className="text-2xl font-black text-white mb-2">Transfer Ticket</h3>
             <p className="text-gray-400 mb-6">Transfer this NFT ticket to another wallet via email</p>
             <input
@@ -306,7 +306,7 @@ export default function MyTicketsPage() {
               <button
                 onClick={() => handleTransfer(transferModal)}
                 disabled={transferring || !transferEmail}
-                className="flex-1 py-3 rounded-lg bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold hover:shadow-[0_0_20px_rgba(0,240,255,0.5)] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex-1 py-3 rounded-lg bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold hover:shadow-[0_0_20px_rgba(232,168,56,0.3)] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {transferring ? (
                   <>
@@ -349,7 +349,7 @@ export default function MyTicketsPage() {
             </p>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold rounded-lg hover:shadow-[0_0_20px_rgba(0,240,255,0.5)] transition-all"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold rounded-lg hover:shadow-[0_0_20px_rgba(232,168,56,0.3)] transition-all"
             >
               <span className="material-symbols-outlined">explore</span>
               Browse Events

@@ -56,7 +56,7 @@ const MOCK_EVENTS: Record<string, Event> = {
     venue: 'San Francisco Bay Area',
     description:
       "Experience the most immersive electronic music festival of the year. Featuring world-renowned DJs, AI-assisted visual performances, and holographic stage setups. This is not just a concert—it's a journey through digital enlightenment.",
-    imageGradient: 'from-cyan-500/40 to-purple-600/40',
+    imageGradient: 'from-[#e8a838]/40 to-[#6c2bd9]/40',
     tiers: [
       {
         id: 'ga',
@@ -113,7 +113,7 @@ const MOCK_EVENTS: Record<string, Event> = {
     venue: 'Los Angeles Convention Center',
     description:
       'Immerse yourself in a groundbreaking VR concert experience. Using cutting-edge virtual reality technology, experience your favorite artists in impossible venues—from zero gravity to underwater stages.',
-    imageGradient: 'from-cyan-500/50 to-pink-500/30',
+    imageGradient: 'from-[#e8a838]/40 to-[#d4632a]/40',
     tiers: [
       {
         id: 'vr-basic',
@@ -164,7 +164,7 @@ const MOCK_EVENTS: Record<string, Event> = {
     venue: 'MetaStadium NYC',
     description:
       'The championship final of the blockchain gaming league. Watch AI-enhanced players compete in unprecedented digital tournaments with real prize pools. Revolutionary gaming at its finest.',
-    imageGradient: 'from-green-400/40 to-cyan-500/40',
+    imageGradient: 'from-[#39ff14]/30 to-[#e8a838]/40',
     tiers: [
       {
         id: 'general',
@@ -219,7 +219,7 @@ const MOCK_EVENTS: Record<string, Event> = {
     venue: 'Miami Art Deco Theater',
     description:
       'A revolutionary fusion of classical opera and cutting-edge holographic technology. Watch legendary performers brought to life through quantum computing projection systems in a historic Miami venue.',
-    imageGradient: 'from-pink-500/40 to-purple-600/40',
+    imageGradient: 'from-[#d4632a]/40 to-[#6c2bd9]/40',
     tiers: [
       {
         id: 'orchestra',
@@ -273,7 +273,7 @@ const MOCK_EVENTS: Record<string, Event> = {
     time: '09:00 - 18:00',
     venue: 'Denver Convention Center',
     description: 'The premier Web3 conference bringing together builders, investors, and visionaries. Three days of keynotes, workshops, and networking across decentralized finance, NFTs, DAOs, and the future of the internet.',
-    imageGradient: 'from-purple-600/40 to-blue-500/40',
+    imageGradient: 'from-[#6c2bd9]/40 to-[#e8a838]/40',
     tiers: [
       { id: 'ga', name: 'General Admission', price: 299, description: 'Full conference access', perks: ['All keynotes and panels', 'Exhibition hall access', 'Digital swag bag', 'Conference recordings'], remaining: 450, total: 700, tier: 'standard' },
       { id: 'vip', name: 'VIP Access', price: 699, description: 'Premium conference experience', perks: ['Priority seating at all talks', 'VIP networking lounge', 'Exclusive workshop sessions', 'Speaker meet & greet', 'Premium swag collection'], remaining: 120, total: 200, tier: 'vip' },
@@ -289,7 +289,7 @@ const MOCK_EVENTS: Record<string, Event> = {
     time: '21:00 - 03:00',
     venue: 'Seattle Paramount Theatre',
     description: 'An electrifying live performance blending cyberpunk aesthetics with cutting-edge electronic music. Laser arrays, holographic performers, and neural-reactive lighting create an unforgettable sensory experience.',
-    imageGradient: 'from-cyan-400/50 to-magenta-500/40',
+    imageGradient: 'from-[#e8a838]/40 to-[#d4632a]/40',
     tiers: [
       { id: 'floor', name: 'Standing Floor', price: 79, description: 'General standing area', perks: ['Floor standing access', 'LED wristband', 'Digital commemorative poster'], remaining: 223, total: 350, tier: 'standard' },
       { id: 'balcony-vip', name: 'Balcony VIP', price: 179, description: 'Elevated VIP experience', perks: ['Reserved balcony seating', 'VIP bar with 2 drinks included', 'Early entry (1 hour)', 'Exclusive merch access'], remaining: 55, total: 100, tier: 'vip' },
@@ -305,7 +305,7 @@ const MOCK_EVENTS: Record<string, Event> = {
     time: '12:00 - 20:00',
     venue: 'Tokyo International Center',
     description: 'Watch the world\'s best gamers face off against advanced AI opponents in the ultimate test of skill and strategy. Featuring multiple game titles, live commentary, and a $5M prize pool.',
-    imageGradient: 'from-lime-400/40 to-cyan-500/40',
+    imageGradient: 'from-[#39ff14]/30 to-[#e8a838]/40',
     tiers: [
       { id: 'spectator', name: 'Spectator Pass', price: 39, description: 'Standard arena seating', perks: ['Arena seating', 'Live match commentary', 'Access to fan zone', 'Digital match replays'], remaining: 567, total: 800, tier: 'standard' },
       { id: 'premium', name: 'Premium Arena', price: 129, description: 'Close to the action', perks: ['Front section seating', 'Pro player lounge access', 'Exclusive stats dashboard', 'Signed team jerseys raffle'], remaining: 80, total: 150, tier: 'vip' },
@@ -321,7 +321,7 @@ const MOCK_EVENTS: Record<string, Event> = {
     time: '10:00 - 21:00',
     venue: 'London National Gallery (Web3 Wing)',
     description: 'Step inside art like never before. This immersive exhibition transforms classic and contemporary masterpieces into room-scale interactive experiences using projection mapping, spatial audio, and AR technology.',
-    imageGradient: 'from-fuchsia-500/40 to-purple-600/40',
+    imageGradient: 'from-[#d4632a]/40 to-[#6c2bd9]/40',
     tiers: [
       { id: 'timed', name: 'Timed Entry', price: 69, description: 'Standard 2-hour time slot', perks: ['2-hour timed entry', 'All gallery rooms', 'AR companion app', 'Digital art prints (3)'], remaining: 134, total: 250, tier: 'standard' },
       { id: 'flex', name: 'Flex Pass', price: 129, description: 'All-day unlimited access', perks: ['Unlimited same-day access', 'Skip-the-line entry', 'Guided audio tour', 'Physical art book', 'Artist Q&A session'], remaining: 45, total: 100, tier: 'vip' },
@@ -337,7 +337,7 @@ const MOCK_EVENTS: Record<string, Event> = {
     time: '08:30 - 17:30',
     venue: 'Berlin Tech Hub',
     description: 'Europe\'s leading technology conference exploring AI, quantum computing, robotics, and space tech. Featuring 100+ speakers, hands-on demos, startup pitch competitions, and an innovation showcase.',
-    imageGradient: 'from-indigo-500/40 to-blue-600/40',
+    imageGradient: 'from-[#6c2bd9]/40 to-[#e8a838]/40',
     tiers: [
       { id: 'standard', name: 'Standard Pass', price: 199, description: 'Full conference access', perks: ['All sessions and demos', 'Innovation hall access', 'Networking app', 'Conference proceedings'], remaining: 320, total: 500, tier: 'standard' },
       { id: 'pro', name: 'Pro Innovator', price: 449, description: 'Enhanced networking and workshops', perks: ['Reserved workshop seating', 'Innovator networking dinner', 'Startup pitch front row', 'Pro badge with priority access', '1-on-1 mentor session'], remaining: 85, total: 200, tier: 'vip' },
@@ -353,7 +353,7 @@ const MOCK_EVENTS: Record<string, Event> = {
     time: '20:00 - 04:00',
     venue: 'Chicago Navy Pier',
     description: 'A neon-drenched celebration of retrowave and synthwave culture. DJs, live bands, retro arcade zone, DeLorean car show, and a lakefront laser light finale. The 80s never looked so futuristic.',
-    imageGradient: 'from-pink-500/50 to-cyan-400/40',
+    imageGradient: 'from-[#d4632a]/40 to-[#e8a838]/40',
     tiers: [
       { id: 'wave-rider', name: 'Wave Rider', price: 55, description: 'General festival access', perks: ['All stages access', 'Retro arcade zone', 'LED glow kit', 'Digital photo pack'], remaining: 412, total: 450, tier: 'standard' },
       { id: 'neon-vip', name: 'Neon VIP', price: 125, description: 'Elevated retro experience', perks: ['VIP viewing platform', 'Neon bar with 3 drinks', 'Priority arcade access', 'Exclusive vinyl sampler', 'VIP parking'], remaining: 60, total: 100, tier: 'vip' },
@@ -543,7 +543,7 @@ export default function EventDetailPage({
           <h1 className="text-4xl font-bold text-[#e8a838] mb-4">Event not found</h1>
           <Link
             href="/"
-            className="inline-block px-6 py-3 bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold rounded-lg hover:shadow-[0_0_20px_rgba(0,240,255,0.5)] transition-all"
+            className="inline-block px-6 py-3 bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold rounded-lg hover:shadow-[0_0_20px_rgba(232,168,56,0.3)] transition-all"
           >
             Back to Events
           </Link>
@@ -774,7 +774,7 @@ export default function EventDetailPage({
                         ? 'bg-gradient-to-r from-[#d4632a] to-[#6c2bd9] hover:shadow-[0_0_30px_rgba(255,45,120,0.5)] text-white'
                         : tier.tier === 'vip'
                           ? 'bg-gradient-to-r from-[#d4632a]/80 to-[#6c2bd9]/80 hover:shadow-[0_0_20px_rgba(255,45,120,0.4)] text-white'
-                          : 'bg-gradient-to-r from-[#e8a838]/30 to-[#39ff14]/30 border border-[#e8a838]/50 hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] text-[#e8a838]'
+                          : 'bg-gradient-to-r from-[#e8a838]/30 to-[#39ff14]/30 border border-[#e8a838]/50 hover:shadow-[0_0_20px_rgba(232,168,56,0.2)] text-[#e8a838]'
                     } disabled:opacity-50`}
                   >
                     {minting ? (
@@ -937,7 +937,7 @@ export default function EventDetailPage({
       {purchase.isOpen && purchase.tier && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={closePurchase} />
-          <div className="relative w-full max-w-lg rounded-2xl border border-[#2a2420] bg-[#0d0b08] p-8 shadow-[0_0_60px_rgba(0,240,255,0.15)]">
+          <div className="relative w-full max-w-lg rounded-2xl border border-[#2a2420] bg-[#0d0b08] p-8 shadow-[0_0_60px_rgba(232,168,56,0.15)]">
             {purchase.step === 'confirm' && (
               <>
                 <h3 className="text-2xl font-black mb-6 bg-gradient-to-r from-[#e8a838] to-[#d4632a] bg-clip-text text-transparent">Confirm Purchase</h3>
@@ -1095,7 +1095,7 @@ export default function EventDetailPage({
                 )}
                 <div className="flex gap-3">
                   <a href={`https://32f.blockv.io/token/0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06`} target="_blank" rel="noopener noreferrer" className="flex-1 py-3 rounded-xl border border-[#e8a838]/30 text-[#e8a838] font-bold hover:bg-[#e8a838]/10 transition-all text-center text-sm">View on Blockscout</a>
-                  <Link href="/my-tickets" className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#e8a838] to-[#39ff14] text-black font-bold hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-all text-center text-sm">View My Tickets</Link>
+                  <Link href="/my-tickets" className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#e8a838] to-[#39ff14] text-black font-bold hover:shadow-[0_0_20px_rgba(232,168,56,0.3)] transition-all text-center text-sm">View My Tickets</Link>
                 </div>
               </div>
             )}

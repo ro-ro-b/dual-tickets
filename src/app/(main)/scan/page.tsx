@@ -317,7 +317,7 @@ export default function ScannerPage() {
               <button
                 onClick={handleScanTicket}
                 disabled={loading || !ticketIdInput.trim()}
-                className="w-full py-4 rounded-lg font-bold flex items-center justify-center gap-2 transition-all bg-gradient-to-r from-[#e8a838]/30 to-[#39ff14]/30 border border-[#e8a838]/50 text-[#e8a838] hover:from-[#e8a838]/50 hover:to-[#39ff14]/50 hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-4 rounded-lg font-bold flex items-center justify-center gap-2 transition-all bg-gradient-to-r from-[#e8a838]/30 to-[#39ff14]/30 border border-[#e8a838]/50 text-[#e8a838] hover:from-[#e8a838]/50 hover:to-[#39ff14]/50 hover:shadow-[0_0_20px_rgba(232,168,56,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <span className="material-symbols-outlined text-lg">
                   {loading ? 'hourglass_top' : 'center_focus_strong'}

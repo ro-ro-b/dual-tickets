@@ -423,7 +423,7 @@ export default function MarketplacePage() {
                   <div className="mt-auto px-6 pb-6">
                     <button
                       onClick={() => handleBuyClick(listing)}
-                      className="w-full py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition-all bg-gradient-to-r from-[#e8a838]/20 to-[#d4632a]/20 border border-[#e8a838]/30 text-[#e8a838] hover:from-[#e8a838]/40 hover:to-[#d4632a]/40 hover:shadow-[0_0_20px_rgba(0,240,255,0.3)]"
+                      className="w-full py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition-all bg-gradient-to-r from-[#e8a838]/20 to-[#d4632a]/20 border border-[#e8a838]/30 text-[#e8a838] hover:from-[#e8a838]/40 hover:to-[#d4632a]/40 hover:shadow-[0_0_20px_rgba(232,168,56,0.2)]"
                     >
                       <span className="material-symbols-outlined text-sm">swap_horiz</span>
                       Buy via ebus
@@ -604,7 +604,7 @@ export default function MarketplacePage() {
 
                   <button
                     onClick={handleExecutePurchase}
-                    className="flex-1 py-3 rounded-lg font-bold bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black hover:shadow-[0_0_30px_rgba(0,240,255,0.5)] transition-all flex items-center justify-center gap-2"
+                    className="flex-1 py-3 rounded-lg font-bold bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black hover:shadow-[0_0_30px_rgba(232,168,56,0.3)] transition-all flex items-center justify-center gap-2"
                   >
                     <span className="material-symbols-outlined">flash_on</span>
                     EXECUTE ON-CHAIN PURCHASE
@@ -716,7 +716,7 @@ export default function MarketplacePage() {
 
                   <Link
                     href="/tickets/my-tickets"
-                    className="flex-1 py-3 rounded-lg font-bold bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black hover:shadow-[0_0_30px_rgba(0,240,255,0.5)] transition-all flex items-center justify-center gap-2"
+                    className="flex-1 py-3 rounded-lg font-bold bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black hover:shadow-[0_0_30px_rgba(232,168,56,0.3)] transition-all flex items-center justify-center gap-2"
                   >
                     <span className="material-symbols-outlined">card_membership</span>
                     View My Ticket

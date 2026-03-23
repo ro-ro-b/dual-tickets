@@ -275,7 +275,7 @@ export default function TicketsAdminPage() {
   if (authState === 'checking') {
     return (
       <div className="flex items-center justify-center py-24">
-        <div className="w-8 h-8 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin" />
+        <div className="w-8 h-8 rounded-full border-2 border-[#e8a838] border-t-transparent animate-spin" />
       </div>
     );
   }
@@ -284,19 +284,19 @@ export default function TicketsAdminPage() {
     return (
       <div className="flex items-center justify-center h-full">
         <div className="w-full max-w-md px-6">
-          <div className="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8">
-            <div className="w-16 h-16 rounded-full bg-cyan-500/20 flex items-center justify-center mx-auto mb-6">
-              <span className="material-symbols-outlined text-cyan-400 text-3xl">lock</span>
+          <div className="bg-[#151210] backdrop-blur-xl rounded-3xl border border-[#2a2420] p-8">
+            <div className="w-16 h-16 rounded-full bg-[#e8a838]/20 flex items-center justify-center mx-auto mb-6">
+              <span className="material-symbols-outlined text-[#e8a838] text-3xl">lock</span>
             </div>
             <h2 className="text-xl font-bold text-white text-center mb-2"><DualInline className="text-current" /> Network Auth</h2>
-            <p className="text-sm text-white/50 text-center mb-6">
+            <p className="text-sm text-gray-500 text-center mb-6">
               {authState === 'unauthenticated'
                 ? 'Enter your email to receive a one-time code for minting tickets.'
                 : `Enter the OTP code sent to ${email}`}
             </p>
 
             {authError && (
-              <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+              <div className="mb-4 p-3 rounded-lg bg-[#d4632a]/10 border border-[#d4632a]/20 text-[#d4632a] text-sm">
                 {authError}
               </div>
             )}
@@ -304,22 +304,22 @@ export default function TicketsAdminPage() {
             {authState === 'unauthenticated' ? (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-1.5">Email</label>
+                  <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-1.5">Email</label>
                   <input
                     type="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/20 focus:border-cyan-400/30 bg-white/5 text-white placeholder-white/30"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#2a2420] text-sm focus:outline-none focus:ring-2 focus:ring-[#e8a838]/20 focus:border-[#e8a838]/30 bg-[#151210] text-white placeholder-gray-700"
                     placeholder="admin@example.com"
                   />
                 </div>
                 <button
                   onClick={handleSendOtp}
                   disabled={authLoading || !email}
-                  className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 text-black font-bold text-sm shadow-lg shadow-cyan-500/25 hover:opacity-90 transition disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold text-sm shadow-lg shadow-[#e8a838]/25 hover:opacity-90 transition disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {authLoading ? (
-                    <div className="w-5 h-5 rounded-full border-2 border-black border-t-transparent animate-spin" />
+                    <div className="w-5 h-5 rounded-full border-2 border-[#0d0b08] border-t-transparent animate-spin" />
                   ) : (
                     <span className="material-symbols-outlined text-lg">mail</span>
                   )}
@@ -329,12 +329,12 @@ export default function TicketsAdminPage() {
             ) : (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-1.5">Verification Code</label>
+                  <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-1.5">Verification Code</label>
                   <input
                     type="text"
                     value={otp}
                     onChange={e => setOtp(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/20 focus:border-cyan-400/30 bg-white/5 text-white text-center tracking-[0.3em] font-mono text-lg placeholder-white/30"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#2a2420] text-sm focus:outline-none focus:ring-2 focus:ring-[#e8a838]/20 focus:border-[#e8a838]/30 bg-[#151210] text-white text-center tracking-[0.3em] font-mono text-lg placeholder-gray-700"
                     placeholder="Enter code"
                     autoFocus
                   />
@@ -342,10 +342,10 @@ export default function TicketsAdminPage() {
                 <button
                   onClick={handleLogin}
                   disabled={authLoading || !otp}
-                  className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 text-black font-bold text-sm shadow-lg shadow-cyan-500/25 hover:opacity-90 transition disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold text-sm shadow-lg shadow-[#e8a838]/25 hover:opacity-90 transition disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {authLoading ? (
-                    <div className="w-5 h-5 rounded-full border-2 border-black border-t-transparent animate-spin" />
+                    <div className="w-5 h-5 rounded-full border-2 border-[#0d0b08] border-t-transparent animate-spin" />
                   ) : (
                     <span className="material-symbols-outlined text-lg">login</span>
                   )}
@@ -353,7 +353,7 @@ export default function TicketsAdminPage() {
                 </button>
                 <button
                   onClick={() => { setAuthState('unauthenticated'); setOtp(''); setAuthError(''); }}
-                  className="w-full py-2 text-white/40 text-sm hover:text-white/70 transition"
+                  className="w-full py-2 text-gray-600 text-sm hover:text-white/70 transition"
                 >
                   Back to email
                 </button>
@@ -368,23 +368,23 @@ export default function TicketsAdminPage() {
   // ── Cinematic Minting Phase ──
   if (mintPhase === 'minting') {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center relative overflow-hidden">
+      <div className="min-h-screen bg-[#0d0b08] flex items-center justify-center relative overflow-hidden">
         {/* Ambient orbs with cyan and magenta */}
-        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-cyan-500/[0.08] blur-3xl animate-ambient pointer-events-none" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-magenta-500/[0.06] blur-3xl animate-ambient pointer-events-none" style={{ animationDelay: "-7s" }} />
+        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-[#e8a838]/[0.08] blur-3xl animate-ambient pointer-events-none" />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-[#d4632a]/[0.06] blur-3xl animate-ambient pointer-events-none" style={{ animationDelay: "-7s" }} />
         <div className="max-w-lg w-full px-6 relative z-10">
           {/* Central animation */}
           <div className="relative w-40 h-40 mx-auto mb-10">
             {/* Outer ring */}
-            <div className="absolute inset-0 rounded-full border-2 border-cyan-400/20" />
-            <div className="absolute inset-0 rounded-full border-2 border-t-cyan-400 border-r-transparent border-b-transparent border-l-transparent animate-spin" style={{ animationDuration: '2s' }} />
+            <div className="absolute inset-0 rounded-full border-2 border-[#e8a838]/20" />
+            <div className="absolute inset-0 rounded-full border-2 border-t-[#e8a838] border-r-transparent border-b-transparent border-l-transparent animate-spin" style={{ animationDuration: '2s' }} />
             {/* Middle ring */}
-            <div className="absolute inset-4 rounded-full border-2 border-magenta-500/30" />
-            <div className="absolute inset-4 rounded-full border-2 border-t-transparent border-r-magenta-500 border-b-transparent border-l-transparent animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }} />
+            <div className="absolute inset-4 rounded-full border-2 border-[#d4632a]/30" />
+            <div className="absolute inset-4 rounded-full border-2 border-t-transparent border-r-[#d4632a] border-b-transparent border-l-transparent animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }} />
             {/* Inner ring */}
-            <div className="absolute inset-8 rounded-full border-2 border-cyan-400/20" />
+            <div className="absolute inset-8 rounded-full border-2 border-[#e8a838]/20" />
             {/* Center pulse */}
-            <div className="absolute inset-12 rounded-full bg-gradient-to-r from-cyan-500/40 to-magenta-500/40 blur-lg animate-pulse" />
+            <div className="absolute inset-12 rounded-full bg-gradient-to-r from-[#e8a838]/40 to-[#d4632a]/40 blur-lg animate-pulse" />
           </div>
 
           {/* Minting steps */}
@@ -394,39 +394,39 @@ export default function TicketsAdminPage() {
                 {/* Icon area */}
                 <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center relative">
                   {step.status === 'pending' && (
-                    <div className="w-10 h-10 rounded-full border-2 border-white/20" />
+                    <div className="w-10 h-10 rounded-full border-2 border-[#3a332c]" />
                   )}
                   {step.status === 'active' && (
                     <>
-                      <div className="absolute inset-0 rounded-full border-2 border-cyan-400 animate-pulse" />
-                      <span className="material-symbols-outlined text-cyan-400 text-lg">{step.icon}</span>
+                      <div className="absolute inset-0 rounded-full border-2 border-[#e8a838] animate-pulse" />
+                      <span className="material-symbols-outlined text-[#e8a838] text-lg">{step.icon}</span>
                     </>
                   )}
                   {step.status === 'done' && (
-                    <div className="w-10 h-10 rounded-full bg-green-500/20 border border-green-500 flex items-center justify-center">
-                      <span className="material-symbols-outlined text-green-400 text-lg">check</span>
+                    <div className="w-10 h-10 rounded-full bg-[#39ff14]/20 border border-[#39ff14] flex items-center justify-center">
+                      <span className="material-symbols-outlined text-[#39ff14] text-lg">check</span>
                     </div>
                   )}
                   {step.status === 'error' && (
-                    <div className="w-10 h-10 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center">
-                      <span className="material-symbols-outlined text-red-400 text-lg">error</span>
+                    <div className="w-10 h-10 rounded-full bg-[#d4632a]/20 border border-[#d4632a] flex items-center justify-center">
+                      <span className="material-symbols-outlined text-[#d4632a] text-lg">error</span>
                     </div>
                   )}
                 </div>
 
                 {/* Content */}
                 <div className="flex-1 pt-1">
-                  <p className={`text-sm font-semibold ${step.status === 'active' ? 'text-cyan-400' : step.status === 'done' ? 'text-green-400' : step.status === 'error' ? 'text-red-400' : 'text-white/50'}`}>
+                  <p className={`text-sm font-semibold ${step.status === 'active' ? 'text-[#e8a838]' : step.status === 'done' ? 'text-[#39ff14]' : step.status === 'error' ? 'text-[#d4632a]' : 'text-gray-500'}`}>
                     {step.label}
                   </p>
-                  <p className="text-xs text-white/30">{step.description}</p>
+                  <p className="text-xs text-gray-700">{step.description}</p>
                 </div>
               </div>
             ))}
           </div>
 
           {mintError && (
-            <div className="mt-6 p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm text-center">
+            <div className="mt-6 p-4 rounded-lg bg-[#d4632a]/10 border border-[#d4632a]/20 text-[#d4632a] text-sm text-center">
               {mintError}
             </div>
           )}
@@ -438,26 +438,26 @@ export default function TicketsAdminPage() {
   // ── Success Phase ──
   if (mintPhase === 'success') {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center relative overflow-hidden p-6">
+      <div className="min-h-screen bg-[#0d0b08] flex items-center justify-center relative overflow-hidden p-6">
         {/* Ambient orbs */}
-        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-cyan-500/[0.08] blur-3xl animate-ambient pointer-events-none" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-green-500/[0.06] blur-3xl animate-ambient pointer-events-none" style={{ animationDelay: "-7s" }} />
+        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-[#e8a838]/[0.08] blur-3xl animate-ambient pointer-events-none" />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-[#39ff14]/[0.06] blur-3xl animate-ambient pointer-events-none" style={{ animationDelay: "-7s" }} />
 
         <div className="max-w-lg w-full relative z-10">
           <div className="text-center mb-8">
-            <div className="w-20 h-20 rounded-full bg-green-500/20 border border-green-500 flex items-center justify-center mx-auto mb-6">
-              <span className="material-symbols-outlined text-green-400 text-5xl">verified</span>
+            <div className="w-20 h-20 rounded-full bg-[#39ff14]/20 border border-[#39ff14] flex items-center justify-center mx-auto mb-6">
+              <span className="material-symbols-outlined text-[#39ff14] text-5xl">verified</span>
             </div>
             <h2 className="text-3xl font-bold text-white mb-2">Ticket Minted Successfully</h2>
-            <p className="text-white/50">Your event ticket NFT has been anchored on the <DualInline className="text-current" /> Network</p>
+            <p className="text-gray-500">Your event ticket NFT has been anchored on the <DualInline className="text-current" /> Network</p>
           </div>
 
-          <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-8 space-y-6">
+          <div className="bg-[#151210] backdrop-blur-xl rounded-2xl border border-[#2a2420] p-8 space-y-6">
             {/* Ticket ID */}
             <div>
-              <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-2">Ticket NFT ID</label>
+              <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Ticket NFT ID</label>
               <div className="flex items-center gap-2">
-                <code className="flex-1 px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-sm font-mono text-cyan-400 break-all">
+                <code className="flex-1 px-4 py-3 rounded-lg bg-[#151210] border border-[#2a2420] text-sm font-mono text-[#e8a838] break-all">
                   {mintResult?.ticketId || mintResult?.objectIds?.[0] || 'N/A'}
                 </code>
                 <button
@@ -465,7 +465,7 @@ export default function TicketsAdminPage() {
                     const id = mintResult?.ticketId || mintResult?.objectIds?.[0];
                     if (id) navigator.clipboard.writeText(id);
                   }}
-                  className="px-3 py-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition"
+                  className="px-3 py-3 rounded-lg bg-[#151210] border border-[#2a2420] hover:bg-[#1a1612] transition"
                 >
                   <span className="material-symbols-outlined text-white/60 text-lg">content_copy</span>
                 </button>
@@ -474,37 +474,37 @@ export default function TicketsAdminPage() {
 
             {/* Action ID */}
             <div>
-              <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-2">Action ID</label>
-              <div className="px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-sm font-mono text-white/70">
+              <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Action ID</label>
+              <div className="px-4 py-3 rounded-lg bg-[#151210] border border-[#2a2420] text-sm font-mono text-white/70">
                 {mintResult?.actionId || 'N/A'}
               </div>
             </div>
 
             {/* Event Details */}
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
+            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-[#2a2420]">
               <div>
-                <p className="text-xs text-white/40 mb-1">Event</p>
+                <p className="text-xs text-gray-600 mb-1">Event</p>
                 <p className="text-sm font-semibold text-white">{form.eventName}</p>
               </div>
               <div>
-                <p className="text-xs text-white/40 mb-1">Tier</p>
-                <p className="text-sm font-semibold text-cyan-400">{form.tier.toUpperCase()}</p>
+                <p className="text-xs text-gray-600 mb-1">Tier</p>
+                <p className="text-sm font-semibold text-[#e8a838]">{form.tier.toUpperCase()}</p>
               </div>
               <div>
-                <p className="text-xs text-white/40 mb-1">Venue</p>
+                <p className="text-xs text-gray-600 mb-1">Venue</p>
                 <p className="text-sm font-semibold text-white">{form.venueName}</p>
               </div>
               <div>
-                <p className="text-xs text-white/40 mb-1">Date</p>
+                <p className="text-xs text-gray-600 mb-1">Date</p>
                 <p className="text-sm font-semibold text-white">{form.eventDate}</p>
               </div>
             </div>
 
             {/* AI Artwork Preview */}
             {aiArt.imageUrl && (
-              <div className="pt-4 border-t border-white/10">
-                <p className="text-xs text-white/40 mb-2">AI Generated Artwork</p>
-                <div className="w-24 h-24 rounded-xl overflow-hidden border border-white/10">
+              <div className="pt-4 border-t border-[#2a2420]">
+                <p className="text-xs text-gray-600 mb-2">AI Generated Artwork</p>
+                <div className="w-24 h-24 rounded-xl overflow-hidden border border-[#2a2420]">
                   <img src={aiArt.imageUrl} alt="Event artwork" className="w-full h-full object-cover" />
                 </div>
               </div>
@@ -535,14 +535,14 @@ export default function TicketsAdminPage() {
                   setMintError('');
                   setAiArt({ generating: false });
                 }}
-                className="flex-1 px-4 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 text-black font-bold text-sm shadow-lg shadow-cyan-500/25 hover:opacity-90 transition flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-3 rounded-xl bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold text-sm shadow-lg shadow-[#e8a838]/25 hover:opacity-90 transition flex items-center justify-center gap-2"
               >
                 <span className="material-symbols-outlined">add</span>
                 Mint Another
               </button>
               <Link
                 href={`/tickets/${mintResult?.ticketId || mintResult?.objectIds?.[0]}`}
-                className="flex-1 px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white font-bold text-sm hover:bg-white/20 transition flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-3 rounded-xl bg-[#1a1612] border border-[#3a332c] text-white font-bold text-sm hover:bg-[#2a2420] transition flex items-center justify-center gap-2"
               >
                 <span className="material-symbols-outlined">open_in_new</span>
                 View Ticket
@@ -556,78 +556,78 @@ export default function TicketsAdminPage() {
 
   // ── Form Phase ──
   return (
-    <div className="min-h-screen bg-slate-950 relative overflow-hidden">
+    <div className="min-h-screen bg-[#0d0b08] relative overflow-hidden">
       {/* Ambient orbs */}
-      <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-cyan-500/[0.08] blur-3xl animate-ambient pointer-events-none" />
-      <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-magenta-500/[0.06] blur-3xl animate-ambient pointer-events-none" style={{ animationDelay: "-7s" }} />
+      <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-[#e8a838]/[0.08] blur-3xl animate-ambient pointer-events-none" />
+      <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-[#d4632a]/[0.06] blur-3xl animate-ambient pointer-events-none" style={{ animationDelay: "-7s" }} />
 
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-6 py-12">
         {/* Header */}
         <div className="mb-12 text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <span className="material-symbols-outlined text-cyan-400 text-4xl">bolt</span>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-magenta-400 bg-clip-text text-transparent">
+            <span className="material-symbols-outlined text-[#e8a838] text-4xl">bolt</span>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-[#e8a838] to-[#d4632a] bg-clip-text text-transparent">
               Mint Event Tickets
             </h1>
           </div>
-          <p className="text-white/50"><DualInline className="text-current" /> Tickets Admin</p>
+          <p className="text-gray-500"><DualInline className="text-current" /> Tickets Admin</p>
         </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Event Information Section */}
-          <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-8">
+          <div className="bg-[#151210] backdrop-blur-xl rounded-2xl border border-[#2a2420] p-8">
             <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-              <span className="material-symbols-outlined text-cyan-400">calendar_month</span>
+              <span className="material-symbols-outlined text-[#e8a838]">calendar_month</span>
               Event Information
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Event Name */}
               <div>
-                <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-2">Event Name *</label>
+                <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Event Name *</label>
                 <input
                   type="text"
                   required
                   value={form.eventName}
                   onChange={e => update('eventName', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/20 focus:border-cyan-400/30 bg-white/5 text-white placeholder-white/30"
+                  className="w-full px-4 py-3 rounded-xl border border-[#2a2420] text-sm focus:outline-none focus:ring-2 focus:ring-[#e8a838]/20 focus:border-[#e8a838]/30 bg-[#151210] text-white placeholder-gray-700"
                   placeholder="e.g., Summer Music Festival 2026"
                 />
               </div>
 
               {/* Event Date */}
               <div>
-                <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-2">Event Date *</label>
+                <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Event Date *</label>
                 <input
                   type="date"
                   required
                   value={form.eventDate}
                   onChange={e => update('eventDate', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/20 focus:border-cyan-400/30 bg-white/5 text-white placeholder-white/30"
+                  className="w-full px-4 py-3 rounded-xl border border-[#2a2420] text-sm focus:outline-none focus:ring-2 focus:ring-[#e8a838]/20 focus:border-[#e8a838]/30 bg-[#151210] text-white placeholder-gray-700"
                 />
               </div>
 
               {/* Event Time */}
               <div>
-                <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-2">Event Time</label>
+                <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Event Time</label>
                 <input
                   type="text"
                   value={form.eventTime}
                   onChange={e => update('eventTime', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/20 focus:border-cyan-400/30 bg-white/5 text-white placeholder-white/30"
+                  className="w-full px-4 py-3 rounded-xl border border-[#2a2420] text-sm focus:outline-none focus:ring-2 focus:ring-[#e8a838]/20 focus:border-[#e8a838]/30 bg-[#151210] text-white placeholder-gray-700"
                   placeholder="20:00"
                 />
               </div>
 
               {/* Category */}
               <div>
-                <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-2">Category</label>
+                <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Category</label>
                 <select
                   value={form.category}
                   onChange={e => update('category', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/20 focus:border-cyan-400/30 bg-white/5 text-white"
+                  className="w-full px-4 py-3 rounded-xl border border-[#2a2420] text-sm focus:outline-none focus:ring-2 focus:ring-[#e8a838]/20 focus:border-[#e8a838]/30 bg-[#151210] text-white"
                 >
                   <option value="concert">Concert</option>
                   <option value="sports">Sports</option>
@@ -639,25 +639,25 @@ export default function TicketsAdminPage() {
 
               {/* Venue Name */}
               <div>
-                <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-2">Venue Name *</label>
+                <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Venue Name *</label>
                 <input
                   type="text"
                   required
                   value={form.venueName}
                   onChange={e => update('venueName', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/20 focus:border-cyan-400/30 bg-white/5 text-white placeholder-white/30"
+                  className="w-full px-4 py-3 rounded-xl border border-[#2a2420] text-sm focus:outline-none focus:ring-2 focus:ring-[#e8a838]/20 focus:border-[#e8a838]/30 bg-[#151210] text-white placeholder-gray-700"
                   placeholder="e.g., Central Park"
                 />
               </div>
 
               {/* Venue Address */}
               <div>
-                <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-2">Venue Address</label>
+                <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Venue Address</label>
                 <input
                   type="text"
                   value={form.venueAddress}
                   onChange={e => update('venueAddress', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/20 focus:border-cyan-400/30 bg-white/5 text-white placeholder-white/30"
+                  className="w-full px-4 py-3 rounded-xl border border-[#2a2420] text-sm focus:outline-none focus:ring-2 focus:ring-[#e8a838]/20 focus:border-[#e8a838]/30 bg-[#151210] text-white placeholder-gray-700"
                   placeholder="Full address"
                 />
               </div>
@@ -665,33 +665,33 @@ export default function TicketsAdminPage() {
 
             {/* Description */}
             <div className="mt-6">
-              <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-2">Description</label>
+              <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Description</label>
               <textarea
                 value={form.description}
                 onChange={e => update('description', e.target.value)}
                 rows={3}
-                className="w-full px-4 py-3 rounded-xl border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/20 focus:border-cyan-400/30 bg-white/5 text-white placeholder-white/30 resize-none"
+                className="w-full px-4 py-3 rounded-xl border border-[#2a2420] text-sm focus:outline-none focus:ring-2 focus:ring-[#e8a838]/20 focus:border-[#e8a838]/30 bg-[#151210] text-white placeholder-gray-700 resize-none"
                 placeholder="Event details, terms, restrictions..."
               />
             </div>
           </div>
 
           {/* Ticket Details Section */}
-          <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-8">
+          <div className="bg-[#151210] backdrop-blur-xl rounded-2xl border border-[#2a2420] p-8">
             <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-              <span className="material-symbols-outlined text-magenta-400">confirmation_number</span>
+              <span className="material-symbols-outlined text-[#d4632a]">confirmation_number</span>
               Ticket Details
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Tier */}
               <div>
-                <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-2">Tier *</label>
+                <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Tier *</label>
                 <select
                   required
                   value={form.tier}
                   onChange={e => update('tier', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/20 focus:border-cyan-400/30 bg-white/5 text-white"
+                  className="w-full px-4 py-3 rounded-xl border border-[#2a2420] text-sm focus:outline-none focus:ring-2 focus:ring-[#e8a838]/20 focus:border-[#e8a838]/30 bg-[#151210] text-white"
                 >
                   <option value="general">General Admission</option>
                   <option value="vip">VIP</option>
@@ -702,93 +702,93 @@ export default function TicketsAdminPage() {
 
               {/* Section */}
               <div>
-                <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-2">Section</label>
+                <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Section</label>
                 <input
                   type="text"
                   value={form.section}
                   onChange={e => update('section', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/20 focus:border-cyan-400/30 bg-white/5 text-white placeholder-white/30"
+                  className="w-full px-4 py-3 rounded-xl border border-[#2a2420] text-sm focus:outline-none focus:ring-2 focus:ring-[#e8a838]/20 focus:border-[#e8a838]/30 bg-[#151210] text-white placeholder-gray-700"
                   placeholder="e.g., A, B, Floor 1"
                 />
               </div>
 
               {/* Seat */}
               <div>
-                <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-2">Seat</label>
+                <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Seat</label>
                 <input
                   type="text"
                   value={form.seat}
                   onChange={e => update('seat', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/20 focus:border-cyan-400/30 bg-white/5 text-white placeholder-white/30"
+                  className="w-full px-4 py-3 rounded-xl border border-[#2a2420] text-sm focus:outline-none focus:ring-2 focus:ring-[#e8a838]/20 focus:border-[#e8a838]/30 bg-[#151210] text-white placeholder-gray-700"
                   placeholder="e.g., 101, 202, GA"
                 />
               </div>
 
               {/* Price */}
               <div>
-                <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-2">Price (USD)</label>
+                <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Price (USD)</label>
                 <input
                   type="number"
                   step="0.01"
                   min="0"
                   value={form.price}
                   onChange={e => update('price', parseFloat(e.target.value) || 0)}
-                  className="w-full px-4 py-3 rounded-xl border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/20 focus:border-cyan-400/30 bg-white/5 text-white placeholder-white/30"
+                  className="w-full px-4 py-3 rounded-xl border border-[#2a2420] text-sm focus:outline-none focus:ring-2 focus:ring-[#e8a838]/20 focus:border-[#e8a838]/30 bg-[#151210] text-white placeholder-gray-700"
                   placeholder="99.99"
                 />
               </div>
 
               {/* Max Resale Price */}
               <div>
-                <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-2">Max Resale Price (USD)</label>
+                <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Max Resale Price (USD)</label>
                 <input
                   type="number"
                   step="0.01"
                   min="0"
                   value={form.maxResalePrice}
                   onChange={e => update('maxResalePrice', parseFloat(e.target.value) || 0)}
-                  className="w-full px-4 py-3 rounded-xl border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/20 focus:border-cyan-400/30 bg-white/5 text-white placeholder-white/30"
+                  className="w-full px-4 py-3 rounded-xl border border-[#2a2420] text-sm focus:outline-none focus:ring-2 focus:ring-[#e8a838]/20 focus:border-[#e8a838]/30 bg-[#151210] text-white placeholder-gray-700"
                   placeholder="149.99"
                 />
               </div>
 
               {/* Quantity */}
               <div>
-                <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-2">Quantity to Mint</label>
+                <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Quantity to Mint</label>
                 <input
                   type="number"
                   min="1"
                   value={form.quantity}
                   onChange={e => update('quantity', parseInt(e.target.value) || 1)}
-                  className="w-full px-4 py-3 rounded-xl border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/20 focus:border-cyan-400/30 bg-white/5 text-white placeholder-white/30"
+                  className="w-full px-4 py-3 rounded-xl border border-[#2a2420] text-sm focus:outline-none focus:ring-2 focus:ring-[#e8a838]/20 focus:border-[#e8a838]/30 bg-[#151210] text-white placeholder-gray-700"
                 />
               </div>
             </div>
 
             {/* Perks */}
             <div className="mt-6">
-              <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-2">Perks (comma-separated)</label>
+              <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Perks (comma-separated)</label>
               <textarea
                 value={form.perks}
                 onChange={e => update('perks', e.target.value)}
                 rows={3}
-                className="w-full px-4 py-3 rounded-xl border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/20 focus:border-cyan-400/30 bg-white/5 text-white placeholder-white/30 resize-none"
+                className="w-full px-4 py-3 rounded-xl border border-[#2a2420] text-sm focus:outline-none focus:ring-2 focus:ring-[#e8a838]/20 focus:border-[#e8a838]/30 bg-[#151210] text-white placeholder-gray-700 resize-none"
                 placeholder="e.g., Early entry, Exclusive merchandise, Meet & greet"
               />
             </div>
           </div>
 
           {/* AI Artwork Generation */}
-          <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-8">
+          <div className="bg-[#151210] backdrop-blur-xl rounded-2xl border border-[#2a2420] p-8">
             <h2 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-              <span className="material-symbols-outlined text-cyan-400">auto_awesome</span>
+              <span className="material-symbols-outlined text-[#e8a838]">auto_awesome</span>
               AI Event Artwork
             </h2>
-            <p className="text-sm text-white/40 mb-6">Generate unique AI artwork for this event using Gemini. The image will be attached to the minted ticket NFT.</p>
+            <p className="text-sm text-gray-600 mb-6">Generate unique AI artwork for this event using Gemini. The image will be attached to the minted ticket NFT.</p>
 
             {aiArt.imageUrl && !aiArt.generating ? (
               <div className="space-y-4">
-                <div className="relative rounded-xl overflow-hidden border border-white/10 max-w-sm mx-auto">
+                <div className="relative rounded-xl overflow-hidden border border-[#2a2420] max-w-sm mx-auto">
                   <img src={aiArt.imageUrl} alt="AI generated event artwork" className="w-full aspect-square object-cover" />
                   <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-[#39ff14] text-black text-[10px] font-black flex items-center gap-1 shadow-[0_0_10px_rgba(57,255,20,0.5)]">
                     <span className="material-symbols-outlined text-xs">auto_awesome</span>
@@ -799,7 +799,7 @@ export default function TicketsAdminPage() {
                   <button
                     type="button"
                     onClick={generateArt}
-                    className="flex-1 px-4 py-2.5 rounded-xl border border-white/10 text-white/70 text-sm font-medium hover:bg-white/5 transition flex items-center justify-center gap-2"
+                    className="flex-1 px-4 py-2.5 rounded-xl border border-[#2a2420] text-white/70 text-sm font-medium hover:bg-[#151210] transition flex items-center justify-center gap-2"
                   >
                     <span className="material-symbols-outlined text-sm">refresh</span>
                     Regenerate
@@ -807,7 +807,7 @@ export default function TicketsAdminPage() {
                   <button
                     type="button"
                     onClick={() => setAiArt({ generating: false })}
-                    className="px-4 py-2.5 rounded-xl border border-red-500/30 text-red-400 text-sm font-medium hover:bg-red-500/10 transition flex items-center justify-center gap-2"
+                    className="px-4 py-2.5 rounded-xl border border-[#d4632a]/30 text-[#d4632a] text-sm font-medium hover:bg-[#d4632a]/10 transition flex items-center justify-center gap-2"
                   >
                     <span className="material-symbols-outlined text-sm">delete</span>
                     Remove
@@ -817,19 +817,19 @@ export default function TicketsAdminPage() {
             ) : aiArt.generating ? (
               <div className="flex flex-col items-center py-8 gap-4">
                 <div className="relative w-20 h-20">
-                  <div className="absolute inset-0 rounded-full border-2 border-cyan-400/20" />
-                  <div className="absolute inset-0 rounded-full border-2 border-t-cyan-400 border-r-transparent border-b-transparent border-l-transparent animate-spin" style={{ animationDuration: '1.5s' }} />
-                  <div className="absolute inset-4 rounded-full bg-cyan-400/10 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-cyan-400 text-2xl">palette</span>
+                  <div className="absolute inset-0 rounded-full border-2 border-[#e8a838]/20" />
+                  <div className="absolute inset-0 rounded-full border-2 border-t-[#e8a838] border-r-transparent border-b-transparent border-l-transparent animate-spin" style={{ animationDuration: '1.5s' }} />
+                  <div className="absolute inset-4 rounded-full bg-[#e8a838]/10 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-[#e8a838] text-2xl">palette</span>
                   </div>
                 </div>
-                <p className="text-sm text-cyan-400 font-medium">Generating artwork with Gemini AI...</p>
-                <p className="text-xs text-white/30">This may take 10-30 seconds</p>
+                <p className="text-sm text-[#e8a838] font-medium">Generating artwork with Gemini AI...</p>
+                <p className="text-xs text-gray-700">This may take 10-30 seconds</p>
               </div>
             ) : (
               <div className="flex flex-col items-center">
                 {aiArt.error && (
-                  <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm w-full text-center">
+                  <div className="mb-4 p-3 rounded-lg bg-[#d4632a]/10 border border-[#d4632a]/20 text-[#d4632a] text-sm w-full text-center">
                     {aiArt.error}
                   </div>
                 )}
@@ -837,13 +837,13 @@ export default function TicketsAdminPage() {
                   type="button"
                   onClick={generateArt}
                   disabled={!form.eventName}
-                  className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500/20 to-magenta-500/20 border border-cyan-400/30 text-cyan-400 font-bold text-sm hover:border-cyan-400/60 hover:shadow-[0_0_20px_rgba(0,200,255,0.15)] transition disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+                  className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#e8a838]/20 to-[#d4632a]/20 border border-[#e8a838]/30 text-[#e8a838] font-bold text-sm hover:border-[#e8a838]/60 hover:shadow-[0_0_20px_rgba(232,168,56,0.2)] transition disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
                 >
                   <span className="material-symbols-outlined">auto_awesome</span>
                   Generate AI Artwork
                 </button>
                 {!form.eventName && (
-                  <p className="text-xs text-white/30 mt-2">Fill in the event name first</p>
+                  <p className="text-xs text-gray-700 mt-2">Fill in the event name first</p>
                 )}
               </div>
             )}
@@ -851,7 +851,7 @@ export default function TicketsAdminPage() {
 
           {/* Error Display */}
           {mintError && (
-            <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+            <div className="p-4 rounded-lg bg-[#d4632a]/10 border border-[#d4632a]/20 text-[#d4632a] text-sm">
               {mintError}
             </div>
           )}
@@ -860,11 +860,11 @@ export default function TicketsAdminPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 text-black font-bold text-lg shadow-lg shadow-cyan-500/30 hover:opacity-90 transition disabled:opacity-50 flex items-center justify-center gap-2"
+            className="w-full py-4 rounded-xl bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold text-lg shadow-lg shadow-[#e8a838]/30 hover:opacity-90 transition disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {submitting ? (
               <>
-                <div className="w-5 h-5 rounded-full border-2 border-black border-t-transparent animate-spin" />
+                <div className="w-5 h-5 rounded-full border-2 border-[#0d0b08] border-t-transparent animate-spin" />
                 Minting...
               </>
             ) : (
