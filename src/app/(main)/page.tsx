@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { DualIcon } from './DualLogo'
 
 interface Event {
   id: string
@@ -108,9 +109,7 @@ export default function TicketsPage() {
             {/* DUAL Logo + Tagline */}
             <div className="flex flex-col items-center gap-4 mb-8">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#e8a838] to-[#d4632a] flex items-center justify-center shadow-[0_0_20px_rgba(232,168,56,0.4)]">
-                  <span className="material-symbols-outlined text-white text-2xl">confirmation_number</span>
-                </div>
+                <DualIcon size={48} className="text-[#e8a838]" />
                 <span className="text-5xl md:text-6xl font-black tracking-tight text-white">DUAL</span>
               </div>
               <p className="text-xl md:text-2xl italic font-light tracking-wide">

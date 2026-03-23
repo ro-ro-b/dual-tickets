@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+import { DualIcon, DualLogo } from './DualLogo'
 
 export default function TicketsLayout({
   children,
@@ -39,10 +40,8 @@ export default function TicketsLayout({
         <div className="bg-[#0d0b08]/95 backdrop-blur-xl">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#e8a838] to-[#d4632a] flex items-center justify-center shadow-[0_0_12px_rgba(232,168,56,0.4)]">
-                <span className="material-symbols-outlined text-white text-lg">confirmation_number</span>
-              </div>
+            <Link href="/" className="flex items-center gap-2 group">
+              <DualIcon size={26} className="text-[#e8a838]" />
               <span className="text-xl font-bold text-white tracking-tight">DUAL</span>
               <span className="text-sm text-gray-500 font-light">Tickets</span>
             </Link>
@@ -123,9 +122,7 @@ export default function TicketsLayout({
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
               <div>
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#e8a838] to-[#d4632a] flex items-center justify-center">
-                    <span className="material-symbols-outlined text-white text-sm">confirmation_number</span>
-                  </div>
+                  <DualIcon size={22} className="text-[#e8a838]" />
                   <span className="text-lg font-bold">DUAL Tickets</span>
                 </div>
                 <p className="text-sm text-gray-600">
