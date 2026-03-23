@@ -50,6 +50,46 @@ export default function TicketsAdminPage() {
     perks: '',
   });
 
+  // AI Image Generation
+  const [aiArt, setAiArt] = useState<{
+    imageUrl?: string;
+    imageBase64?: string;
+    imageMimeType?: string;
+    generating: boolean;
+    error?: string;
+  }>({ generating: false });
+
+  const generateArt = async () => {
+    if (!form.eventName) {
+      setAiArt(prev => ({ ...prev, error: 'Enter an event name first' }));
+      return;
+    }
+    setAiArt({ generating: true });
+    try {
+      const res = await fetch('/api/generate-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          eventName: form.eventName,
+          venue: form.venueName,
+          date: form.eventDate,
+          tierName: form.tier,
+          category: form.category,
+        }),
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error || 'Generation failed');
+      setAiArt({
+        imageUrl: data.imageUrl,
+        imageBase64: data.imageBase64,
+        imageMimeType: data.mimeType,
+        generating: false,
+      });
+    } catch (err: any) {
+      setAiArt({ generating: false, error: err.message || 'Image generation failed' });
+    }
+  };
+
   // Check auth on mount
   useEffect(() => {
     fetch('/api/auth/status')
@@ -175,6 +215,7 @@ export default function TicketsAdminPage() {
           maxResalePrice: form.maxResalePrice,
           quantity: form.quantity,
           perks: perksArray,
+          ...(aiArt.imageUrl ? { imageUrl: aiArt.imageUrl } : {}),
         },
       };
 
@@ -459,6 +500,16 @@ export default function TicketsAdminPage() {
               </div>
             </div>
 
+            {/* AI Artwork Preview */}
+            {aiArt.imageUrl && (
+              <div className="pt-4 border-t border-white/10">
+                <p className="text-xs text-white/40 mb-2">AI Generated Artwork</p>
+                <div className="w-24 h-24 rounded-xl overflow-hidden border border-white/10">
+                  <img src={aiArt.imageUrl} alt="Event artwork" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            )}
+
             {/* Action Buttons */}
             <div className="flex gap-3 pt-4">
               <button
@@ -482,6 +533,7 @@ export default function TicketsAdminPage() {
                   });
                   setMintResult(null);
                   setMintError('');
+                  setAiArt({ generating: false });
                 }}
                 className="flex-1 px-4 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 text-black font-bold text-sm shadow-lg shadow-cyan-500/25 hover:opacity-90 transition flex items-center justify-center gap-2"
               >
@@ -724,6 +776,77 @@ export default function TicketsAdminPage() {
                 placeholder="e.g., Early entry, Exclusive merchandise, Meet & greet"
               />
             </div>
+          </div>
+
+          {/* AI Artwork Generation */}
+          <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-8">
+            <h2 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+              <span className="material-symbols-outlined text-cyan-400">auto_awesome</span>
+              AI Event Artwork
+            </h2>
+            <p className="text-sm text-white/40 mb-6">Generate unique AI artwork for this event using Gemini. The image will be attached to the minted ticket NFT.</p>
+
+            {aiArt.imageUrl && !aiArt.generating ? (
+              <div className="space-y-4">
+                <div className="relative rounded-xl overflow-hidden border border-white/10 max-w-sm mx-auto">
+                  <img src={aiArt.imageUrl} alt="AI generated event artwork" className="w-full aspect-square object-cover" />
+                  <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-[#39ff14] text-black text-[10px] font-black flex items-center gap-1 shadow-[0_0_10px_rgba(57,255,20,0.5)]">
+                    <span className="material-symbols-outlined text-xs">auto_awesome</span>
+                    AI GENERATED
+                  </div>
+                </div>
+                <div className="flex gap-3 max-w-sm mx-auto">
+                  <button
+                    type="button"
+                    onClick={generateArt}
+                    className="flex-1 px-4 py-2.5 rounded-xl border border-white/10 text-white/70 text-sm font-medium hover:bg-white/5 transition flex items-center justify-center gap-2"
+                  >
+                    <span className="material-symbols-outlined text-sm">refresh</span>
+                    Regenerate
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setAiArt({ generating: false })}
+                    className="px-4 py-2.5 rounded-xl border border-red-500/30 text-red-400 text-sm font-medium hover:bg-red-500/10 transition flex items-center justify-center gap-2"
+                  >
+                    <span className="material-symbols-outlined text-sm">delete</span>
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ) : aiArt.generating ? (
+              <div className="flex flex-col items-center py-8 gap-4">
+                <div className="relative w-20 h-20">
+                  <div className="absolute inset-0 rounded-full border-2 border-cyan-400/20" />
+                  <div className="absolute inset-0 rounded-full border-2 border-t-cyan-400 border-r-transparent border-b-transparent border-l-transparent animate-spin" style={{ animationDuration: '1.5s' }} />
+                  <div className="absolute inset-4 rounded-full bg-cyan-400/10 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-cyan-400 text-2xl">palette</span>
+                  </div>
+                </div>
+                <p className="text-sm text-cyan-400 font-medium">Generating artwork with Gemini AI...</p>
+                <p className="text-xs text-white/30">This may take 10-30 seconds</p>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center">
+                {aiArt.error && (
+                  <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm w-full text-center">
+                    {aiArt.error}
+                  </div>
+                )}
+                <button
+                  type="button"
+                  onClick={generateArt}
+                  disabled={!form.eventName}
+                  className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500/20 to-magenta-500/20 border border-cyan-400/30 text-cyan-400 font-bold text-sm hover:border-cyan-400/60 hover:shadow-[0_0_20px_rgba(0,200,255,0.15)] transition disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+                >
+                  <span className="material-symbols-outlined">auto_awesome</span>
+                  Generate AI Artwork
+                </button>
+                {!form.eventName && (
+                  <p className="text-xs text-white/30 mt-2">Fill in the event name first</p>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Error Display */}
