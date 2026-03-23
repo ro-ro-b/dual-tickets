@@ -424,6 +424,7 @@ export default function EventDetailPage({
               venue: td.venue || 'DUAL Network',
               description: td.description || 'An on-chain verified ticket on the DUAL Network.',
               imageGradient: 'from-[#e8a838]/40 to-[#39ff14]/40',
+              imageUrl: td.imageUrl,
               tiers: [{
                 id: 'general',
                 name: td.tier ? td.tier.charAt(0).toUpperCase() + td.tier.slice(1) : 'General Admission',
@@ -596,9 +597,9 @@ export default function EventDetailPage({
         }
       `}</style>
 
-      <div className={`relative h-96 overflow-hidden ${EVENT_IMAGES[event.id] ? '' : `bg-gradient-to-br ${event.imageGradient}`}`}>
-        {EVENT_IMAGES[event.id] ? (
-          <img src={EVENT_IMAGES[event.id]} alt={event.name} className="absolute inset-0 w-full h-full object-cover" />
+      <div className={`relative h-96 overflow-hidden ${(EVENT_IMAGES[event.id] || event.imageUrl) ? '' : `bg-gradient-to-br ${event.imageGradient}`}`}>
+        {(EVENT_IMAGES[event.id] || event.imageUrl) ? (
+          <img src={EVENT_IMAGES[event.id] || event.imageUrl} alt={event.name} className="absolute inset-0 w-full h-full object-cover" />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
             <span className="material-symbols-outlined text-9xl text-white/20">confirmation_number</span>

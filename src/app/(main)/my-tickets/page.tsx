@@ -23,61 +23,6 @@ interface Ticket {
   ownerId?: string
 }
 
-const MOCK_TICKETS: Ticket[] = [
-  {
-    id: 'demo-1',
-    eventName: 'Neon Dreams Festival 2026',
-    date: '2026-04-15',
-    venue: 'San Francisco Bay Area',
-    tier: 'backstage',
-    status: 'valid',
-    section: 'VIP',
-    seat: 'B-142',
-    qrCode: 'QR_CODE_001',
-    transactionHash: '0x7a8f...9d2c',
-    mintedDate: '2026-03-10',
-  },
-  {
-    id: 'demo-2',
-    eventName: 'Virtual Reality Concert Series',
-    date: '2026-05-22',
-    venue: 'Los Angeles Convention Center',
-    tier: 'vip',
-    status: 'valid',
-    section: 'Premium',
-    seat: 'A-055',
-    qrCode: 'QR_CODE_002',
-    transactionHash: '0x4b3e...6a1f',
-    mintedDate: '2026-03-08',
-  },
-  {
-    id: 'demo-3',
-    eventName: 'Crypto Cup 2026 - Final Match',
-    date: '2026-06-10',
-    venue: 'MetaStadium NYC',
-    tier: 'general',
-    status: 'scanned',
-    section: 'Lower Bowl',
-    seat: 'C-287',
-    qrCode: 'QR_CODE_003',
-    transactionHash: '0x2d9c...5e7b',
-    mintedDate: '2026-02-28',
-  },
-  {
-    id: 'demo-4',
-    eventName: 'The Holographic Opera',
-    date: '2026-07-08',
-    venue: 'Miami Art Deco Theater',
-    tier: 'backstage',
-    status: 'collectible',
-    section: 'Main Floor',
-    seat: 'F-018',
-    qrCode: 'QR_CODE_004',
-    transactionHash: '0x8f2a...4c9e',
-    mintedDate: '2026-02-15',
-  },
-]
-
 const DUAL_CONTRACT = '0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06'
 const BLOCKSCOUT = 'https://32f.blockv.io'
 
@@ -126,9 +71,7 @@ export default function MyTicketsPage() {
       .finally(() => setLoading(false))
   }, [])
 
-  // Use mock tickets as primary display (DUAL org has no balance for real tokens)
-  // liveTickets count still feeds the stats banner
-  const allTickets = MOCK_TICKETS
+  const allTickets = liveTickets
 
   const toggleFlip = (ticketId: string) => {
     setFlipped((prev) => ({ ...prev, [ticketId]: !prev[ticketId] }))
