@@ -40,9 +40,8 @@ export default function TicketsLayout({
         <div className="bg-[#0d0b08]/95 backdrop-blur-xl">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 group">
-              <DualIcon size={26} className="text-[#e8a838]" />
-              <span className="text-xl font-bold text-white tracking-tight">DUAL</span>
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <DualLogo height={22} className="text-[#e8a838]" />
               <span className="text-xl font-bold text-gray-500">Tickets</span>
             </Link>
 
@@ -122,8 +121,8 @@ export default function TicketsLayout({
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
               <div>
                 <div className="flex items-center gap-2 mb-4">
-                  <DualIcon size={22} className="text-[#e8a838]" />
-                  <span className="text-lg font-bold">DUAL Tickets</span>
+                  <DualLogo height={18} className="text-[#e8a838]" />
+                  <span className="text-lg font-bold text-gray-500">Tickets</span>
                 </div>
                 <p className="text-sm text-gray-600">
                   The future of live events on-chain. Transparent, secure, fair.

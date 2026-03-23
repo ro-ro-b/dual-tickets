@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { DualIcon } from './DualLogo'
+import { DualLogo } from './DualLogo'
 
 interface Event {
   id: string
@@ -108,10 +108,7 @@ export default function TicketsPage() {
           <div className="max-w-4xl mx-auto text-center">
             {/* DUAL Logo + Tagline */}
             <div className="flex flex-col items-center gap-4 mb-8">
-              <div className="flex items-center gap-3">
-                <DualIcon size={48} className="text-[#e8a838]" />
-                <span className="text-5xl md:text-6xl font-black tracking-tight text-white">DUAL</span>
-              </div>
+              <DualLogo height={48} className="text-[#e8a838]" />
               <p className="text-xl md:text-2xl italic font-light tracking-wide">
                 <span className="bg-gradient-to-r from-[#e8a838] via-[#f0c040] to-[#d4632a] bg-clip-text text-transparent">The Tokenised Future of Events and Tickets</span>
               </p>
