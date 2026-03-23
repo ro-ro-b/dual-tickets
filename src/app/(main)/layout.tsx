@@ -15,7 +15,6 @@ export default function TicketsLayout({
 
   const navLinks = [
     { href: '/', label: 'Home' },
-    { href: '/events', label: 'Events' },
     { href: '/my-tickets', label: 'My Tickets' },
     { href: '/marketplace', label: 'Marketplace' },
     { href: '/scan', label: 'Scan' },
@@ -135,7 +134,6 @@ export default function TicketsLayout({
       <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 bg-[#0e0e0e] md:hidden border-t border-[#474747]/20">
         {[
           { href: '/', icon: 'home', label: 'Home' },
-          { href: '/events', icon: 'event_note', label: 'Events' },
           { href: '/marketplace', icon: 'storefront', label: 'Market' },
           { href: '/scan', icon: 'qr_code_scanner', label: 'Scan' },
           { href: '/admin', icon: 'person', label: 'Profile' },
