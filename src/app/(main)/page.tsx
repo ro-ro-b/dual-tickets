@@ -34,11 +34,11 @@ export default function HomePage() {
   }
 
   const IMAGE_MAP: Record<string, string> = {
-    'Burning Man 2026': 'https://images.unsplash.com/photo-1560804855-42d16e132f60?w=800&q=80',
+    'Burning Man 2026': 'https://images.unsplash.com/photo-1504457047772-27faf1c00561?w=800&q=80',
     'UEFA Champions League Final 2026': 'https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?w=800&q=80',
-    'Art Basel Miami Beach 2026': 'https://images.unsplash.com/photo-1578301978693-85fa9fd0c984?w=800&q=80',
+    'Art Basel Miami Beach 2026': 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80',
     'Tokyo Game Show 2026': 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=80',
-    'Sydney Opera House — Luminous Nights Concert': 'https://images.unsplash.com/photo-1624138784614-87fd1b6528f0?w=800&q=80',
+    'Sydney Opera House — Luminous Nights Concert': 'https://images.unsplash.com/photo-1523059623039-a9ed027e7fad?w=800&q=80',
   }
 
   useEffect(() => {
