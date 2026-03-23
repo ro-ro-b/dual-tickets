@@ -98,27 +98,25 @@ export default function TicketsLayout({
               </p>
             </div>
             <div>
-              <h4 className="font-headline text-[10px] uppercase tracking-[0.3em] text-[#919191] mb-6">Platform</h4>
+              <h4 className="font-headline text-[10px] uppercase tracking-[0.3em] text-[#919191] mb-6">Navigate</h4>
               <ul className="space-y-3 text-sm text-[#c7c6c6]">
-                <li><a href="#" className="hover:text-white transition-colors">About</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Security</a></li>
+                <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
+                <li><Link href="/my-tickets" className="hover:text-white transition-colors">My Tickets</Link></li>
+                <li><Link href="/marketplace" className="hover:text-white transition-colors">Marketplace</Link></li>
+                <li><Link href="/scan" className="hover:text-white transition-colors">Venue Scanner</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-headline text-[10px] uppercase tracking-[0.3em] text-[#919191] mb-6">Learn</h4>
+              <h4 className="font-headline text-[10px] uppercase tracking-[0.3em] text-[#919191] mb-6">Network</h4>
               <ul className="space-y-3 text-sm text-[#c7c6c6]">
-                <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
+                <li><a href="https://32f.blockv.io/token/0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Blockscout Explorer</a></li>
+                <li><a href="https://32f.blockv.io" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">DUAL Chain</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-headline text-[10px] uppercase tracking-[0.3em] text-[#919191] mb-6">Legal</h4>
-              <ul className="space-y-3 text-sm text-[#c7c6c6]">
-                <li><a href="#" className="hover:text-white transition-colors">Privacy</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Terms</a></li>
-              </ul>
+              <h4 className="font-headline text-[10px] uppercase tracking-[0.3em] text-[#919191] mb-6">Contract</h4>
+              <p className="text-xs text-[#c7c6c6] font-mono break-all leading-relaxed">0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06</p>
+              <p className="text-xs text-[#919191] mt-2">ERC-721 on DUAL Network</p>
             </div>
           </div>
           <div className="border-t border-[#474747]/20 pt-8 flex items-center justify-between">

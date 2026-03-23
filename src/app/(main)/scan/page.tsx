@@ -32,10 +32,10 @@ const tierColors: Record<string, { bg: string; text: string; border: string }> =
 }
 
 const DEMO_TICKETS: Record<string, { eventName: string; tier: string; seat: string; price: number; maxResale: number; holder: string }> = {
-  'demo-1': { eventName: 'Neon Dreams Festival 2026', tier: 'backstage', seat: 'B-142', price: 299, maxResale: 450, holder: '0x7a8f9d2c...e4b1' },
-  'demo-2': { eventName: 'Virtual Reality Concert Series', tier: 'vip', seat: 'A-055', price: 149, maxResale: 250, holder: '0x4b3e6a1f...c8d2' },
-  'demo-3': { eventName: 'Crypto Cup 2026 - Final Match', tier: 'general', seat: 'C-287', price: 89, maxResale: 150, holder: '0x2d9c5e7b...a3f9' },
-  'demo-4': { eventName: 'The Holographic Opera', tier: 'backstage', seat: 'F-018', price: 249, maxResale: 375, holder: '0x8f2a4c9e...d7b3' },
+  '69c1b5626d63a822adbe1dca': { eventName: 'Electric Dreams — Sydney Harbour NYE 2026', tier: 'vip', seat: 'Platinum Deck', price: 350, maxResale: 500, holder: '0x2A976Bfa...8110' },
+  '69c1a31ace3f7201f7e553a6': { eventName: 'Neon Horizon — Sydney Electronic Music Festival 2026', tier: 'vip', seat: 'VIP Lounge', price: 175, maxResale: 250, holder: '0x2A976Bfa...8110' },
+  '69c114ad0d1fd1090e023a1a': { eventName: 'Burning Man 2026', tier: 'general', seat: 'Open Playa — GA', price: 575, maxResale: 800, holder: '0x2A976Bfa...8110' },
+  '69c114ac0d1fd1090e023a13': { eventName: 'UEFA Champions League Final 2026', tier: 'premium', seat: 'West Stand Lower — Row 8, Seat 44', price: 1500, maxResale: 2000, holder: '0x2A976Bfa...8110' },
 }
 
 export default function ScannerPage() {
@@ -301,14 +301,19 @@ export default function ScannerPage() {
                   value={ticketIdInput}
                   onChange={(e) => setTicketIdInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && !loading && handleScanTicket()}
-                  placeholder="Enter ticket ID (e.g., demo-1)"
+                  placeholder="Enter ticket ID or paste object hash"
                   disabled={loading}
                   className="w-full px-4 py-3 bg-[#131313] border border-[#39ff14]/30 text-white placeholder-[#919191] focus:border-[#39ff14] focus:outline-none transition-colors disabled:opacity-50"
                 />
                 <div className="mt-2 flex flex-wrap gap-2">
                   <span className="text-xs text-[#919191]">Quick scan:</span>
-                  {Object.keys(DEMO_TICKETS).map(id => (
-                    <button key={id} onClick={() => setTicketIdInput(id)} className="text-xs px-2 py-1 bg-[#131313] border border-[#474747]/20 text-[#919191] hover:text-[#39ff14] hover:border-[#39ff14]/30 transition-colors">{id}</button>
+                  {[
+                    { id: '69c1b5626d63a822adbe1dca', label: 'NYE 2026' },
+                    { id: '69c1a31ace3f7201f7e553a6', label: 'Neon Horizon' },
+                    { id: '69c114ad0d1fd1090e023a1a', label: 'Burning Man' },
+                    { id: '69c114ac0d1fd1090e023a13', label: 'UEFA Final' },
+                  ].map(item => (
+                    <button key={item.id} onClick={() => setTicketIdInput(item.id)} className="text-xs px-2 py-1 bg-[#131313] border border-[#474747]/20 text-[#919191] hover:text-[#39ff14] hover:border-[#39ff14]/30 transition-colors">{item.label}</button>
                   ))}
                 </div>
               </div>

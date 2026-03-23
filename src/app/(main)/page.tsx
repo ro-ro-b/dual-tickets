@@ -23,6 +23,24 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
+  const VENUE_MAP: Record<string, string> = {
+    'Electric Dreams — Sydney Harbour NYE 2026': 'Sydney Harbour Bridge',
+    'Neon Horizon — Sydney Electronic Music Festival 2026': 'Hordern Pavilion, Sydney',
+    'Burning Man 2026': 'Black Rock City, Nevada',
+    'UEFA Champions League Final 2026': 'Allianz Arena, Munich',
+    'Art Basel Miami Beach 2026': 'Miami Beach Convention Center',
+    'Tokyo Game Show 2026': 'Makuhari Messe, Tokyo',
+    'Sydney Opera House — Luminous Nights Concert': 'Sydney Opera House',
+  }
+
+  const IMAGE_MAP: Record<string, string> = {
+    'Burning Man 2026': 'https://images.unsplash.com/photo-1560804855-42d16e132f60?w=800&q=80',
+    'UEFA Champions League Final 2026': 'https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?w=800&q=80',
+    'Art Basel Miami Beach 2026': 'https://images.unsplash.com/photo-1578301978693-85fa9fd0c984?w=800&q=80',
+    'Tokyo Game Show 2026': 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=80',
+    'Sydney Opera House — Luminous Nights Concert': 'https://images.unsplash.com/photo-1624138784614-87fd1b6528f0?w=800&q=80',
+  }
+
   useEffect(() => {
     async function fetchEvents() {
       try {
@@ -33,15 +51,16 @@ export default function HomePage() {
 
         const mapped: Event[] = tickets.map((t: any) => {
           const td = t.ticketData || {}
+          const eventName = td.eventName || td.name || 'Event'
           return {
             id: t.id || t.objectId,
-            name: td.eventName || td.name || 'Event',
+            name: eventName,
             date: td.eventDate || t.createdAt || '',
-            venue: td.venue || '',
+            venue: td.venue || VENUE_MAP[eventName] || '',
             tier: td.tier || td.ticketTier || 'General',
             price: td.price || td.originalPrice || 0,
             originalPrice: td.originalPrice || td.price || 0,
-            imageUrl: td.imageUrl,
+            imageUrl: td.imageUrl || IMAGE_MAP[eventName],
             isLive: !!t.blockchainTxHash,
             contractAddress: t.contractAddress || '0x41Cf...5aFF06',
           }
@@ -107,11 +126,11 @@ export default function HomePage() {
               Curated high-stakes digital access for global events. Secured by the architectural integrity of <DualInline className="text-white" /> Network&apos;s on-chain enforcement.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link href="/events">
+              <a href="#events">
                 <button className="bg-[#39ff14] text-black font-headline font-bold text-xs uppercase tracking-widest px-8 py-4 transition-all hover:bg-[#2de010] hover:shadow-[0_0_20px_rgba(57,255,20,0.3)]">
                   View Collections
                 </button>
-              </Link>
+              </a>
               <Link href="/marketplace">
                 <button className="bg-transparent border-2 border-[#39ff14] text-[#39ff14] font-headline font-bold text-xs uppercase tracking-widest px-8 py-4 transition-all hover:bg-[#39ff14] hover:text-black">
                   Marketplace
@@ -142,6 +161,7 @@ export default function HomePage() {
         </div>
 
         {/* Event Grid */}
+        <div id="events">
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -246,6 +266,7 @@ export default function HomePage() {
             <p className="font-headline text-[10px] uppercase tracking-[0.3em] text-[#39ff14]/40">End of Live Feed</p>
           </div>
         )}
+        </div>
       </div>
     </div>
   )
