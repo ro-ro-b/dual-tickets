@@ -40,8 +40,8 @@ async function resolveBlockscoutLinks(ownerAddress: string): Promise<Map<string,
   if (_blockscoutCache && Date.now() - _blockscoutCacheTime < 300000) return _blockscoutCache;
   const map = new Map<string, BlockscoutLinks>();
   try {
-    // Single API call: get all token instances owned by this address (includes metadata with integrity_hash)
-    const instUrl = `${BLOCKSCOUT_BASE}/api/v2/tokens/${DUAL_CONTRACT}/instances?holder_address_hash=${ownerAddress}`;
+    // Fetch ALL token instances for the contract (not filtered by holder, which may not work on all Blockscout versions)
+    const instUrl = `${BLOCKSCOUT_BASE}/api/v2/tokens/${DUAL_CONTRACT}/instances`;
     const instRes = await fetch(instUrl);
     if (!instRes.ok) return map;
     const instData = await instRes.json();
@@ -58,16 +58,15 @@ async function resolveBlockscoutLinks(ownerAddress: string): Promise<Map<string,
     // Single API call: get token transfers to find tx hashes
     const txUrl = `${BLOCKSCOUT_BASE}/api/v2/addresses/${ownerAddress}/token-transfers?type=ERC-721&filter=to`;
     const txRes = await fetch(txUrl);
-    if (!txRes.ok) return map;
-    const txData = await txRes.json();
-    const transfers = txData?.items || [];
-
-    // Build token_id → tx_hash map from transfers
     const txByTokenId = new Map<string, string>();
-    for (const t of transfers) {
-      const tokenId = t.total?.token_id;
-      const txHash = t.transaction_hash;
-      if (tokenId && txHash) txByTokenId.set(String(tokenId), txHash);
+    if (txRes.ok) {
+      const txData = await txRes.json();
+      const transfers = txData?.items || [];
+      for (const t of transfers) {
+        const tokenId = t.total?.token_id;
+        const txHash = t.transaction_hash;
+        if (tokenId && txHash) txByTokenId.set(String(tokenId), txHash);
+      }
     }
 
     // Combine: integrity_hash → { txUrl, tokenInstanceUrl }
@@ -240,7 +239,7 @@ function mapGatewayToTicket(obj: any): Ticket {
     createdAt: obj.when_created || new Date().toISOString(),
     updatedAt: obj.when_modified || new Date().toISOString(),
     blockchainTxHash: obj.integrity_hash || undefined,
-    explorerLinks: undefined,
+    explorerLinks: null as any,
   };
 }
 

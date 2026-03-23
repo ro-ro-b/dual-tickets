@@ -61,9 +61,9 @@ export default function MyTicketsPage() {
           isLive: true,
           objectId: t.objectId || t.id,
           integrityHash: t.blockchainTxHash,
-          explorerUrl: t.blockchainTxHash
+          explorerUrl: t.explorerLinks?.integrityHash || t.explorerLinks?.contentHash || (t.blockchainTxHash
             ? `${BLOCKSCOUT}/token/${DUAL_CONTRACT}`
-            : undefined,
+            : undefined),
           ownerId: t.ownerId,
           imageUrl: t.ticketData?.imageUrl || undefined,
         }))
