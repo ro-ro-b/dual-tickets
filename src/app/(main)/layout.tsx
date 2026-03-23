@@ -41,7 +41,7 @@ export default function TicketsLayout({
               href={link.href}
               className={`font-headline text-sm tracking-widest uppercase transition-colors ${
                 isActive(link.href)
-                  ? 'text-white border-b-2 border-white pb-1 font-bold'
+                  ? 'text-[#39ff14] border-b-2 border-[#39ff14] pb-1 font-bold'
                   : 'text-[#c7c6c6] hover:text-white'
               }`}
             >
@@ -71,7 +71,7 @@ export default function TicketsLayout({
                 onClick={() => setMobileMenuOpen(false)}
                 className={`px-4 py-4 font-headline text-sm tracking-widest uppercase transition-colors ${
                   isActive(link.href)
-                    ? 'text-white bg-white/5'
+                    ? 'text-[#39ff14] bg-[#39ff14]/5'
                     : 'text-[#c7c6c6] hover:text-white'
                 }`}
               >
@@ -144,7 +144,7 @@ export default function TicketsLayout({
             href={item.href}
             className={`flex flex-col items-center justify-center p-3 transition-colors ${
               isActive(item.href)
-                ? 'bg-white text-[#131313]'
+                ? 'bg-[#39ff14] text-black'
                 : 'text-[#c7c6c6] hover:text-white'
             }`}
           >

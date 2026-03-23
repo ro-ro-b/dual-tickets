@@ -71,19 +71,19 @@ export default function HomePage() {
       <div className="w-full bg-[#0e0e0e] border-y border-[#474747]/20 py-3 overflow-hidden whitespace-nowrap">
         <div className="inline-block animate-marquee">
           <span className="font-headline text-xs tracking-[0.2em] uppercase text-[#c6c6c6] flex items-center space-x-4">
-            <span className="inline-block w-2 h-2 bg-white animate-pulse" />
+            <span className="inline-block w-2 h-2 bg-[#39ff14] animate-pulse" />
             <span>{liveCount} live listings with on-chain price enforcement</span>
             <span className="mx-8 text-[#474747] opacity-30">|</span>
-            <span className="inline-block w-2 h-2 bg-white animate-pulse" />
+            <span className="inline-block w-2 h-2 bg-[#39ff14] animate-pulse" />
             <span>DUAL Network: ERC-721 tokenised tickets with anti-scalp enforcement</span>
             <span className="mx-8 text-[#474747] opacity-30">|</span>
-            <span className="inline-block w-2 h-2 bg-white animate-pulse" />
+            <span className="inline-block w-2 h-2 bg-[#39ff14] animate-pulse" />
             <span>Contract: 0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06</span>
             <span className="mx-8 text-[#474747] opacity-30">|</span>
-            <span className="inline-block w-2 h-2 bg-white animate-pulse" />
+            <span className="inline-block w-2 h-2 bg-[#39ff14] animate-pulse" />
             <span>{liveCount} live listings with on-chain price enforcement</span>
             <span className="mx-8 text-[#474747] opacity-30">|</span>
-            <span className="inline-block w-2 h-2 bg-white animate-pulse" />
+            <span className="inline-block w-2 h-2 bg-[#39ff14] animate-pulse" />
             <span>DUAL Network: ERC-721 tokenised tickets with anti-scalp enforcement</span>
           </span>
         </div>
@@ -94,7 +94,7 @@ export default function HomePage() {
         <header className="grid grid-cols-12 gap-8 mb-16">
           <div className="col-span-12 lg:col-span-7">
             <h1 className="font-headline text-6xl md:text-8xl font-bold uppercase tracking-tight leading-none mb-6">
-              Primary<br />Market<br />Access.
+              Primary<br />Market<br /><span className="text-[#39ff14]">Access.</span>
             </h1>
           </div>
           <div className="col-span-12 lg:col-span-5 flex flex-col justify-end pb-4 border-l border-[#474747]/20 pl-8">
@@ -103,12 +103,12 @@ export default function HomePage() {
             </p>
             <div className="flex flex-wrap gap-4">
               <Link href="/events">
-                <button className="bg-white text-[#1a1c1c] font-headline font-bold text-xs uppercase tracking-widest px-8 py-4 transition-all hover:bg-[#d4d4d4]">
+                <button className="bg-[#39ff14] text-black font-headline font-bold text-xs uppercase tracking-widest px-8 py-4 transition-all hover:bg-[#2de010] hover:shadow-[0_0_20px_rgba(57,255,20,0.3)]">
                   View Collections
                 </button>
               </Link>
               <Link href="/marketplace">
-                <button className="bg-transparent border-2 border-white text-white font-headline font-bold text-xs uppercase tracking-widest px-8 py-4 transition-all hover:bg-white hover:text-[#1a1c1c]">
+                <button className="bg-transparent border-2 border-[#39ff14] text-[#39ff14] font-headline font-bold text-xs uppercase tracking-widest px-8 py-4 transition-all hover:bg-[#39ff14] hover:text-black">
                   Marketplace
                 </button>
               </Link>
@@ -126,8 +126,8 @@ export default function HomePage() {
                 onClick={() => setSelectedFilter(tier)}
                 className={`px-6 py-2 font-headline text-xs uppercase tracking-widest transition-colors ${
                   selectedFilter === tier
-                    ? 'bg-white text-black font-bold'
-                    : 'bg-[#353535] text-white hover:bg-white hover:text-black'
+                    ? 'bg-[#39ff14] text-black font-bold shadow-[0_0_12px_rgba(57,255,20,0.25)]'
+                    : 'bg-[#353535] text-white hover:bg-[#39ff14] hover:text-black'
                 }`}
               >
                 {tier === 'all' ? 'All' : tier}
@@ -175,14 +175,14 @@ export default function HomePage() {
                       </div>
                     )}
                     {/* Tier Badge */}
-                    <div className="absolute top-0 right-0 bg-white text-black px-4 py-2 font-headline font-bold text-xs uppercase tracking-widest">
+                    <div className="absolute top-0 right-0 bg-[#39ff14] text-black px-4 py-2 font-headline font-bold text-xs uppercase tracking-widest">
                       {event.tier}
                     </div>
                   </div>
 
                   {/* Card Content */}
                   <div className="space-y-4">
-                    <h3 className="font-headline text-2xl font-bold uppercase tracking-tight group-hover:text-[#d4d4d4] transition-colors">
+                    <h3 className="font-headline text-2xl font-bold uppercase tracking-tight group-hover:text-[#39ff14] transition-colors">
                       {event.name}
                     </h3>
 
@@ -211,13 +211,13 @@ export default function HomePage() {
                     </div>
 
                     {/* Contract Address */}
-                    <div className="p-4 bg-[#1b1b1b] border border-[#474747]/20">
-                      <p className="text-[9px] text-[#c6c6c6] font-mono uppercase mb-1">Contract Address</p>
+                    <div className="p-4 bg-[#1b1b1b] border border-[#39ff14]/10">
+                      <p className="text-[9px] text-[#39ff14]/60 font-mono uppercase mb-1">Contract Address</p>
                       <p className="text-[10px] text-white font-mono break-all opacity-80">{event.contractAddress}</p>
                     </div>
 
                     {/* CTA Button */}
-                    <button className="w-full bg-white text-black py-4 font-headline font-bold text-xs uppercase tracking-[0.2em] hover:bg-[#d4d4d4] transition-colors">
+                    <button className="w-full bg-white text-black py-4 font-headline font-bold text-xs uppercase tracking-[0.2em] hover:bg-[#39ff14] hover:shadow-[0_0_15px_rgba(57,255,20,0.2)] transition-all">
                       View Event
                     </button>
                   </div>
@@ -238,7 +238,7 @@ export default function HomePage() {
         {/* End of Feed */}
         {!loading && !error && filteredEvents.length > 0 && (
           <div className="mt-20 mb-12 border-t border-[#474747]/20 pt-8 text-center">
-            <p className="font-headline text-[10px] uppercase tracking-[0.3em] text-[#474747]">End of Live Feed</p>
+            <p className="font-headline text-[10px] uppercase tracking-[0.3em] text-[#39ff14]/40">End of Live Feed</p>
           </div>
         )}
       </div>
