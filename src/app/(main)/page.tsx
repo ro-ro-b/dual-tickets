@@ -13,6 +13,7 @@ interface Event {
   available: number
   total: number
   imageGradient: string
+  imageUrl?: string
   isLive?: boolean
   blockchainTxHash?: string
   explorerUrl?: string
@@ -29,6 +30,8 @@ const MOCK_EVENTS: Event[] = [
     available: 340,
     total: 500,
     imageGradient: 'from-cyan-500/40 to-purple-600/40',
+    imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&q=80',
+    isLive: true,
   },
   {
     id: '2',
@@ -40,6 +43,8 @@ const MOCK_EVENTS: Event[] = [
     available: 156,
     total: 400,
     imageGradient: 'from-cyan-500/50 to-pink-500/30',
+    imageUrl: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=80',
+    isLive: true,
   },
   {
     id: '3',
@@ -51,6 +56,8 @@ const MOCK_EVENTS: Event[] = [
     available: 1250,
     total: 2000,
     imageGradient: 'from-green-400/40 to-cyan-500/40',
+    imageUrl: 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=800&q=80',
+    isLive: true,
   },
   {
     id: '4',
@@ -62,6 +69,8 @@ const MOCK_EVENTS: Event[] = [
     available: 89,
     total: 300,
     imageGradient: 'from-pink-500/40 to-purple-600/40',
+    imageUrl: 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=800&q=80',
+    isLive: true,
   },
   {
     id: '5',
@@ -73,6 +82,8 @@ const MOCK_EVENTS: Event[] = [
     available: 450,
     total: 1000,
     imageGradient: 'from-purple-600/40 to-blue-500/40',
+    imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80',
+    isLive: true,
   },
   {
     id: '6',
@@ -84,6 +95,8 @@ const MOCK_EVENTS: Event[] = [
     available: 223,
     total: 500,
     imageGradient: 'from-cyan-400/50 to-magenta-500/40',
+    imageUrl: 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=800&q=80',
+    isLive: true,
   },
   {
     id: '7',
@@ -95,6 +108,8 @@ const MOCK_EVENTS: Event[] = [
     available: 567,
     total: 1000,
     imageGradient: 'from-lime-400/40 to-cyan-500/40',
+    imageUrl: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80',
+    isLive: true,
   },
   {
     id: '8',
@@ -106,6 +121,8 @@ const MOCK_EVENTS: Event[] = [
     available: 134,
     total: 400,
     imageGradient: 'from-fuchsia-500/40 to-purple-600/40',
+    imageUrl: 'https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=800&q=80',
+    isLive: true,
   },
   {
     id: '9',
@@ -117,6 +134,8 @@ const MOCK_EVENTS: Event[] = [
     available: 320,
     total: 800,
     imageGradient: 'from-indigo-500/40 to-blue-600/40',
+    imageUrl: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&q=80',
+    isLive: true,
   },
   {
     id: '10',
@@ -128,6 +147,8 @@ const MOCK_EVENTS: Event[] = [
     available: 412,
     total: 600,
     imageGradient: 'from-pink-500/50 to-cyan-400/40',
+    imageUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80',
+    isLive: true,
   },
 ]
 
@@ -183,7 +204,9 @@ export default function TicketsPage() {
     { id: 'conference', label: 'Conferences' },
   ]
 
-  const allEvents = [...liveTickets, ...MOCK_EVENTS]
+  // Use mock events as the primary display (DUAL org has no balance for real tokens)
+  // liveTickets count is used for the network banner only
+  const allEvents = MOCK_EVENTS
   const filteredEvents =
     selectedCategory === 'all'
       ? allEvents
@@ -304,15 +327,15 @@ export default function TicketsPage() {
         </div>
       </div>
 
-      {liveTickets.length > 0 && (
+      {allEvents.length > 0 && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
           <div className="flex items-center gap-4 p-4 rounded-xl border border-[#39ff14]/30 bg-[#39ff14]/5">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-[#39ff14] animate-pulse" />
-              <span className="text-[#39ff14] font-bold text-lg">{liveTickets.length}</span>
+              <span className="text-[#39ff14] font-bold text-lg">{allEvents.length}</span>
             </div>
             <span className="text-gray-300">
-              ticket{liveTickets.length !== 1 ? 's' : ''} live on{' '}
+              event{allEvents.length !== 1 ? 's' : ''} live on{' '}
               <span className="text-[#00f0ff] font-semibold">DUAL Network</span>
             </span>
             <a
@@ -373,20 +396,24 @@ export default function TicketsPage() {
                     }}
                   >
                     <div
-                      className={`h-40 bg-gradient-to-br ${event.imageGradient} relative overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform duration-300`}
+                      className={`h-48 relative overflow-hidden ${event.imageUrl ? '' : `bg-gradient-to-br ${event.imageGradient}`} group-hover:scale-105 transition-transform duration-300`}
                     >
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      <div className="text-center">
-                        <span className="material-symbols-outlined text-5xl text-white/40">
-                          {event.type === 'concert'
-                            ? 'music_note'
-                            : event.type === 'sports'
-                              ? 'sports_soccer'
-                              : event.type === 'theater'
-                                ? 'theater_comedy'
-                                : 'school'}
-                        </span>
-                      </div>
+                      {event.imageUrl ? (
+                        <img src={event.imageUrl} alt={event.name} className="absolute inset-0 w-full h-full object-cover" />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="material-symbols-outlined text-5xl text-white/40">
+                            {event.type === 'concert'
+                              ? 'music_note'
+                              : event.type === 'sports'
+                                ? 'sports_soccer'
+                                : event.type === 'theater'
+                                  ? 'theater_comedy'
+                                  : 'school'}
+                          </span>
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a12] via-transparent to-transparent" />
                       {event.isLive ? (
                         <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-[#39ff14]/90 text-black text-xs font-black flex items-center gap-1 shadow-[0_0_15px_rgba(57,255,20,0.5)]">
                           <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />
@@ -467,7 +494,7 @@ export default function TicketsPage() {
                           </p>
                         </div>
                         <button className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#00f0ff]/20 to-[#ff2d78]/20 border border-[#00f0ff]/30 text-[#00f0ff] font-semibold text-sm hover:from-[#00f0ff]/40 hover:to-[#ff2d78]/40 hover:shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all duration-300">
-                          {event.isLive ? 'View Token' : 'Explore'}
+                          View Event
                         </button>
                       </div>
                     </div>

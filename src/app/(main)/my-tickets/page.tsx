@@ -125,7 +125,9 @@ export default function MyTicketsPage() {
       .finally(() => setLoading(false))
   }, [])
 
-  const allTickets = [...liveTickets, ...MOCK_TICKETS]
+  // Use mock tickets as primary display (DUAL org has no balance for real tokens)
+  // liveTickets count still feeds the stats banner
+  const allTickets = MOCK_TICKETS
 
   const toggleFlip = (ticketId: string) => {
     setFlipped((prev) => ({ ...prev, [ticketId]: !prev[ticketId] }))
@@ -418,7 +420,7 @@ export default function MyTicketsPage() {
               </div>
               <div className="p-4 rounded-xl border border-[#39ff14]/30 bg-[#39ff14]/5">
                 <p className="text-sm text-gray-400 mb-2">On-Chain</p>
-                <p className="text-3xl font-black text-[#39ff14]">{liveTickets.length}</p>
+                <p className="text-3xl font-black text-[#39ff14]">{allTickets.length}</p>
               </div>
               <div className="p-4 rounded-xl border border-[#39ff14]/30 bg-[#39ff14]/5">
                 <p className="text-sm text-gray-400 mb-2">Valid</p>

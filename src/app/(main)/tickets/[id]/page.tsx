@@ -22,12 +22,27 @@ interface Event {
   venue: string
   description: string
   imageGradient: string
+  imageUrl?: string
   tiers: TicketTier[]
   priceFloor: number
   priceCeiling: number
   isLive?: boolean
   blockchainTxHash?: string
   explorerUrl?: string
+}
+
+// Event images keyed by mock event ID
+const EVENT_IMAGES: Record<string, string> = {
+  '1': 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1200&q=80',
+  '2': 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1200&q=80',
+  '3': 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1200&q=80',
+  '4': 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=1200&q=80',
+  '5': 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=80',
+  '6': 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=1200&q=80',
+  '7': 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200&q=80',
+  '8': 'https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=1200&q=80',
+  '9': 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=1200&q=80',
+  '10': 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1200&q=80',
 }
 
 const MOCK_EVENTS: Record<string, Event> = {
@@ -249,6 +264,102 @@ const MOCK_EVENTS: Record<string, Event> = {
     priceFloor: 49,
     priceCeiling: 249,
   },
+  '5': {
+    id: '5',
+    name: 'Web3 Summit 2026',
+    date: '2026-08-03',
+    time: '09:00 - 18:00',
+    venue: 'Denver Convention Center',
+    description: 'The premier Web3 conference bringing together builders, investors, and visionaries. Three days of keynotes, workshops, and networking across decentralized finance, NFTs, DAOs, and the future of the internet.',
+    imageGradient: 'from-purple-600/40 to-blue-500/40',
+    tiers: [
+      { id: 'ga', name: 'General Admission', price: 299, description: 'Full conference access', perks: ['All keynotes and panels', 'Exhibition hall access', 'Digital swag bag', 'Conference recordings'], remaining: 450, total: 700, tier: 'standard' },
+      { id: 'vip', name: 'VIP Access', price: 699, description: 'Premium conference experience', perks: ['Priority seating at all talks', 'VIP networking lounge', 'Exclusive workshop sessions', 'Speaker meet & greet', 'Premium swag collection'], remaining: 120, total: 200, tier: 'vip' },
+      { id: 'whale', name: 'Whale Pass', price: 999, description: 'The ultimate summit experience', perks: ['Front row reserved seating', 'Private dinner with speakers', 'Lifetime conference access', 'DAO governance token airdrop', 'Executive suite access', 'Helicopter transfer'], remaining: 18, total: 100, tier: 'premium' },
+    ],
+    priceFloor: 299,
+    priceCeiling: 999,
+  },
+  '6': {
+    id: '6',
+    name: 'Cyberpunk Live: Electric Revolution',
+    date: '2026-04-28',
+    time: '21:00 - 03:00',
+    venue: 'Seattle Paramount Theatre',
+    description: 'An electrifying live performance blending cyberpunk aesthetics with cutting-edge electronic music. Laser arrays, holographic performers, and neural-reactive lighting create an unforgettable sensory experience.',
+    imageGradient: 'from-cyan-400/50 to-magenta-500/40',
+    tiers: [
+      { id: 'floor', name: 'Standing Floor', price: 79, description: 'General standing area', perks: ['Floor standing access', 'LED wristband', 'Digital commemorative poster'], remaining: 223, total: 350, tier: 'standard' },
+      { id: 'balcony-vip', name: 'Balcony VIP', price: 179, description: 'Elevated VIP experience', perks: ['Reserved balcony seating', 'VIP bar with 2 drinks included', 'Early entry (1 hour)', 'Exclusive merch access'], remaining: 55, total: 100, tier: 'vip' },
+      { id: 'backstage', name: 'Backstage All-Access', price: 249, description: 'The complete backstage experience', perks: ['Full backstage access', 'Meet the performers', 'Sound check viewing', 'Signed limited edition vinyl', 'After-party invite', 'Exclusive NFT wearable'], remaining: 8, total: 50, tier: 'premium' },
+    ],
+    priceFloor: 79,
+    priceCeiling: 249,
+  },
+  '7': {
+    id: '7',
+    name: 'AI vs Humans: Esports Championship',
+    date: '2026-05-14',
+    time: '12:00 - 20:00',
+    venue: 'Tokyo International Center',
+    description: 'Watch the world\'s best gamers face off against advanced AI opponents in the ultimate test of skill and strategy. Featuring multiple game titles, live commentary, and a $5M prize pool.',
+    imageGradient: 'from-lime-400/40 to-cyan-500/40',
+    tiers: [
+      { id: 'spectator', name: 'Spectator Pass', price: 39, description: 'Standard arena seating', perks: ['Arena seating', 'Live match commentary', 'Access to fan zone', 'Digital match replays'], remaining: 567, total: 800, tier: 'standard' },
+      { id: 'premium', name: 'Premium Arena', price: 129, description: 'Close to the action', perks: ['Front section seating', 'Pro player lounge access', 'Exclusive stats dashboard', 'Signed team jerseys raffle'], remaining: 80, total: 150, tier: 'vip' },
+      { id: 'champions', name: 'Champions Box', price: 199, description: 'The ultimate esports experience', perks: ['Private viewing suite', 'Pro player meet & greet', 'Championship trophy photo op', 'Exclusive in-game items', 'Post-match celebration access'], remaining: 12, total: 50, tier: 'premium' },
+    ],
+    priceFloor: 39,
+    priceCeiling: 199,
+  },
+  '8': {
+    id: '8',
+    name: 'The Digital Canvas: Immersive Art Experience',
+    date: '2026-06-30',
+    time: '10:00 - 21:00',
+    venue: 'London National Gallery (Web3 Wing)',
+    description: 'Step inside art like never before. This immersive exhibition transforms classic and contemporary masterpieces into room-scale interactive experiences using projection mapping, spatial audio, and AR technology.',
+    imageGradient: 'from-fuchsia-500/40 to-purple-600/40',
+    tiers: [
+      { id: 'timed', name: 'Timed Entry', price: 69, description: 'Standard 2-hour time slot', perks: ['2-hour timed entry', 'All gallery rooms', 'AR companion app', 'Digital art prints (3)'], remaining: 134, total: 250, tier: 'standard' },
+      { id: 'flex', name: 'Flex Pass', price: 129, description: 'All-day unlimited access', perks: ['Unlimited same-day access', 'Skip-the-line entry', 'Guided audio tour', 'Physical art book', 'Artist Q&A session'], remaining: 45, total: 100, tier: 'vip' },
+      { id: 'patron', name: 'Patron Experience', price: 199, description: 'Curated private experience', perks: ['Private after-hours viewing', 'Champagne reception with curator', 'Signed limited edition print', 'Annual gallery membership', 'NFT art collection airdrop'], remaining: 10, total: 50, tier: 'premium' },
+    ],
+    priceFloor: 69,
+    priceCeiling: 199,
+  },
+  '9': {
+    id: '9',
+    name: 'Future Tech Innovators Summit',
+    date: '2026-09-12',
+    time: '08:30 - 17:30',
+    venue: 'Berlin Tech Hub',
+    description: 'Europe\'s leading technology conference exploring AI, quantum computing, robotics, and space tech. Featuring 100+ speakers, hands-on demos, startup pitch competitions, and an innovation showcase.',
+    imageGradient: 'from-indigo-500/40 to-blue-600/40',
+    tiers: [
+      { id: 'standard', name: 'Standard Pass', price: 199, description: 'Full conference access', perks: ['All sessions and demos', 'Innovation hall access', 'Networking app', 'Conference proceedings'], remaining: 320, total: 500, tier: 'standard' },
+      { id: 'pro', name: 'Pro Innovator', price: 449, description: 'Enhanced networking and workshops', perks: ['Reserved workshop seating', 'Innovator networking dinner', 'Startup pitch front row', 'Pro badge with priority access', '1-on-1 mentor session'], remaining: 85, total: 200, tier: 'vip' },
+      { id: 'founder', name: 'Founder Circle', price: 599, description: 'Executive-level access', perks: ['Private founder lounge', 'Investor speed dating', 'VIP dinner with keynote speakers', 'Media interview opportunity', 'Lifetime alumni network access', 'Custom branded NFT credential'], remaining: 25, total: 100, tier: 'premium' },
+    ],
+    priceFloor: 199,
+    priceCeiling: 599,
+  },
+  '10': {
+    id: '10',
+    name: 'Synth Wave Night: Retrowave Festival',
+    date: '2026-07-19',
+    time: '20:00 - 04:00',
+    venue: 'Chicago Navy Pier',
+    description: 'A neon-drenched celebration of retrowave and synthwave culture. DJs, live bands, retro arcade zone, DeLorean car show, and a lakefront laser light finale. The 80s never looked so futuristic.',
+    imageGradient: 'from-pink-500/50 to-cyan-400/40',
+    tiers: [
+      { id: 'wave-rider', name: 'Wave Rider', price: 55, description: 'General festival access', perks: ['All stages access', 'Retro arcade zone', 'LED glow kit', 'Digital photo pack'], remaining: 412, total: 450, tier: 'standard' },
+      { id: 'neon-vip', name: 'Neon VIP', price: 125, description: 'Elevated retro experience', perks: ['VIP viewing platform', 'Neon bar with 3 drinks', 'Priority arcade access', 'Exclusive vinyl sampler', 'VIP parking'], remaining: 60, total: 100, tier: 'vip' },
+      { id: 'chrome', name: 'Chrome Elite', price: 175, description: 'The ultimate synth experience', perks: ['DeLorean arrival experience', 'Artist greenroom access', 'Signed band merch bundle', 'Private lakefront fireworks viewing', 'After-party DJ set access', 'Holographic collector card'], remaining: 15, total: 50, tier: 'premium' },
+    ],
+    priceFloor: 55,
+    priceCeiling: 175,
+  },
 }
 
 export default function EventDetailPage({
@@ -263,26 +374,57 @@ export default function EventDetailPage({
   const [minting, setMinting] = useState(false)
 
   useEffect(() => {
-    if (mockEvent) {
-      fetch(`/api/tickets/${params.id}`)
-        .then((r) => r.json())
-        .then((data) => {
-          if (data.ticket) {
-            setLiveData(data.ticket)
+    // Always try the API — for mock events it enriches with live data,
+    // for real DUAL ticket IDs it builds the event from ticket data
+    fetch(`/api/tickets/${params.id}`)
+      .then((r) => r.json())
+      .then((data) => {
+        const ticket = data.ticket || data;
+        if (ticket && ticket.id) {
+          setLiveData(ticket)
+          if (mockEvent) {
+            // Enrich mock event with live chain data
             setEvent((prev) =>
               prev
                 ? {
                     ...prev,
                     isLive: true,
-                    blockchainTxHash: data.ticket.blockchainTxHash,
+                    blockchainTxHash: ticket.blockchainTxHash,
                     explorerUrl: `https://32f.blockv.io/token/0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06`,
                   }
                 : null
             )
+          } else {
+            // Build event from real DUAL ticket data
+            const td = ticket.ticketData || {};
+            setEvent({
+              id: ticket.id,
+              name: td.eventName || td.name || 'Event',
+              date: td.eventDate || ticket.createdAt || new Date().toISOString(),
+              time: td.eventTime || 'TBA',
+              venue: td.venue || 'DUAL Network',
+              description: td.description || 'An on-chain verified ticket on the DUAL Network.',
+              imageGradient: 'from-[#00f0ff]/40 to-[#39ff14]/40',
+              tiers: [{
+                id: 'general',
+                name: td.tier ? td.tier.charAt(0).toUpperCase() + td.tier.slice(1) : 'General Admission',
+                price: td.price || 0,
+                description: td.description || 'On-chain verified ticket',
+                perks: td.perks || ['DUAL Network verified', 'Anti-scalp protection', 'Transferable'],
+                remaining: 1,
+                total: 1,
+                tier: (td.tier === 'vip' ? 'vip' : td.tier === 'premium' ? 'premium' : 'standard') as any,
+              }],
+              priceFloor: td.price || 0,
+              priceCeiling: td.maxResalePrice || td.price || 0,
+              isLive: true,
+              blockchainTxHash: ticket.blockchainTxHash,
+              explorerUrl: `https://32f.blockv.io/token/0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06`,
+            })
           }
-        })
-        .catch(() => {})
-    }
+        }
+      })
+      .catch(() => {})
   }, [params.id, mockEvent])
 
   const handleMintTicket = async (tierId: string) => {
@@ -376,17 +518,15 @@ export default function EventDetailPage({
         }
       `}</style>
 
-      <div className={`relative h-96 overflow-hidden bg-gradient-to-br ${event.imageGradient}`}>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#08080f] via-transparent to-transparent" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="material-symbols-outlined text-9xl text-white/20">
-            {event.id === '1' || event.id === '2' || event.id === '6'
-              ? 'music_note'
-              : event.id === '3' || event.id === '7'
-                ? 'sports_soccer'
-                : 'theater_comedy'}
-          </span>
-        </div>
+      <div className={`relative h-96 overflow-hidden ${EVENT_IMAGES[event.id] ? '' : `bg-gradient-to-br ${event.imageGradient}`}`}>
+        {EVENT_IMAGES[event.id] ? (
+          <img src={EVENT_IMAGES[event.id]} alt={event.name} className="absolute inset-0 w-full h-full object-cover" />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="material-symbols-outlined text-9xl text-white/20">confirmation_number</span>
+          </div>
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#08080f] via-[#08080f]/40 to-transparent" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
