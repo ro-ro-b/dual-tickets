@@ -423,7 +423,7 @@ export default function EventDetailPage({
               time: td.eventTime || 'TBA',
               venue: td.venue || 'DUAL Network',
               description: td.description || 'An on-chain verified ticket on the DUAL Network.',
-              imageGradient: 'from-[#e8a838]/40 to-[#39ff14]/40',
+              imageGradient: 'from-[#e8a838]/40 to-[#d4632a]/40',
               imageUrl: td.imageUrl,
               tiers: [{
                 id: 'general',
@@ -564,37 +564,6 @@ export default function EventDetailPage({
           }
         }
 
-        @keyframes holographic-rotate {
-          0% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 50%;
-          }
-        }
-
-        .holographic {
-          background-size: 300% 300%;
-          animation: holographic-rotate 6s ease infinite;
-        }
-
-        .gloss-effect {
-          position: relative;
-        }
-
-        .gloss-effect::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 50%;
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
-          border-radius: inherit;
-        }
       `}</style>
 
       <div className={`relative h-96 overflow-hidden ${(EVENT_IMAGES[event.id] || event.imageUrl) ? '' : `bg-gradient-to-br ${event.imageGradient}`}`}>
@@ -623,9 +592,9 @@ export default function EventDetailPage({
           </h1>
 
           {event.isLive && (
-            <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#39ff14]/10 border border-[#39ff14]/30">
+            <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#e8a838]/10 border border-[#e8a838]/30">
               <span className="w-2 h-2 rounded-full bg-[#39ff14] animate-pulse" />
-              <span className="text-sm font-bold text-[#39ff14]">LIVE ON <DualInline /> NETWORK</span>
+              <span className="text-sm font-bold text-[#e8a838]">LIVE ON <DualInline /> NETWORK</span>
               {event.explorerUrl && (
                 <a
                   href={event.explorerUrl}
@@ -663,10 +632,10 @@ export default function EventDetailPage({
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <span className="material-symbols-outlined text-[#39ff14]">verified</span>
+              <span className="material-symbols-outlined text-[#e8a838]">verified</span>
               <div>
                 <p className="text-sm text-gray-400 mb-1">Verification</p>
-                <p className="font-semibold text-[#39ff14]"><><DualInline /> Verified</></p>
+                <p className="font-semibold text-[#e8a838]"><><DualInline /> Verified</></p>
               </div>
             </div>
           </div>
@@ -680,45 +649,44 @@ export default function EventDetailPage({
             {event.tiers.map((tier) => (
               <div
                 key={tier.id}
-                className={`relative group gloss-effect rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer ${
+                className={`relative group rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer bg-[#151210] ${
                   tier.tier === 'premium' ? 'md:scale-105 md:origin-bottom' : ''
                 } ${
                   selectedTier === tier.id
                     ? 'ring-2 ring-[#e8a838] scale-105'
-                    : 'hover:scale-105'
+                    : 'hover:scale-[1.02]'
                 }`}
                 onClick={() => setSelectedTier(tier.id)}
               >
-                <div
-                  className={`absolute inset-0 -z-10 transition-all duration-300 ${
-                    tier.tier === 'premium'
-                      ? 'holographic bg-gradient-to-br from-[#d4632a]/30 via-[#e8a838]/20 to-[#6c2bd9]/30'
-                      : tier.tier === 'vip'
-                        ? 'bg-gradient-to-br from-[#d4632a]/20 to-[#6c2bd9]/20'
-                        : 'bg-gradient-to-br from-[#e8a838]/10 to-[#39ff14]/10'
-                  }`}
-                />
+                {/* Gold accent bar at top */}
+                <div className={`h-1 w-full ${
+                  tier.tier === 'premium'
+                    ? 'bg-gradient-to-r from-[#d4632a] via-[#e8a838] to-[#d4632a]'
+                    : tier.tier === 'vip'
+                      ? 'bg-gradient-to-r from-[#d4632a] to-[#e8a838]'
+                      : 'bg-gradient-to-r from-[#e8a838]/60 to-[#e8a838]/20'
+                }`} />
 
                 <div
                   className={`absolute inset-0 rounded-2xl pointer-events-none transition-all duration-300 ${
                     tier.tier === 'premium'
-                      ? 'border-2 border-transparent bg-gradient-to-r from-[#d4632a] via-[#e8a838] to-[#6c2bd9] bg-clip-border'
+                      ? 'border-2 border-[#e8a838]/50 group-hover:border-[#e8a838]'
                       : tier.tier === 'vip'
-                        ? 'border-2 border-[#d4632a]/50 group-hover:border-[#d4632a]'
-                        : 'border border-[#e8a838]/30 group-hover:border-[#e8a838]/70'
+                        ? 'border border-[#d4632a]/40 group-hover:border-[#d4632a]/70'
+                        : 'border border-[#2a2420] group-hover:border-[#3a332c]'
                   }`}
                 />
 
                 <div className="relative p-8 flex flex-col h-full">
                   {tier.tier === 'premium' && (
-                    <div className="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-[#d4632a] to-[#6c2bd9] w-fit">
-                      <span className="material-symbols-outlined text-sm">crown</span>
-                      <span className="text-xs font-bold">PREMIUM</span>
+                    <div className="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#e8a838]/15 border border-[#e8a838]/40 w-fit">
+                      <span className="material-symbols-outlined text-sm text-[#e8a838]">crown</span>
+                      <span className="text-xs font-bold text-[#e8a838]">PREMIUM</span>
                     </div>
                   )}
 
                   {tier.tier === 'vip' && (
-                    <div className="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#d4632a]/20 border border-[#d4632a]/50 w-fit">
+                    <div className="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#d4632a]/15 border border-[#d4632a]/40 w-fit">
                       <span className="material-symbols-outlined text-sm text-[#d4632a]">star</span>
                       <span className="text-xs font-bold text-[#d4632a]">VIP</span>
                     </div>
@@ -738,7 +706,7 @@ export default function EventDetailPage({
                   <div className="mb-6 space-y-2">
                     {tier.perks.map((perk, idx) => (
                       <div key={idx} className="flex items-start gap-2 text-sm text-gray-300">
-                        <span className="material-symbols-outlined text-xs text-[#39ff14] mt-0.5 flex-shrink-0">
+                        <span className="material-symbols-outlined text-xs text-[#e8a838] mt-0.5 flex-shrink-0">
                           check_circle
                         </span>
                         <span>{perk}</span>
@@ -755,7 +723,7 @@ export default function EventDetailPage({
                     </div>
                     <div className="w-full h-1.5 rounded-full bg-[#151210] overflow-hidden">
                       <div
-                        className="h-full bg-gradient-to-r from-[#e8a838] to-[#39ff14]"
+                        className="h-full bg-gradient-to-r from-[#e8a838] to-[#d4632a]"
                         style={{
                           width: `${(tier.remaining / tier.total) * 100}%`,
                         }}
@@ -771,10 +739,10 @@ export default function EventDetailPage({
                     disabled={minting}
                     className={`w-full py-3 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
                       tier.tier === 'premium'
-                        ? 'bg-gradient-to-r from-[#d4632a] to-[#6c2bd9] hover:shadow-[0_0_30px_rgba(255,45,120,0.5)] text-white'
+                        ? 'bg-gradient-to-r from-[#e8a838] to-[#d4632a] hover:shadow-[0_0_20px_rgba(232,168,56,0.3)] text-black'
                         : tier.tier === 'vip'
-                          ? 'bg-gradient-to-r from-[#d4632a]/80 to-[#6c2bd9]/80 hover:shadow-[0_0_20px_rgba(255,45,120,0.4)] text-white'
-                          : 'bg-gradient-to-r from-[#e8a838]/30 to-[#39ff14]/30 border border-[#e8a838]/50 hover:shadow-[0_0_20px_rgba(232,168,56,0.2)] text-[#e8a838]'
+                          ? 'bg-gradient-to-r from-[#d4632a] to-[#e8a838] hover:shadow-[0_0_20px_rgba(232,168,56,0.3)] text-black'
+                          : 'border border-[#e8a838]/40 hover:border-[#e8a838] hover:bg-[#e8a838]/10 text-[#e8a838]'
                     } disabled:opacity-50`}
                   >
                     {minting ? (
@@ -796,7 +764,7 @@ export default function EventDetailPage({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          <div className="border border-[#d4632a]/30 rounded-2xl p-8 bg-gradient-to-br from-[#d4632a]/10 to-transparent">
+          <div className="border border-[#2a2420] rounded-2xl p-8 bg-[#151210]">
             <div className="flex items-start gap-4">
               <span className="material-symbols-outlined text-[#d4632a] text-3xl">
                 verified_user
@@ -831,7 +799,7 @@ export default function EventDetailPage({
             </div>
           </div>
 
-          <div className="border border-[#e8a838]/30 rounded-2xl p-8 bg-gradient-to-br from-[#e8a838]/10 to-transparent">
+          <div className="border border-[#2a2420] rounded-2xl p-8 bg-[#151210]">
             <div className="flex items-start gap-4">
               <span className="material-symbols-outlined text-[#e8a838] text-3xl">checklist</span>
               <div>
@@ -862,18 +830,18 @@ export default function EventDetailPage({
           </div>
         </div>
 
-        <div className="border border-[#39ff14]/30 rounded-2xl p-8 bg-gradient-to-br from-[#39ff14]/5 to-transparent">
+        <div className="border border-[#2a2420] rounded-2xl p-8 bg-[#151210]">
           <h3 className="text-2xl font-black mb-6 text-white">Blockchain Provenance</h3>
           {event.isLive && event.blockchainTxHash && (
-            <div className="mb-6 p-4 rounded-lg border border-[#39ff14]/30 bg-[#39ff14]/5">
+            <div className="mb-6 p-4 rounded-lg border border-[#2a2420] bg-[#0d0b08]">
               <p className="text-xs text-gray-400 mb-2">Transaction Hash</p>
-              <p className="font-mono text-sm text-[#39ff14] break-all mb-4">{event.blockchainTxHash}</p>
+              <p className="font-mono text-sm text-[#e8a838] break-all mb-4">{event.blockchainTxHash}</p>
               {event.explorerUrl && (
                 <a
                   href={event.explorerUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#39ff14]/10 border border-[#39ff14]/30 text-[#39ff14] text-sm font-semibold hover:bg-[#39ff14]/20 transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#e8a838]/10 border border-[#e8a838]/30 text-[#e8a838] text-sm font-semibold hover:bg-[#e8a838]/20 transition-colors"
                 >
                   <span className="material-symbols-outlined text-sm">open_in_new</span>
                   View on Blockscout Explorer
@@ -892,7 +860,7 @@ export default function EventDetailPage({
                   </p>
                   <p>
                     <strong className="text-white">Standard:</strong>{' '}
-                    <span className="font-mono text-[#39ff14]">ERC-721</span>
+                    <span className="font-mono text-[#e8a838]">ERC-721</span>
                   </p>
                   <p>
                     <strong className="text-white">Chain:</strong>{' '}
@@ -906,15 +874,15 @@ export default function EventDetailPage({
                 <h4 className="font-bold text-lg mb-4 text-white">Security Features</h4>
                 <ul className="space-y-2 text-sm text-gray-300">
                   <li className="flex items-start gap-2">
-                    <span className="text-[#39ff14] mt-1">✓</span>
+                    <span className="text-[#e8a838] mt-1">✓</span>
                     <span>Smart contract audit verified</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-[#39ff14] mt-1">✓</span>
+                    <span className="text-[#e8a838] mt-1">✓</span>
                     <span>Multi-signature authorization</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-[#39ff14] mt-1">✓</span>
+                    <span className="text-[#e8a838] mt-1">✓</span>
                     <span>Real-time price enforcement</span>
                   </li>
                 </ul>
@@ -953,7 +921,7 @@ export default function EventDetailPage({
                     </div>
                     <div className="p-4 rounded-xl bg-[#151210] border border-[#2a2420]">
                       <p className="text-sm text-gray-400 mb-1">Price</p>
-                      <p className="font-bold text-[#39ff14] text-2xl">${purchase.tier.price}</p>
+                      <p className="font-bold text-[#e8a838] text-2xl">${purchase.tier.price}</p>
                     </div>
                   </div>
                   <div className="p-3 rounded-lg bg-[#e8a838]/5 border border-[#e8a838]/20 text-xs text-gray-400">
@@ -1056,8 +1024,8 @@ export default function EventDetailPage({
                     'Finalising ownership...'
                   ].map((step, i) => (
                     <div key={i} className="flex items-center gap-3 text-sm">
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center ${i < 3 ? 'bg-[#39ff14]/20' : 'bg-[#2a2420]'}`}>
-                        {i < 3 ? <span className="text-[#39ff14] text-xs">✓</span> : <span className="w-3 h-3 border-2 border-[#e8a838]/30 border-t-[#e8a838] rounded-full animate-spin" />}
+                      <div className={`w-6 h-6 rounded-full flex items-center justify-center ${i < 3 ? 'bg-[#e8a838]/15' : 'bg-[#2a2420]'}`}>
+                        {i < 3 ? <span className="text-[#e8a838] text-xs">✓</span> : <span className="w-3 h-3 border-2 border-[#e8a838]/30 border-t-[#e8a838] rounded-full animate-spin" />}
                       </div>
                       <span className={i < 3 ? 'text-gray-400' : 'text-white'}>{step}</span>
                     </div>
@@ -1071,7 +1039,7 @@ export default function EventDetailPage({
               <div className="text-center py-4">
                 {/* Show generated artwork in success */}
                 {(aiArt.videoUrl || aiArt.imageUrl) && (
-                  <div className="w-48 h-48 mx-auto mb-4 rounded-2xl overflow-hidden border border-[#39ff14]/30 shadow-[0_0_30px_rgba(57,255,20,0.15)]">
+                  <div className="w-48 h-48 mx-auto mb-4 rounded-2xl overflow-hidden border border-[#e8a838]/30 shadow-[0_0_30px_rgba(232,168,56,0.15)]">
                     {aiArt.videoUrl ? (
                       <video src={aiArt.videoUrl} autoPlay loop muted playsInline className="w-full h-full object-cover" />
                     ) : (
@@ -1081,11 +1049,11 @@ export default function EventDetailPage({
                   </div>
                 )}
                 {!aiArt.videoUrl && !aiArt.imageUrl && (
-                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[#39ff14]/20 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-[#39ff14] text-4xl">check_circle</span>
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[#e8a838]/15 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-[#e8a838] text-4xl">check_circle</span>
                   </div>
                 )}
-                <h3 className="text-2xl font-black mb-2 text-[#39ff14]">TICKET MINTED</h3>
+                <h3 className="text-2xl font-black mb-2 text-[#e8a838]">TICKET MINTED</h3>
                 <p className="text-gray-400 mb-6">Your ticket has been minted on the <><DualInline /> Network</></p>
                 {purchase.transactionHash && (
                   <div className="p-3 rounded-lg bg-[#151210] border border-[#2a2420] mb-6">
@@ -1095,7 +1063,7 @@ export default function EventDetailPage({
                 )}
                 <div className="flex gap-3">
                   <a href={`https://32f.blockv.io/token/0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06`} target="_blank" rel="noopener noreferrer" className="flex-1 py-3 rounded-xl border border-[#e8a838]/30 text-[#e8a838] font-bold hover:bg-[#e8a838]/10 transition-all text-center text-sm">View on Blockscout</a>
-                  <Link href="/my-tickets" className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#e8a838] to-[#39ff14] text-black font-bold hover:shadow-[0_0_20px_rgba(232,168,56,0.3)] transition-all text-center text-sm">View My Tickets</Link>
+                  <Link href="/my-tickets" className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold hover:shadow-[0_0_20px_rgba(232,168,56,0.3)] transition-all text-center text-sm">View My Tickets</Link>
                 </div>
               </div>
             )}
@@ -1109,7 +1077,7 @@ export default function EventDetailPage({
                 <p className="text-gray-400 mb-6">{purchase.error || 'An unexpected error occurred'}</p>
                 <div className="flex gap-3">
                   <button onClick={closePurchase} className="flex-1 py-3 rounded-xl border border-[#3a332c] text-gray-400 font-bold hover:text-white transition-all">Close</button>
-                  <button onClick={executeMint} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#d4632a] to-[#6c2bd9] text-white font-bold hover:shadow-[0_0_20px_rgba(255,45,120,0.4)] transition-all">Try Again</button>
+                  <button onClick={executeMint} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold hover:shadow-[0_0_20px_rgba(232,168,56,0.3)] transition-all">Try Again</button>
                 </div>
               </div>
             )}
