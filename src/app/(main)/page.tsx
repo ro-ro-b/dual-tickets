@@ -101,7 +101,7 @@ export default function TicketsPage() {
           animation: shimmer 1.5s infinite;
         }
         .card-glow:hover {
-          box-shadow: 0 0 30px rgba(232, 168, 56, 0.1), 0 0 60px rgba(108, 43, 217, 0.05);
+          box-shadow: 0 0 30px rgba(232, 168, 56, 0.1), 0 0 60px rgba(212, 99, 42, 0.05);
         }
       `}</style>
 
@@ -118,15 +118,15 @@ export default function TicketsPage() {
             <path d="M0 256L0 220L100 190L250 210L400 170L550 200L700 160L850 195L1000 175L1150 200L1300 185L1440 210L1440 256Z" fill="url(#mountain-front)" />
             <defs>
               <linearGradient id="mountain-far" x1="0" y1="60" x2="0" y2="256">
-                <stop offset="0%" stopColor="#4a2040" stopOpacity="0.6" />
+                <stop offset="0%" stopColor="#3d2a18" stopOpacity="0.6" />
                 <stop offset="100%" stopColor="#0d0b08" stopOpacity="0" />
               </linearGradient>
               <linearGradient id="mountain-mid" x1="0" y1="100" x2="0" y2="256">
-                <stop offset="0%" stopColor="#5c2848" stopOpacity="0.4" />
+                <stop offset="0%" stopColor="#4a3020" stopOpacity="0.4" />
                 <stop offset="100%" stopColor="#0d0b08" stopOpacity="0" />
               </linearGradient>
               <linearGradient id="mountain-front" x1="0" y1="160" x2="0" y2="256">
-                <stop offset="0%" stopColor="#2e1425" stopOpacity="0.5" />
+                <stop offset="0%" stopColor="#2a1c10" stopOpacity="0.5" />
                 <stop offset="100%" stopColor="#0d0b08" stopOpacity="0" />
               </linearGradient>
             </defs>
@@ -214,7 +214,7 @@ export default function TicketsPage() {
                         {event.imageUrl ? (
                           <img src={event.imageUrl} alt={event.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                         ) : (
-                          <div className="absolute inset-0 bg-gradient-to-br from-[#2a1f3d] via-[#1a1225] to-[#0d0b08] flex items-center justify-center">
+                          <div className="absolute inset-0 bg-gradient-to-br from-[#2a2015] via-[#1a1510] to-[#0d0b08] flex items-center justify-center">
                             <span className="material-symbols-outlined text-4xl text-[#e8a838]/30">confirmation_number</span>
                           </div>
                         )}
@@ -222,7 +222,7 @@ export default function TicketsPage() {
 
                         {/* LIVE ON-CHAIN Badge */}
                         {event.isLive && (
-                          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-[#39ff14] text-black text-[10px] font-black flex items-center gap-1 shadow-[0_0_10px_rgba(57,255,20,0.5)]">
+                          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-[#e8a838] text-black text-[10px] font-black flex items-center gap-1 shadow-[0_0_10px_rgba(232,168,56,0.4)]">
                             <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />
                             LIVE ON-CHAIN
                           </div>
@@ -260,7 +260,7 @@ export default function TicketsPage() {
                           </div>
                           <div className="w-full h-1 rounded-full bg-[#2a2420] overflow-hidden">
                             <div
-                              className="h-full rounded-full bg-gradient-to-r from-[#e8a838] to-[#39ff14]"
+                              className="h-full rounded-full bg-gradient-to-r from-[#e8a838] to-[#d4632a]"
                               style={{ width: `${availPct}%` }}
                             />
                           </div>
