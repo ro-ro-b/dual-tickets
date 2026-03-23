@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { DualInline } from './DualLogo'
+import { DualInline, DualLogo } from './DualLogo'
 
 interface Event {
   id: string
@@ -94,8 +94,12 @@ export default function HomePage() {
         {/* Hero / Editorial Header */}
         <header className="grid grid-cols-12 gap-8 mb-16">
           <div className="col-span-12 lg:col-span-7">
+            <div className="mb-6">
+              <DualLogo height={72} className="text-white md:hidden" />
+              <DualLogo height={110} className="text-white hidden md:block" />
+            </div>
             <h1 className="font-headline text-6xl md:text-8xl font-bold uppercase tracking-tight leading-none mb-6">
-              Primary<br />Market<br /><span className="text-[#39ff14]">Access.</span>
+              Tickets.<br /><span className="text-[#39ff14]">Tokenised</span>
             </h1>
           </div>
           <div className="col-span-12 lg:col-span-5 flex flex-col justify-end pb-4 border-l border-[#474747]/20 pl-8">
