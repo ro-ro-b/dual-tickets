@@ -30,15 +30,22 @@ const tierColors: Record<string, { bg: string; text: string; border: string }> =
   premium: { bg: 'from-[#ff00e5]/10 to-transparent', text: 'text-[#ff00e5]', border: 'border-[#ff00e5]/30' },
 }
 
+const DEMO_TICKETS: Record<string, { eventName: string; tier: string; seat: string; price: number; maxResale: number; holder: string }> = {
+  'demo-1': { eventName: 'Neon Dreams Festival 2026', tier: 'backstage', seat: 'B-142', price: 299, maxResale: 450, holder: '0x7a8f9d2c...e4b1' },
+  'demo-2': { eventName: 'Virtual Reality Concert Series', tier: 'vip', seat: 'A-055', price: 149, maxResale: 250, holder: '0x4b3e6a1f...c8d2' },
+  'demo-3': { eventName: 'Crypto Cup 2026 - Final Match', tier: 'general', seat: 'C-287', price: 89, maxResale: 150, holder: '0x2d9c5e7b...a3f9' },
+  'demo-4': { eventName: 'The Holographic Opera', tier: 'backstage', seat: 'F-018', price: 249, maxResale: 375, holder: '0x8f2a4c9e...d7b3' },
+}
+
 export default function ScannerPage() {
   const [ticketIdInput, setTicketIdInput] = useState('')
   const [verificationStep, setVerificationStep] = useState<0 | 1 | 2 | 3 | 4>(0)
   const [result, setResult] = useState<VerificationResult | null>(null)
   const [loading, setLoading] = useState(false)
   const [stats, setStats] = useState<ScanStats>({
-    scannedToday: 0,
-    validScans: 0,
-    rejectedScans: 0,
+    scannedToday: 12,
+    validScans: 11,
+    rejectedScans: 1,
   })
 
   const handleScanTicket = async () => {
@@ -51,32 +58,88 @@ export default function ScannerPage() {
     setVerificationStep(1)
     setResult(null)
 
-    try {
-      // Simulate step 1: Reading QR Code
-      await new Promise((r) => setTimeout(r, 1000))
-      setVerificationStep(2)
+    // Step 1: Reading QR Code
+    await new Promise((r) => setTimeout(r, 800))
+    setVerificationStep(2)
 
-      // Simulate step 2: Querying DUAL Network
-      await new Promise((r) => setTimeout(r, 1000))
-      setVerificationStep(3)
+    // Step 2: Querying DUAL Network
+    await new Promise((r) => setTimeout(r, 900))
+    setVerificationStep(3)
 
-      // Call verify API
-      const verifyResponse = await fetch(`/api/tickets/${ticketIdInput}/verify`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+    // Check for demo tickets first
+    const demoTicket = DEMO_TICKETS[ticketIdInput.trim()]
+
+    // Step 3: Verifying On-Chain
+    await new Promise((r) => setTimeout(r, 800))
+    setVerificationStep(4)
+
+    // Step 4: Anti-Scalp Compliance
+    await new Promise((r) => setTimeout(r, 600))
+
+    if (demoTicket) {
+      const txHash = '0x' + Array.from({length: 64}, () => Math.floor(Math.random()*16).toString(16)).join('')
+      setResult({
+        status: 'valid',
+        ticketId: ticketIdInput.trim(),
+        eventName: demoTicket.eventName,
+        tier: demoTicket.tier,
+        originalPrice: demoTicket.price,
+        maxResalePrice: demoTicket.maxResale,
+        holder: demoTicket.holder,
+        seat: demoTicket.seat,
+        verificationHash: txHash,
+        verificationTime: new Date().toISOString(),
       })
+      setStats((prev) => ({
+        ...prev,
+        scannedToday: prev.scannedToday + 1,
+        validScans: prev.validScans + 1,
+      }))
+    } else {
+      // Try the API for real DUAL ticket IDs
+      try {
+        const ticketResponse = await fetch(`/api/tickets/${ticketIdInput}`)
+        const ticketData = await ticketResponse.json()
 
-      const verifyData = await verifyResponse.json()
-
-      // Simulate step 3: Verifying On-Chain
-      await new Promise((r) => setTimeout(r, 1000))
-      setVerificationStep(4)
-
-      // Fetch ticket details
-      const ticketResponse = await fetch(`/api/tickets/${ticketIdInput}`)
-      const ticketData = await ticketResponse.json()
-
-      if (!ticketData || !ticketData.ticketData) {
+        if (ticketData && ticketData.ticketData) {
+          setResult({
+            status: 'valid',
+            ticketId: ticketIdInput,
+            eventName: ticketData.ticketData.eventName || 'Event',
+            tier: ticketData.ticketData.tier || 'general',
+            originalPrice: ticketData.ticketData.originalPrice || ticketData.ticketData.price || 0,
+            maxResalePrice: ticketData.ticketData.maxResalePrice || 0,
+            holder: ticketData.ownerId?.slice(0, 10) + '...' || 'Unknown',
+            seat: ticketData.ticketData.seat || 'No seat assigned',
+            verificationHash: ticketData.blockchainTxHash || '0x' + Math.random().toString(16).slice(2),
+            verificationTime: new Date().toISOString(),
+          })
+          setStats((prev) => ({
+            ...prev,
+            scannedToday: prev.scannedToday + 1,
+            validScans: prev.validScans + 1,
+          }))
+        } else {
+          setResult({
+            status: 'invalid',
+            ticketId: ticketIdInput,
+            eventName: 'Unknown',
+            tier: 'Unknown',
+            originalPrice: 0,
+            maxResalePrice: 0,
+            holder: 'Unknown',
+            seat: 'Unknown',
+            verificationHash: 'N/A',
+            verificationTime: new Date().toISOString(),
+            reason: 'Ticket not found on DUAL Network',
+          })
+          setStats((prev) => ({
+            ...prev,
+            scannedToday: prev.scannedToday + 1,
+            rejectedScans: prev.rejectedScans + 1,
+          }))
+        }
+      } catch {
         setResult({
           status: 'invalid',
           ticketId: ticketIdInput,
@@ -88,55 +151,17 @@ export default function ScannerPage() {
           seat: 'Unknown',
           verificationHash: 'N/A',
           verificationTime: new Date().toISOString(),
-          reason: 'Ticket not found',
+          reason: 'Ticket not found on DUAL Network',
         })
-      } else {
-        // Simulate step 4: Checking Anti-Scalp Compliance
-        await new Promise((r) => setTimeout(r, 800))
-        setVerificationStep(0)
-
-        // Generate mock verification data
-        setResult({
-          status: 'valid',
-          ticketId: ticketIdInput,
-          eventName: ticketData.ticketData.eventName || 'Event',
-          tier: ticketData.ticketData.tier || 'general',
-          originalPrice: ticketData.ticketData.originalPrice || ticketData.ticketData.price || 0,
-          maxResalePrice: ticketData.ticketData.maxResalePrice || 0,
-          holder: ticketData.ownerId?.slice(0, 10) + '...' || 'Unknown',
-          seat: ticketData.ticketData.seat || 'No seat assigned',
-          verificationHash: ticketData.blockchainTxHash || '0x' + Math.random().toString(16).slice(2),
-          verificationTime: new Date().toISOString(),
-        })
-
         setStats((prev) => ({
           ...prev,
           scannedToday: prev.scannedToday + 1,
-          validScans: prev.validScans + 1,
+          rejectedScans: prev.rejectedScans + 1,
         }))
       }
-    } catch (err) {
-      setVerificationStep(0)
-      setResult({
-        status: 'invalid',
-        ticketId: ticketIdInput,
-        eventName: 'Error',
-        tier: 'Unknown',
-        originalPrice: 0,
-        maxResalePrice: 0,
-        holder: 'Unknown',
-        seat: 'Unknown',
-        verificationHash: 'N/A',
-        verificationTime: new Date().toISOString(),
-        reason: String(err),
-      })
-      setStats((prev) => ({
-        ...prev,
-        scannedToday: prev.scannedToday + 1,
-        rejectedScans: prev.rejectedScans + 1,
-      }))
     }
 
+    setVerificationStep(0)
     setLoading(false)
   }
 
@@ -275,10 +300,16 @@ export default function ScannerPage() {
                   value={ticketIdInput}
                   onChange={(e) => setTicketIdInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && !loading && handleScanTicket()}
-                  placeholder="Enter ticket ID (e.g., ticket-abc123)"
+                  placeholder="Enter ticket ID (e.g., demo-1)"
                   disabled={loading}
                   className="w-full px-4 py-3 rounded-lg bg-white/5 border border-[#00f0ff]/30 text-white placeholder-gray-500 focus:border-[#00f0ff] focus:outline-none transition-colors disabled:opacity-50"
                 />
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <span className="text-xs text-gray-500">Quick scan:</span>
+                  {Object.keys(DEMO_TICKETS).map(id => (
+                    <button key={id} onClick={() => setTicketIdInput(id)} className="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-400 hover:text-[#00f0ff] hover:border-[#00f0ff]/30 transition-colors">{id}</button>
+                  ))}
+                </div>
               </div>
 
               {/* Scan Button */}

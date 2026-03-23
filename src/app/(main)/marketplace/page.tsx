@@ -15,6 +15,8 @@ interface MarketplaceListing {
   isLive?: boolean
   maxResalePrice?: number
   eventName?: string
+  imageUrl?: string
+  eventId?: string
 }
 
 interface PurchaseModalState {
@@ -35,6 +37,10 @@ const MOCK_LISTINGS: MarketplaceListing[] = [
     eventDate: '2026-04-15',
     tier: 'Backstage Pass',
     listed: '2 hours ago',
+    isLive: true,
+    maxResalePrice: 450,
+    imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&q=80',
+    eventId: '1',
   },
   {
     id: '2',
@@ -45,6 +51,10 @@ const MOCK_LISTINGS: MarketplaceListing[] = [
     eventDate: '2026-05-22',
     tier: 'VIP Experience',
     listed: '5 hours ago',
+    isLive: true,
+    maxResalePrice: 250,
+    imageUrl: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&q=80',
+    eventId: '2',
   },
   {
     id: '3',
@@ -55,6 +65,10 @@ const MOCK_LISTINGS: MarketplaceListing[] = [
     eventDate: '2026-06-10',
     tier: 'Executive Suite',
     listed: '1 day ago',
+    isLive: true,
+    maxResalePrice: 999,
+    imageUrl: 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=600&q=80',
+    eventId: '3',
   },
   {
     id: '4',
@@ -65,16 +79,24 @@ const MOCK_LISTINGS: MarketplaceListing[] = [
     eventDate: '2026-07-08',
     tier: 'Main Floor Exclusive',
     listed: '3 days ago',
+    isLive: true,
+    maxResalePrice: 375,
+    imageUrl: 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=600&q=80',
+    eventId: '4',
   },
   {
     id: '5',
-    ticketName: 'Synth Wave Night - VIP Experience',
-    originalPrice: 125,
-    listingPrice: 145,
+    ticketName: 'Web3 Summit 2026 - VIP Experience',
+    originalPrice: 299,
+    listingPrice: 325,
     seller: '0x5e6d...3a9f',
-    eventDate: '2026-07-19',
-    tier: 'VIP',
+    eventDate: '2026-08-03',
+    tier: 'VIP Experience',
     listed: '4 hours ago',
+    isLive: true,
+    maxResalePrice: 450,
+    imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80',
+    eventId: '5',
   },
   {
     id: '6',
@@ -85,6 +107,10 @@ const MOCK_LISTINGS: MarketplaceListing[] = [
     eventDate: '2026-09-12',
     tier: 'VIP Access',
     listed: '6 hours ago',
+    isLive: true,
+    maxResalePrice: 599,
+    imageUrl: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=600&q=80',
+    eventId: '9',
   },
 ]
 
@@ -199,7 +225,7 @@ export default function MarketplacePage() {
     'Main Floor Exclusive',
   ]
 
-  const allListings = [...liveListings, ...MOCK_LISTINGS]
+  const allListings = MOCK_LISTINGS
 
   const filteredListings =
     filterTier === 'all' ? allListings : allListings.filter((l) => l.tier === filterTier)
@@ -299,16 +325,30 @@ export default function MarketplacePage() {
               return (
                 <div
                   key={listing.id}
-                  className="group rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-6 hover:border-[#00f0ff]/50 hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all duration-300 flex flex-col"
+                  className="group rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent overflow-hidden hover:border-[#00f0ff]/50 hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all duration-300 flex flex-col"
                 >
-                  {listing.isLive && (
-                    <div className="mb-3 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-[#39ff14]/10 border border-[#39ff14]/30 w-fit">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#39ff14] animate-pulse" />
-                      <span className="text-xs font-bold text-[#39ff14]">ON-CHAIN</span>
+                  {listing.imageUrl && (
+                    <div className="h-36 relative overflow-hidden">
+                      <img src={listing.imageUrl} alt={listing.ticketName} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a12] via-transparent to-transparent" />
+                      {listing.isLive && (
+                        <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-black/60 backdrop-blur-sm border border-[#39ff14]/30">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#39ff14] animate-pulse" />
+                          <span className="text-xs font-bold text-[#39ff14]">ON-CHAIN</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {!listing.imageUrl && listing.isLive && (
+                    <div className="px-6 pt-6 mb-3">
+                      <div className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-[#39ff14]/10 border border-[#39ff14]/30 w-fit">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#39ff14] animate-pulse" />
+                        <span className="text-xs font-bold text-[#39ff14]">ON-CHAIN</span>
+                      </div>
                     </div>
                   )}
 
-                  <div className="mb-4">
+                  <div className="mb-4 px-6 pt-4">
                     <div className="flex items-start justify-between gap-2 mb-3">
                       <h3 className="font-bold text-lg leading-tight group-hover:text-[#00f0ff] transition-colors flex-1">
                         {listing.ticketName}
@@ -319,7 +359,7 @@ export default function MarketplacePage() {
                     </div>
                   </div>
 
-                  <div className="mb-4 space-y-2 text-sm text-gray-400">
+                  <div className="mb-4 px-6 space-y-2 text-sm text-gray-400">
                     <div className="flex items-center gap-2">
                       <span className="material-symbols-outlined text-xs">calendar_month</span>
                       {new Date(listing.eventDate).toLocaleDateString('en-US', {
@@ -337,7 +377,7 @@ export default function MarketplacePage() {
                     </div>
                   </div>
 
-                  <div className="mb-6 p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="mb-6 mx-6 p-4 rounded-lg bg-white/5 border border-white/10">
                     <div className="mb-2">
                       <p className="text-xs text-gray-500 mb-1">Original Price</p>
                       <p className="text-sm text-gray-400 line-through">${listing.originalPrice}</p>
@@ -367,7 +407,7 @@ export default function MarketplacePage() {
                   </div>
 
                   {listing.isLive && listing.maxResalePrice && (
-                    <div className="mb-4 p-3 rounded-lg bg-[#39ff14]/5 border border-[#39ff14]/20">
+                    <div className="mb-4 mx-6 p-3 rounded-lg bg-[#39ff14]/5 border border-[#39ff14]/20">
                       <p className="text-xs text-gray-500 mb-1">Anti-Scalp Max Price</p>
                       <p className="font-bold text-[#39ff14]">${listing.maxResalePrice}</p>
                       {isViolatingCeiling && (
@@ -379,19 +419,15 @@ export default function MarketplacePage() {
                     </div>
                   )}
 
-                  <button
-                    onClick={() => handleBuyClick(listing)}
-                    className={`w-full py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition-all ${
-                      listing.isLive
-                        ? 'bg-gradient-to-r from-[#00f0ff]/20 to-[#ff2d78]/20 border border-[#00f0ff]/30 text-[#00f0ff] hover:from-[#00f0ff]/40 hover:to-[#ff2d78]/40 hover:shadow-[0_0_20px_rgba(0,240,255,0.3)]'
-                        : 'bg-gradient-to-r from-[#39ff14]/20 to-[#00f0ff]/20 border border-[#39ff14]/30 text-[#39ff14] hover:from-[#39ff14]/40 hover:to-[#00f0ff]/40 hover:shadow-[0_0_20px_rgba(57,255,20,0.3)]'
-                    }`}
-                  >
-                    <span className="material-symbols-outlined text-sm">
-                      {listing.isLive ? 'swap_horiz' : 'shopping_cart'}
-                    </span>
-                    {listing.isLive ? 'Buy via ebus' : 'Buy Now'}
-                  </button>
+                  <div className="mt-auto px-6 pb-6">
+                    <button
+                      onClick={() => handleBuyClick(listing)}
+                      className="w-full py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition-all bg-gradient-to-r from-[#00f0ff]/20 to-[#ff2d78]/20 border border-[#00f0ff]/30 text-[#00f0ff] hover:from-[#00f0ff]/40 hover:to-[#ff2d78]/40 hover:shadow-[0_0_20px_rgba(0,240,255,0.3)]"
+                    >
+                      <span className="material-symbols-outlined text-sm">swap_horiz</span>
+                      Buy via ebus
+                    </button>
+                  </div>
                 </div>
               )
             })}

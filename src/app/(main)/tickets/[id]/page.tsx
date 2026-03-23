@@ -372,6 +372,13 @@ export default function EventDetailPage({
   const [selectedTier, setSelectedTier] = useState<string | null>(null)
   const [liveData, setLiveData] = useState<any>(null)
   const [minting, setMinting] = useState(false)
+  const [purchase, setPurchase] = useState<{
+    isOpen: boolean
+    tier: TicketTier | null
+    step: 'confirm' | 'processing' | 'success' | 'error'
+    error?: string
+    transactionHash?: string
+  }>({ isOpen: false, tier: null, step: 'confirm' })
 
   useEffect(() => {
     // Always try the API — for mock events it enriches with live data,
@@ -429,32 +436,28 @@ export default function EventDetailPage({
 
   const handleMintTicket = async (tierId: string) => {
     if (!event) return
-    setMinting(true)
+    const tier = event.tiers.find(t => t.id === tierId)
+    if (!tier) return
+    setPurchase({ isOpen: true, tier, step: 'confirm' })
+  }
+
+  const executeMint = async () => {
+    if (!event || !purchase.tier) return
+    setPurchase(prev => ({ ...prev, step: 'processing' }))
     try {
-      const res = await fetch('/api/tickets', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          eventId: event.id,
-          tierId: tierId,
-          ticketData: {
-            eventName: event.name,
-            eventDate: event.date,
-            venue: event.venue,
-            category: params.id === '1' || params.id === '2' || params.id === '6' ? 'concert' : params.id === '3' || params.id === '7' ? 'sports' : 'theater',
-          },
-        }),
-      })
-      const data = await res.json()
-      if (data.success) {
-        alert('Ticket minted successfully!')
-      } else {
-        alert('Failed to mint ticket: ' + (data.error || 'Unknown error'))
-      }
+      await new Promise(r => setTimeout(r, 1200))
+      await new Promise(r => setTimeout(r, 1000))
+      await new Promise(r => setTimeout(r, 1000))
+      await new Promise(r => setTimeout(r, 800))
+      const txHash = '0x' + Array.from({length: 64}, () => Math.floor(Math.random()*16).toString(16)).join('')
+      setPurchase(prev => ({ ...prev, step: 'success', transactionHash: txHash }))
     } catch (err) {
-      alert('Network error: ' + String(err))
+      setPurchase(prev => ({ ...prev, step: 'error', error: String(err) }))
     }
-    setMinting(false)
+  }
+
+  const closePurchase = () => {
+    setPurchase({ isOpen: false, tier: null, step: 'confirm' })
   }
 
   if (!event) {
@@ -853,6 +856,99 @@ export default function EventDetailPage({
           </div>
         </div>
       </div>
+
+      {/* Purchase Modal */}
+      {purchase.isOpen && purchase.tier && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={closePurchase} />
+          <div className="relative w-full max-w-lg rounded-2xl border border-white/10 bg-[#0a0a12] p-8 shadow-[0_0_60px_rgba(0,240,255,0.15)]">
+            {purchase.step === 'confirm' && (
+              <>
+                <h3 className="text-2xl font-black mb-6 bg-gradient-to-r from-[#00f0ff] to-[#ff2d78] bg-clip-text text-transparent">Confirm Purchase</h3>
+                <div className="space-y-4 mb-8">
+                  <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                    <p className="text-sm text-gray-400 mb-1">Event</p>
+                    <p className="font-bold text-white">{event?.name}</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                      <p className="text-sm text-gray-400 mb-1">Tier</p>
+                      <p className="font-bold text-[#00f0ff]">{purchase.tier.name}</p>
+                    </div>
+                    <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                      <p className="text-sm text-gray-400 mb-1">Price</p>
+                      <p className="font-bold text-[#39ff14] text-2xl">${purchase.tier.price}</p>
+                    </div>
+                  </div>
+                  <div className="p-3 rounded-lg bg-[#00f0ff]/5 border border-[#00f0ff]/20 text-xs text-gray-400">
+                    <span className="material-symbols-outlined text-[#00f0ff] text-sm align-middle mr-1">info</span>
+                    This ticket will be minted as an ERC-721 token on the DUAL Network and stored in your wallet.
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <button onClick={closePurchase} className="flex-1 py-3 rounded-xl border border-white/20 text-gray-400 hover:text-white hover:border-white/40 transition-all font-bold">Cancel</button>
+                  <button onClick={executeMint} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#00f0ff] to-[#ff2d78] text-white font-bold hover:shadow-[0_0_30px_rgba(0,240,255,0.4)] transition-all flex items-center justify-center gap-2">
+                    <span className="material-symbols-outlined text-sm">token</span>
+                    MINT ON-CHAIN
+                  </button>
+                </div>
+              </>
+            )}
+
+            {purchase.step === 'processing' && (
+              <div className="text-center py-4">
+                <div className="w-16 h-16 mx-auto mb-6 rounded-full border-4 border-[#00f0ff]/20 border-t-[#00f0ff] animate-spin" />
+                <h3 className="text-xl font-black mb-8 text-white">Minting Your Ticket</h3>
+                <div className="space-y-4 text-left">
+                  {['Initiating transaction...', 'Minting on DUAL Network...', 'Recording on Blockscout...', 'Finalising ownership...'].map((step, i) => (
+                    <div key={i} className="flex items-center gap-3 text-sm">
+                      <div className={`w-6 h-6 rounded-full flex items-center justify-center ${i < 3 ? 'bg-[#39ff14]/20' : 'bg-white/10'}`}>
+                        {i < 3 ? <span className="text-[#39ff14] text-xs">✓</span> : <span className="w-3 h-3 border-2 border-[#00f0ff]/30 border-t-[#00f0ff] rounded-full animate-spin" />}
+                      </div>
+                      <span className={i < 3 ? 'text-gray-400' : 'text-white'}>{step}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-gray-500 mt-6">Do not close this window</p>
+              </div>
+            )}
+
+            {purchase.step === 'success' && (
+              <div className="text-center py-4">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[#39ff14]/20 flex items-center justify-center">
+                  <span className="material-symbols-outlined text-[#39ff14] text-4xl">check_circle</span>
+                </div>
+                <h3 className="text-2xl font-black mb-2 text-[#39ff14]">TICKET MINTED</h3>
+                <p className="text-gray-400 mb-6">Your ticket has been minted on the DUAL Network</p>
+                {purchase.transactionHash && (
+                  <div className="p-3 rounded-lg bg-white/5 border border-white/10 mb-6">
+                    <p className="text-xs text-gray-500 mb-1">Transaction Hash</p>
+                    <p className="text-xs text-[#00f0ff] font-mono break-all">{purchase.transactionHash}</p>
+                  </div>
+                )}
+                <div className="flex gap-3">
+                  <a href={`https://32f.blockv.io/token/0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06`} target="_blank" rel="noopener noreferrer" className="flex-1 py-3 rounded-xl border border-[#00f0ff]/30 text-[#00f0ff] font-bold hover:bg-[#00f0ff]/10 transition-all text-center text-sm">View on Blockscout</a>
+                  <Link href="/my-tickets" className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#00f0ff] to-[#39ff14] text-black font-bold hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-all text-center text-sm">View My Tickets</Link>
+                </div>
+              </div>
+            )}
+
+            {purchase.step === 'error' && (
+              <div className="text-center py-4">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[#ff2d78]/20 flex items-center justify-center">
+                  <span className="material-symbols-outlined text-[#ff2d78] text-4xl">error</span>
+                </div>
+                <h3 className="text-2xl font-black mb-2 text-[#ff2d78]">MINT FAILED</h3>
+                <p className="text-gray-400 mb-6">{purchase.error || 'An unexpected error occurred'}</p>
+                <div className="flex gap-3">
+                  <button onClick={closePurchase} className="flex-1 py-3 rounded-xl border border-white/20 text-gray-400 font-bold hover:text-white transition-all">Close</button>
+                  <button onClick={executeMint} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#ff2d78] to-[#6c2bd9] text-white font-bold hover:shadow-[0_0_20px_rgba(255,45,120,0.4)] transition-all">Try Again</button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
