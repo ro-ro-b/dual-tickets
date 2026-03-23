@@ -376,10 +376,20 @@ export default function EventDetailPage({
   const [purchase, setPurchase] = useState<{
     isOpen: boolean
     tier: TicketTier | null
-    step: 'confirm' | 'processing' | 'success' | 'error'
+    step: 'confirm' | 'generating' | 'processing' | 'success' | 'error'
     error?: string
     transactionHash?: string
   }>({ isOpen: false, tier: null, step: 'confirm' })
+  const [aiArt, setAiArt] = useState<{
+    imageUrl?: string
+    imageBase64?: string
+    imageMimeType?: string
+    videoUrl?: string
+    generatingImage: boolean
+    generatingVideo: boolean
+    imageError?: string
+    videoError?: string
+  }>({ generatingImage: false, generatingVideo: false })
 
   useEffect(() => {
     // Always try the API — for mock events it enriches with live data,
@@ -440,6 +450,69 @@ export default function EventDetailPage({
     const tier = event.tiers.find(t => t.id === tierId)
     if (!tier) return
     setPurchase({ isOpen: true, tier, step: 'confirm' })
+  }
+
+  const generateTicketArt = async () => {
+    if (!event || !purchase.tier) return
+    setPurchase(prev => ({ ...prev, step: 'generating' }))
+    setAiArt({ generatingImage: true, generatingVideo: false })
+
+    try {
+      const imgRes = await fetch('/api/generate-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          eventName: event.name,
+          venue: event.venue,
+          date: event.date,
+          tierName: purchase.tier.name,
+          category: event.category || 'concert',
+        }),
+      })
+      const imgData = await imgRes.json()
+      if (!imgData.success) throw new Error(imgData.error || 'Image generation failed')
+
+      setAiArt(prev => ({
+        ...prev,
+        imageUrl: imgData.imageUrl,
+        imageBase64: imgData.imageBase64,
+        imageMimeType: imgData.mimeType,
+        generatingImage: false,
+        generatingVideo: true,
+      }))
+
+      // Now generate video from the image
+      const vidRes = await fetch('/api/generate-video', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          eventName: event.name,
+          venue: event.venue,
+          date: event.date,
+          tierName: purchase.tier.name,
+          category: event.category || 'concert',
+          imageBase64: imgData.imageBase64,
+          imageMimeType: imgData.mimeType,
+        }),
+      })
+      const vidData = await vidRes.json()
+      if (vidData.success) {
+        setAiArt(prev => ({ ...prev, videoUrl: vidData.videoUrl, generatingVideo: false }))
+      } else {
+        setAiArt(prev => ({ ...prev, generatingVideo: false, videoError: vidData.error }))
+      }
+    } catch (err: any) {
+      setAiArt(prev => ({
+        ...prev,
+        generatingImage: false,
+        generatingVideo: false,
+        imageError: err.message || 'Generation failed',
+      }))
+    }
+  }
+
+  const regenerateArt = async () => {
+    await generateTicketArt()
   }
 
   const executeMint = async () => {
@@ -888,12 +961,85 @@ export default function EventDetailPage({
                 </div>
                 <div className="flex gap-3">
                   <button onClick={closePurchase} className="flex-1 py-3 rounded-xl border border-[#3a332c] text-gray-400 hover:text-white hover:border-white/40 transition-all font-bold">Cancel</button>
-                  <button onClick={executeMint} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-white font-bold hover:shadow-[0_0_30px_rgba(0,240,255,0.4)] transition-all flex items-center justify-center gap-2">
-                    <span className="material-symbols-outlined text-sm">token</span>
-                    MINT ON-CHAIN
+                  <button onClick={generateTicketArt} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-white font-bold hover:shadow-[0_0_30px_rgba(232,168,56,0.4)] transition-all flex items-center justify-center gap-2">
+                    <span className="material-symbols-outlined text-sm">auto_awesome</span>
+                    GENERATE & MINT
                   </button>
                 </div>
               </>
+            )}
+
+            {purchase.step === 'generating' && (
+              <div className="py-2">
+                <h3 className="text-2xl font-black mb-6 bg-gradient-to-r from-[#e8a838] to-[#d4632a] bg-clip-text text-transparent text-center">
+                  {aiArt.generatingImage ? 'Generating Ticket Artwork' : aiArt.generatingVideo ? 'Creating Animation' : aiArt.imageUrl ? 'Your Unique Ticket Art' : 'Generating...'}
+                </h3>
+
+                {/* Image generation in progress */}
+                {aiArt.generatingImage && (
+                  <div className="text-center py-8">
+                    <div className="w-32 h-32 mx-auto mb-4 rounded-2xl bg-[#151210] border border-[#2a2420] flex items-center justify-center overflow-hidden">
+                      <div className="w-16 h-16 border-4 border-[#e8a838]/20 border-t-[#e8a838] rounded-full animate-spin" />
+                    </div>
+                    <p className="text-sm text-gray-400">AI is creating a unique artwork for your ticket...</p>
+                    <p className="text-xs text-gray-600 mt-1">This may take 15-30 seconds</p>
+                  </div>
+                )}
+
+                {/* Image generated — show preview */}
+                {aiArt.imageUrl && !aiArt.generatingImage && (
+                  <div className="space-y-4">
+                    <div className="relative rounded-2xl overflow-hidden border border-[#2a2420] bg-[#151210]">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={aiArt.imageUrl} alt="AI generated ticket artwork" className="w-full aspect-square object-cover" />
+                      {aiArt.generatingVideo && (
+                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="w-10 h-10 mx-auto mb-2 border-3 border-white/20 border-t-white rounded-full animate-spin" />
+                            <p className="text-xs text-white/80">Creating animation...</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Video preview if ready */}
+                    {aiArt.videoUrl && (
+                      <div className="rounded-2xl overflow-hidden border border-[#2a2420] bg-[#151210]">
+                        <video src={aiArt.videoUrl} autoPlay loop muted playsInline className="w-full aspect-square object-cover" />
+                      </div>
+                    )}
+
+                    {aiArt.videoError && (
+                      <p className="text-xs text-gray-500 text-center">Video generation unavailable — your image artwork will be used</p>
+                    )}
+
+                    <div className="flex gap-3">
+                      <button onClick={regenerateArt} disabled={aiArt.generatingImage || aiArt.generatingVideo} className="flex-1 py-3 rounded-xl border border-[#3a332c] text-gray-400 hover:text-white hover:border-white/40 transition-all font-bold disabled:opacity-30 flex items-center justify-center gap-2">
+                        <span className="material-symbols-outlined text-sm">refresh</span>
+                        Regenerate
+                      </button>
+                      <button onClick={executeMint} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-white font-bold hover:shadow-[0_0_30px_rgba(232,168,56,0.4)] transition-all flex items-center justify-center gap-2">
+                        <span className="material-symbols-outlined text-sm">token</span>
+                        MINT ON-CHAIN
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Error state */}
+                {aiArt.imageError && !aiArt.generatingImage && !aiArt.imageUrl && (
+                  <div className="text-center py-6">
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#d4632a]/20 flex items-center justify-center">
+                      <span className="material-symbols-outlined text-[#d4632a] text-2xl">warning</span>
+                    </div>
+                    <p className="text-sm text-gray-400 mb-4">{aiArt.imageError}</p>
+                    <div className="flex gap-3">
+                      <button onClick={regenerateArt} className="flex-1 py-3 rounded-xl border border-[#3a332c] text-gray-400 hover:text-white hover:border-white/40 transition-all font-bold">Try Again</button>
+                      <button onClick={executeMint} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-white font-bold transition-all text-sm">Mint Without Art</button>
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
 
             {purchase.step === 'processing' && (
@@ -921,9 +1067,22 @@ export default function EventDetailPage({
 
             {purchase.step === 'success' && (
               <div className="text-center py-4">
-                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[#39ff14]/20 flex items-center justify-center">
-                  <span className="material-symbols-outlined text-[#39ff14] text-4xl">check_circle</span>
-                </div>
+                {/* Show generated artwork in success */}
+                {(aiArt.videoUrl || aiArt.imageUrl) && (
+                  <div className="w-48 h-48 mx-auto mb-4 rounded-2xl overflow-hidden border border-[#39ff14]/30 shadow-[0_0_30px_rgba(57,255,20,0.15)]">
+                    {aiArt.videoUrl ? (
+                      <video src={aiArt.videoUrl} autoPlay loop muted playsInline className="w-full h-full object-cover" />
+                    ) : (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={aiArt.imageUrl} alt="Ticket artwork" className="w-full h-full object-cover" />
+                    )}
+                  </div>
+                )}
+                {!aiArt.videoUrl && !aiArt.imageUrl && (
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[#39ff14]/20 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-[#39ff14] text-4xl">check_circle</span>
+                  </div>
+                )}
                 <h3 className="text-2xl font-black mb-2 text-[#39ff14]">TICKET MINTED</h3>
                 <p className="text-gray-400 mb-6">Your ticket has been minted on the <><DualInline /> Network</></p>
                 {purchase.transactionHash && (
