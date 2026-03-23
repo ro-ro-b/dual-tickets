@@ -21,6 +21,7 @@ interface Ticket {
   integrityHash?: string
   explorerUrl?: string
   ownerId?: string
+  imageUrl?: string
 }
 
 const DUAL_CONTRACT = '0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06'
@@ -64,6 +65,7 @@ export default function MyTicketsPage() {
             ? `${BLOCKSCOUT}/token/${DUAL_CONTRACT}`
             : undefined,
           ownerId: t.ownerId,
+          imageUrl: t.ticketData?.imageUrl || undefined,
         }))
         setLiveTickets(mapped)
       })
@@ -306,6 +308,18 @@ export default function MyTicketsPage() {
                         <div className="overflow-hidden border border-[#474747]/20 bg-[#1b1b1b] hover:border-[#39ff14]/20 transition-all duration-300">
                           {/* Top accent bar */}
                           <div className="h-1 bg-[#39ff14]" />
+
+                          {/* AI Artwork Hero */}
+                          {ticket.imageUrl && (
+                            <div className="relative w-full h-40 overflow-hidden bg-[#0e0e0e]">
+                              <img
+                                src={ticket.imageUrl}
+                                alt={ticket.eventName}
+                                className="w-full h-full object-cover opacity-90"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-[#1b1b1b] via-transparent to-transparent" />
+                            </div>
+                          )}
 
                           <div className="p-6">
                             {/* Status row */}
