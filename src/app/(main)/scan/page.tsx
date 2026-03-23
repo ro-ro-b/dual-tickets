@@ -248,7 +248,7 @@ export default function ScannerPage() {
         {/* Header */}
         <div className="mb-12">
           <Link
-            href="/tickets"
+            href="/"
             className="inline-flex items-center gap-2 text-[#00f0ff] hover:text-white transition-colors mb-6"
           >
             <span className="material-symbols-outlined text-sm">arrow_back</span>
@@ -302,12 +302,12 @@ export default function ScannerPage() {
                   onKeyPress={(e) => e.key === 'Enter' && !loading && handleScanTicket()}
                   placeholder="Enter ticket ID (e.g., demo-1)"
                   disabled={loading}
-                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-[#00f0ff]/30 text-white placeholder-gray-500 focus:border-[#00f0ff] focus:outline-none transition-colors disabled:opacity-50"
+                  className="w-full px-4 py-3 rounded-lg bg-[#0f0f25] border border-[#00f0ff]/30 text-white placeholder-gray-500 focus:border-[#00f0ff] focus:outline-none transition-colors disabled:opacity-50"
                 />
                 <div className="mt-2 flex flex-wrap gap-2">
                   <span className="text-xs text-gray-500">Quick scan:</span>
                   {Object.keys(DEMO_TICKETS).map(id => (
-                    <button key={id} onClick={() => setTicketIdInput(id)} className="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-400 hover:text-[#00f0ff] hover:border-[#00f0ff]/30 transition-colors">{id}</button>
+                    <button key={id} onClick={() => setTicketIdInput(id)} className="text-xs px-2 py-1 rounded bg-[#0f0f25] border border-[#1a1a3a] text-gray-400 hover:text-[#00f0ff] hover:border-[#00f0ff]/30 transition-colors">{id}</button>
                   ))}
                 </div>
               </div>
@@ -333,7 +333,7 @@ export default function ScannerPage() {
                       className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                         verificationStep >= 1
                           ? 'bg-[#00f0ff]/30 border border-[#00f0ff]'
-                          : 'bg-white/5 border border-white/10'
+                          : 'bg-[#0f0f25] border border-[#1a1a3a]'
                       }`}
                     >
                       {verificationStep > 1 ? (
@@ -356,7 +356,7 @@ export default function ScannerPage() {
                       className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                         verificationStep >= 2
                           ? 'bg-[#00f0ff]/30 border border-[#00f0ff]'
-                          : 'bg-white/5 border border-white/10'
+                          : 'bg-[#0f0f25] border border-[#1a1a3a]'
                       }`}
                     >
                       {verificationStep > 2 ? (
@@ -382,7 +382,7 @@ export default function ScannerPage() {
                       className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                         verificationStep >= 3
                           ? 'bg-[#ff2d78]/30 border border-[#ff2d78]'
-                          : 'bg-white/5 border border-white/10'
+                          : 'bg-[#0f0f25] border border-[#1a1a3a]'
                       }`}
                     >
                       {verificationStep > 3 ? (
@@ -405,7 +405,7 @@ export default function ScannerPage() {
                       className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center block-animation ${
                         verificationStep >= 4
                           ? 'bg-[#39ff14]/30 border border-[#39ff14]'
-                          : 'bg-white/5 border border-white/10'
+                          : 'bg-[#0f0f25] border border-[#1a1a3a]'
                       }`}
                     >
                       {verificationStep > 4 ? (
@@ -470,49 +470,49 @@ export default function ScannerPage() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                  <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Ticket ID</p>
                     <p className="font-mono text-[#00f0ff] break-all">{result.ticketId}</p>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Event</p>
                     <p className="font-bold text-white">{result.eventName}</p>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Tier</p>
                     <div className={`inline-flex px-3 py-1 rounded-full font-semibold text-sm border bg-gradient-to-r ${tierColor.bg} ${tierColor.text} ${tierColor.border}`}>
                       {result.tier.toUpperCase()}
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Seat</p>
                     <p className="font-bold text-white">{result.seat}</p>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Original Price</p>
                     <p className="font-bold text-white">${result.originalPrice}</p>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Max Resale Price</p>
                     <p className="font-bold text-[#39ff14]">${result.maxResalePrice}</p>
                   </div>
 
-                  <div className="md:col-span-2 p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="md:col-span-2 p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Holder Address</p>
                     <p className="font-mono text-[#00f0ff] break-all text-sm">{result.holder}</p>
                   </div>
 
-                  <div className="md:col-span-2 p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="md:col-span-2 p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Verification Hash</p>
                     <p className="font-mono text-[#39ff14] break-all text-sm">{result.verificationHash}</p>
                   </div>
 
-                  <div className="md:col-span-2 p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="md:col-span-2 p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Verified At</p>
                     <p className="font-mono text-gray-300 text-sm">
                       {new Date(result.verificationTime).toLocaleString()}
@@ -551,17 +551,17 @@ export default function ScannerPage() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                  <div className="md:col-span-2 p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="md:col-span-2 p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Ticket ID</p>
                     <p className="font-mono text-[#00f0ff] break-all">{result.ticketId}</p>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Event</p>
                     <p className="font-bold text-white">{result.eventName}</p>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Original Scan Time</p>
                     <p className="font-bold text-white">
                       {new Date(result.verificationTime).toLocaleString()}
@@ -590,7 +590,7 @@ export default function ScannerPage() {
                 </div>
 
                 <div className="grid grid-cols-1 gap-6 mb-8">
-                  <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Ticket ID</p>
                     <p className="font-mono text-[#00f0ff] break-all">{result.ticketId}</p>
                   </div>
@@ -600,7 +600,7 @@ export default function ScannerPage() {
                     <p className="font-bold text-[#ff2d78]">{result.reason || 'Unknown error'}</p>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-sm text-gray-400 mb-1">Attempted At</p>
                     <p className="font-mono text-gray-300 text-sm">
                       {new Date(result.verificationTime).toLocaleString()}

@@ -269,10 +269,10 @@ export default function MarketplacePage() {
                 <button
                   key={tier}
                   onClick={() => setFilterTier(tier)}
-                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
+                  className={`px-5 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
                     filterTier === tier
-                      ? 'bg-gradient-to-r from-[#00f0ff] to-[#ff2d78] text-black shadow-[0_0_20px_rgba(0,240,255,0.3)]'
-                      : 'bg-white/5 text-gray-300 border border-white/10 hover:border-[#00f0ff]/50'
+                      ? 'bg-white text-[#0a0a1a] font-semibold'
+                      : 'text-gray-500 border border-[#2a2a5a] hover:border-[#ff2d78]/40 hover:text-gray-300'
                   }`}
                 >
                   {tier === 'all' ? 'All Tiers' : tier}
@@ -286,7 +286,7 @@ export default function MarketplacePage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-white focus:border-[#00f0ff] focus:outline-none transition-colors"
+              className="px-4 py-2 rounded-xl bg-[#12122a] border border-[#2a2a5a] text-white text-sm focus:border-[#6c2bd9]/60 focus:outline-none transition-all"
             >
               <option value="newest">Newest First</option>
               <option value="price-asc">Price: Low to High</option>
@@ -302,15 +302,15 @@ export default function MarketplacePage() {
             {[1, 2, 3].map((i) => (
               <div
                 key={i}
-                className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-6 animate-pulse"
+                className="rounded-2xl border border-[#1a1a3a] bg-[#0f0f25] p-6 animate-pulse"
               >
-                <div className="h-6 bg-white/10 rounded mb-4" />
-                <div className="h-4 bg-white/10 rounded w-3/4 mb-6" />
+                <div className="h-6 bg-[#1a1a3a] rounded mb-4" />
+                <div className="h-4 bg-[#1a1a3a] rounded w-3/4 mb-6" />
                 <div className="space-y-3 mb-6">
-                  <div className="h-4 bg-white/10 rounded" />
-                  <div className="h-4 bg-white/10 rounded w-2/3" />
+                  <div className="h-4 bg-[#1a1a3a] rounded" />
+                  <div className="h-4 bg-[#1a1a3a] rounded w-2/3" />
                 </div>
-                <div className="h-10 bg-white/10 rounded" />
+                <div className="h-10 bg-[#1a1a3a] rounded" />
               </div>
             ))}
           </div>
@@ -325,12 +325,12 @@ export default function MarketplacePage() {
               return (
                 <div
                   key={listing.id}
-                  className="group rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent overflow-hidden hover:border-[#00f0ff]/50 hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all duration-300 flex flex-col"
+                  className="group rounded-2xl border border-[#1a1a3a] bg-[#0f0f25] overflow-hidden hover:border-[#2a2a5a] hover:shadow-[0_0_30px_rgba(108,43,217,0.15)] hover:-translate-y-1 transition-all duration-300 flex flex-col"
                 >
                   {listing.imageUrl && (
                     <div className="h-36 relative overflow-hidden">
                       <img src={listing.imageUrl} alt={listing.ticketName} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a12] via-transparent to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a1a] via-transparent to-transparent" />
                       {listing.isLive && (
                         <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-black/60 backdrop-blur-sm border border-[#39ff14]/30">
                           <span className="w-1.5 h-1.5 rounded-full bg-[#39ff14] animate-pulse" />
@@ -377,7 +377,7 @@ export default function MarketplacePage() {
                     </div>
                   </div>
 
-                  <div className="mb-6 mx-6 p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="mb-6 mx-6 p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <div className="mb-2">
                       <p className="text-xs text-gray-500 mb-1">Original Price</p>
                       <p className="text-sm text-gray-400 line-through">${listing.originalPrice}</p>
@@ -568,7 +568,7 @@ export default function MarketplacePage() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                    <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                       <p className="text-xs text-gray-500 mb-1">Original Price</p>
                       <p className="text-2xl font-black text-gray-400 line-through">
                         ${purchaseModal.listing.originalPrice}
@@ -621,7 +621,7 @@ export default function MarketplacePage() {
 
                 <div className="space-y-6 mb-8">
                   {/* Step 1 */}
-                  <div className="flex items-start gap-4 p-4 rounded-lg bg-white/5 border border-[#00f0ff]/30">
+                  <div className="flex items-start gap-4 p-4 rounded-lg bg-[#0f0f25] border border-[#00f0ff]/30">
                     <div className="settle-pulse w-8 h-8 rounded-full bg-[#00f0ff]/30 border border-[#00f0ff] flex items-center justify-center flex-shrink-0">
                       <div className="w-4 h-4 border-2 border-[#00f0ff]/30 border-t-[#00f0ff] rounded-full animate-spin" />
                     </div>
@@ -632,7 +632,7 @@ export default function MarketplacePage() {
                   </div>
 
                   {/* Step 2 */}
-                  <div className="flex items-start gap-4 p-4 rounded-lg bg-white/5 border border-[#ff2d78]/30">
+                  <div className="flex items-start gap-4 p-4 rounded-lg bg-[#0f0f25] border border-[#ff2d78]/30">
                     <div className="settle-pulse w-8 h-8 rounded-full bg-[#ff2d78]/30 border border-[#ff2d78] flex items-center justify-center flex-shrink-0">
                       <div className="w-4 h-4 border-2 border-[#ff2d78]/30 border-t-[#ff2d78] rounded-full animate-spin" />
                     </div>
@@ -643,7 +643,7 @@ export default function MarketplacePage() {
                   </div>
 
                   {/* Step 3 */}
-                  <div className="flex items-start gap-4 p-4 rounded-lg bg-white/5 border border-[#39ff14]/30">
+                  <div className="flex items-start gap-4 p-4 rounded-lg bg-[#0f0f25] border border-[#39ff14]/30">
                     <div className="settle-pulse w-8 h-8 rounded-full bg-[#39ff14]/30 border border-[#39ff14] flex items-center justify-center flex-shrink-0">
                       <div className="w-4 h-4 border-2 border-[#39ff14]/30 border-t-[#39ff14] rounded-full animate-spin" />
                     </div>
@@ -654,7 +654,7 @@ export default function MarketplacePage() {
                   </div>
 
                   {/* Step 4 */}
-                  <div className="flex items-start gap-4 p-4 rounded-lg bg-white/5 border border-[#6c2bd9]/30">
+                  <div className="flex items-start gap-4 p-4 rounded-lg bg-[#0f0f25] border border-[#6c2bd9]/30">
                     <div className="settle-pulse w-8 h-8 rounded-full bg-[#6c2bd9]/30 border border-[#6c2bd9] flex items-center justify-center flex-shrink-0">
                       <div className="w-4 h-4 border-2 border-[#6c2bd9]/30 border-t-[#6c2bd9] rounded-full animate-spin" />
                     </div>
@@ -682,14 +682,14 @@ export default function MarketplacePage() {
                 </div>
 
                 <div className="space-y-4 mb-8">
-                  <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-xs text-gray-500 mb-1">Transaction Hash</p>
                     <p className="font-mono text-[#00f0ff] text-sm break-all">
                       {purchaseModal.transactionHash}
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                     <p className="text-xs text-gray-500 mb-1">Ticket</p>
                     <p className="font-bold text-white">{purchaseModal.listing.ticketName}</p>
                   </div>

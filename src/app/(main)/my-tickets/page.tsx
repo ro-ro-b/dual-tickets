@@ -339,7 +339,7 @@ export default function MyTicketsPage() {
 
       {transferModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
-          <div className="bg-[#0a0a12] border border-[#00f0ff]/30 rounded-2xl p-8 max-w-md w-full mx-4 shadow-[0_0_60px_rgba(0,240,255,0.2)]">
+          <div className="bg-[#0a0a1a] border border-[#00f0ff]/30 rounded-2xl p-8 max-w-md w-full mx-4 shadow-[0_0_60px_rgba(0,240,255,0.2)]">
             <h3 className="text-2xl font-black text-white mb-2">Transfer Ticket</h3>
             <p className="text-gray-400 mb-6">Transfer this NFT ticket to another wallet via email</p>
             <input
@@ -347,7 +347,7 @@ export default function MyTicketsPage() {
               placeholder="Recipient email address"
               value={transferEmail}
               onChange={(e) => setTransferEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-[#00f0ff] focus:outline-none mb-4"
+              className="w-full px-4 py-3 rounded-lg bg-[#0f0f25] border border-[#1a1a3a] text-white placeholder-gray-500 focus:border-[#00f0ff] focus:outline-none mb-4"
             />
             <div className="flex gap-3">
               <button
@@ -355,7 +355,7 @@ export default function MyTicketsPage() {
                   setTransferModal(null)
                   setTransferEmail('')
                 }}
-                className="flex-1 py-3 rounded-lg border border-white/10 text-gray-400 font-semibold hover:bg-white/5 transition-colors"
+                className="flex-1 py-3 rounded-lg border border-[#1a1a3a] text-gray-400 font-semibold hover:bg-[#0f0f25] transition-colors"
               >
                 Cancel
               </button>
@@ -404,7 +404,7 @@ export default function MyTicketsPage() {
               revolution.
             </p>
             <Link
-              href="/tickets"
+              href="/"
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00f0ff] to-[#ff2d78] text-black font-bold rounded-lg hover:shadow-[0_0_20px_rgba(0,240,255,0.5)] transition-all"
             >
               <span className="material-symbols-outlined">explore</span>
@@ -528,18 +528,18 @@ export default function MyTicketsPage() {
                             </div>
 
                             <div className="grid grid-cols-2 gap-4 mb-6">
-                              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                              <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                                 <p className="text-xs text-gray-400 mb-1">Section</p>
                                 <p className="font-black text-lg text-[#00f0ff]">{ticket.section}</p>
                               </div>
-                              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                              <div className="p-4 rounded-lg bg-[#0f0f25] border border-[#1a1a3a]">
                                 <p className="text-xs text-gray-400 mb-1">Seat</p>
                                 <p className="font-black text-lg text-[#39ff14]">{ticket.seat}</p>
                               </div>
                             </div>
 
                             <div className="mb-6 flex justify-center">
-                              <div className="w-32 h-32 rounded-xl bg-white/10 border-2 border-dashed border-[#00f0ff]/50 flex items-center justify-center">
+                              <div className="w-32 h-32 rounded-xl bg-[#1a1a3a] border-2 border-dashed border-[#00f0ff]/50 flex items-center justify-center">
                                 <div className="text-center">
                                   <span className="material-symbols-outlined text-4xl text-[#00f0ff]/50">
                                     qr_code
