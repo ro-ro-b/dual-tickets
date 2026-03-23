@@ -105,10 +105,18 @@ export default function TicketsPage() {
         {/* Hero Section */}
         <div className="relative pt-14 pb-8 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Hero title - warm gold gradient italic */}
-            <h1 className="text-5xl md:text-7xl font-black mb-8 tracking-tight leading-tight italic">
-              <span className="bg-gradient-to-r from-[#e8a838] via-[#f0c040] to-[#d4632a] bg-clip-text text-transparent">The Future of Live Events</span>
-            </h1>
+            {/* DUAL Logo + Tagline */}
+            <div className="flex flex-col items-center gap-4 mb-8">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#e8a838] to-[#d4632a] flex items-center justify-center shadow-[0_0_20px_rgba(232,168,56,0.4)]">
+                  <span className="material-symbols-outlined text-white text-2xl">confirmation_number</span>
+                </div>
+                <span className="text-5xl md:text-6xl font-black tracking-tight text-white">DUAL</span>
+              </div>
+              <p className="text-xl md:text-2xl italic font-light tracking-wide">
+                <span className="bg-gradient-to-r from-[#e8a838] via-[#f0c040] to-[#d4632a] bg-clip-text text-transparent">The Tokenised Future of Events and Tickets</span>
+              </p>
+            </div>
 
             {/* Search Bar */}
             <div className="max-w-lg mx-auto mb-8">
