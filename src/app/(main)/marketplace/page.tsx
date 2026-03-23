@@ -28,92 +28,18 @@ interface PurchaseModalState {
   transactionHash?: string
 }
 
-const MOCK_LISTINGS: MarketplaceListing[] = [
-  {
-    id: '1',
-    ticketName: 'Neon Dreams Festival 2026 - Backstage Pass',
-    originalPrice: 299,
-    listingPrice: 349,
-    seller: '0x7a8f...9d2c',
-    eventDate: '2026-04-15',
-    tier: 'Backstage Pass',
-    listed: '2 hours ago',
-    isLive: true,
-    maxResalePrice: 450,
-    imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&q=80',
-    eventId: '1',
-  },
-  {
-    id: '2',
-    ticketName: 'Virtual Reality Concert Series - VIP',
-    originalPrice: 149,
-    listingPrice: 175,
-    seller: '0x4b3e...6a1f',
-    eventDate: '2026-05-22',
-    tier: 'VIP Experience',
-    listed: '5 hours ago',
-    isLive: true,
-    maxResalePrice: 250,
-    imageUrl: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&q=80',
-    eventId: '2',
-  },
-  {
-    id: '3',
-    ticketName: 'Crypto Cup 2026 - Executive Suite',
-    originalPrice: 799,
-    listingPrice: 799,
-    seller: '0x2d9c...5e7b',
-    eventDate: '2026-06-10',
-    tier: 'Executive Suite',
-    listed: '1 day ago',
-    isLive: true,
-    maxResalePrice: 999,
-    imageUrl: 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=600&q=80',
-    eventId: '3',
-  },
-  {
-    id: '4',
-    ticketName: 'The Holographic Opera - Main Floor',
-    originalPrice: 249,
-    listingPrice: 229,
-    seller: '0x8f2a...4c9e',
-    eventDate: '2026-07-08',
-    tier: 'Main Floor Exclusive',
-    listed: '3 days ago',
-    isLive: true,
-    maxResalePrice: 375,
-    imageUrl: 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=600&q=80',
-    eventId: '4',
-  },
-  {
-    id: '5',
-    ticketName: 'Web3 Summit 2026 - VIP Experience',
-    originalPrice: 299,
-    listingPrice: 325,
-    seller: '0x5e6d...3a9f',
-    eventDate: '2026-08-03',
-    tier: 'VIP Experience',
-    listed: '4 hours ago',
-    isLive: true,
-    maxResalePrice: 450,
-    imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80',
-    eventId: '5',
-  },
-  {
-    id: '6',
-    ticketName: 'Future Tech Innovators Summit - VIP',
-    originalPrice: 399,
-    listingPrice: 425,
-    seller: '0x1c2b...8f4d',
-    eventDate: '2026-09-12',
-    tier: 'VIP Access',
-    listed: '6 hours ago',
-    isLive: true,
-    maxResalePrice: 599,
-    imageUrl: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=600&q=80',
-    eventId: '9',
-  },
-]
+
+function getTimeAgo(dateStr: string): string {
+  const now = new Date()
+  const then = new Date(dateStr)
+  const diffMs = now.getTime() - then.getTime()
+  const diffHrs = Math.floor(diffMs / (1000 * 60 * 60))
+  if (diffHrs < 1) return 'Just now'
+  if (diffHrs < 24) return `${diffHrs} hour${diffHrs !== 1 ? 's' : ''} ago`
+  const diffDays = Math.floor(diffHrs / 24)
+  if (diffDays < 7) return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`
+  return then.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+}
 
 export default function MarketplacePage() {
   const [sortBy, setSortBy] = useState<'price-asc' | 'price-desc' | 'newest'>('newest')
@@ -127,28 +53,29 @@ export default function MarketplacePage() {
   })
 
   useEffect(() => {
-    fetch('/api/tickets?status=listed')
+    fetch('/api/tickets')
       .then((r) => r.json())
       .then((data) => {
         const tickets = data.tickets || []
-        const mapped: MarketplaceListing[] = tickets
-          .filter((t: any) => t.status === 'listed')
-          .map((t: any) => ({
+        const mapped: MarketplaceListing[] = tickets.map((t: any) => {
+          const td = t.ticketData || {}
+          const tierName = td.tier ? td.tier.charAt(0).toUpperCase() + td.tier.slice(1) : 'General'
+          return {
             id: t.id,
-            ticketName:
-              (t.ticketData?.eventName || t.ticketData?.name || 'Event Ticket') +
-              ' - ' +
-              (t.ticketData?.tier || 'Ticket'),
-            originalPrice: t.ticketData?.price || 0,
-            listingPrice: t.ticketData?.listingPrice || t.ticketData?.price || 0,
-            seller: t.ownerId?.slice(0, 8) + '...' + t.ownerId?.slice(-4) || 'Unknown',
-            eventDate: t.ticketData?.eventDate || t.createdAt,
-            tier: t.ticketData?.tier || 'Standard',
-            listed: t.listedAt ? new Date(t.listedAt).toLocaleDateString() : 'Recently',
-            isLive: true,
-            maxResalePrice: t.ticketData?.maxResalePrice,
-            eventName: t.ticketData?.eventName || 'Event',
-          }))
+            ticketName: (td.eventName || td.name || 'Event Ticket') + ' — ' + tierName,
+            originalPrice: td.price || 0,
+            listingPrice: td.listingPrice || td.price || 0,
+            seller: t.blockchainTxHash ? t.blockchainTxHash.slice(0, 10) + '...' + t.blockchainTxHash.slice(-6) : 'DUAL Network',
+            eventDate: td.eventDate || t.createdAt,
+            tier: tierName,
+            listed: t.createdAt ? getTimeAgo(t.createdAt) : 'Recently',
+            isLive: !!t.blockchainTxHash,
+            maxResalePrice: td.maxResalePrice,
+            eventName: td.eventName || td.name || 'Event',
+            imageUrl: td.imageUrl,
+            eventId: t.id,
+          }
+        })
         setLiveListings(mapped)
       })
       .catch(() => {})
@@ -216,20 +143,11 @@ export default function MarketplacePage() {
     })
   }
 
-  const tiers = [
-    'all',
-    'General Admission',
-    'VIP',
-    'VIP Experience',
-    'Backstage Pass',
-    'Executive Suite',
-    'Main Floor Exclusive',
-  ]
-
-  const allListings = MOCK_LISTINGS
+  const uniqueTiers = Array.from(new Set(liveListings.map((l) => l.tier))).filter(Boolean)
+  const tiers = ['all', ...uniqueTiers]
 
   const filteredListings =
-    filterTier === 'all' ? allListings : allListings.filter((l) => l.tier === filterTier)
+    filterTier === 'all' ? liveListings : liveListings.filter((l) => l.tier === filterTier)
 
   const sortedListings = [...filteredListings].sort((a, b) => {
     if (sortBy === 'price-asc') return a.listingPrice - b.listingPrice
@@ -250,10 +168,10 @@ export default function MarketplacePage() {
         </div>
 
         {liveListings.length > 0 && (
-          <div className="mb-8 flex items-center gap-4 p-4 rounded-xl border border-[#39ff14]/30 bg-[#39ff14]/5">
+          <div className="mb-8 flex items-center gap-4 p-4 rounded-xl border border-[#e8a838]/30 bg-[#e8a838]/5">
             <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-[#39ff14] animate-pulse" />
-              <span className="text-[#39ff14] font-bold text-lg">{liveListings.length}</span>
+              <span className="w-3 h-3 rounded-full bg-[#e8a838] animate-pulse" />
+              <span className="text-[#e8a838] font-bold text-lg">{liveListings.length}</span>
             </div>
             <span className="text-gray-300">
               live listing{liveListings.length !== 1 ? 's' : ''} with on-chain price
@@ -287,7 +205,7 @@ export default function MarketplacePage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="px-4 py-2 rounded-xl bg-[#1a1612] border border-[#3a332c] text-white text-sm focus:border-[#6c2bd9]/60 focus:outline-none transition-all"
+              className="px-4 py-2 rounded-xl bg-[#1a1612] border border-[#3a332c] text-white text-sm focus:border-[#e8a838]/50 focus:outline-none transition-all"
             >
               <option value="newest">Newest First</option>
               <option value="price-asc">Price: Low to High</option>
@@ -326,25 +244,25 @@ export default function MarketplacePage() {
               return (
                 <div
                   key={listing.id}
-                  className="group rounded-2xl border border-[#2a2420] bg-[#151210] overflow-hidden hover:border-[#3a332c] hover:shadow-[0_0_30px_rgba(108,43,217,0.15)] hover:-translate-y-1 transition-all duration-300 flex flex-col"
+                  className="group rounded-2xl border border-[#2a2420] bg-[#151210] overflow-hidden hover:border-[#3a332c] hover:shadow-[0_0_30px_rgba(232,168,56,0.1)] hover:-translate-y-1 transition-all duration-300 flex flex-col"
                 >
                   {listing.imageUrl && (
                     <div className="h-36 relative overflow-hidden">
                       <img src={listing.imageUrl} alt={listing.ticketName} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0d0b08] via-transparent to-transparent" />
                       {listing.isLive && (
-                        <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-black/60 backdrop-blur-sm border border-[#39ff14]/30">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#39ff14] animate-pulse" />
-                          <span className="text-xs font-bold text-[#39ff14]">ON-CHAIN</span>
+                        <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-[#e8a838] shadow-[0_0_10px_rgba(232,168,56,0.4)]">
+                          <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />
+                          <span className="text-xs font-bold text-black">ON-CHAIN</span>
                         </div>
                       )}
                     </div>
                   )}
                   {!listing.imageUrl && listing.isLive && (
                     <div className="px-6 pt-6 mb-3">
-                      <div className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-[#39ff14]/10 border border-[#39ff14]/30 w-fit">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#39ff14] animate-pulse" />
-                        <span className="text-xs font-bold text-[#39ff14]">ON-CHAIN</span>
+                      <div className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-[#e8a838]/10 border border-[#e8a838]/30 w-fit">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#e8a838] animate-pulse" />
+                        <span className="text-xs font-bold text-[#e8a838]">ON-CHAIN</span>
                       </div>
                     </div>
                   )}
@@ -396,7 +314,7 @@ export default function MarketplacePage() {
                               : priceChange > 0
                                 ? 'text-[#d4632a]'
                                 : priceChange < 0
-                                  ? 'text-[#39ff14]'
+                                  ? 'text-[#e8a838]'
                                   : 'text-gray-400'
                           }`}
                         >
@@ -408,9 +326,9 @@ export default function MarketplacePage() {
                   </div>
 
                   {listing.isLive && listing.maxResalePrice && (
-                    <div className="mb-4 mx-6 p-3 rounded-lg bg-[#39ff14]/5 border border-[#39ff14]/20">
+                    <div className="mb-4 mx-6 p-3 rounded-lg bg-[#e8a838]/5 border border-[#e8a838]/20">
                       <p className="text-xs text-gray-500 mb-1">Anti-Scalp Max Price</p>
-                      <p className="font-bold text-[#39ff14]">${listing.maxResalePrice}</p>
+                      <p className="font-bold text-[#e8a838]">${listing.maxResalePrice}</p>
                       {isViolatingCeiling && (
                         <p className="text-xs text-[#d4632a] mt-2 flex items-center gap-1">
                           <span className="material-symbols-outlined text-xs">warning</span>
@@ -449,9 +367,9 @@ export default function MarketplacePage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="border border-[#39ff14]/30 rounded-2xl p-8 bg-gradient-to-r from-[#39ff14]/5 to-transparent">
+        <div className="border border-[#2a2420] rounded-2xl p-8 bg-[#151210]">
           <h3 className="text-2xl font-black text-white mb-4 flex items-center gap-3">
-            <span className="material-symbols-outlined text-[#39ff14]">shield_verified</span>
+            <span className="material-symbols-outlined text-[#e8a838]">shield_verified</span>
             Safe Trading with Anti-Scalp Protection
           </h3>
           <p className="text-gray-300 mb-4">
@@ -461,27 +379,27 @@ export default function MarketplacePage() {
           </p>
           <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-300">
             <li className="flex items-start gap-2">
-              <span className="text-[#39ff14] mt-1">✓</span>
+              <span className="text-[#e8a838] mt-1">✓</span>
               <span>Automated price verification</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-[#39ff14] mt-1">✓</span>
+              <span className="text-[#e8a838] mt-1">✓</span>
               <span>Transparent transaction history</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-[#39ff14] mt-1">✓</span>
+              <span className="text-[#e8a838] mt-1">✓</span>
               <span>Instant on-chain settlement</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-[#39ff14] mt-1">✓</span>
+              <span className="text-[#e8a838] mt-1">✓</span>
               <span>Real-time price enforcement</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-[#39ff14] mt-1">✓</span>
+              <span className="text-[#e8a838] mt-1">✓</span>
               <span>Multi-signature escrow</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-[#39ff14] mt-1">✓</span>
+              <span className="text-[#e8a838] mt-1">✓</span>
               <span>Provenance verification</span>
             </li>
           </ul>
@@ -526,7 +444,7 @@ export default function MarketplacePage() {
             }
           `}</style>
 
-          <div className="max-w-2xl w-full rounded-2xl border border-[#e8a838]/30 bg-gradient-to-br from-[#08080f] to-[#1a0033] p-8">
+          <div className="max-w-2xl w-full rounded-2xl border border-[#2a2420] bg-[#0d0b08] p-8 shadow-[0_0_60px_rgba(232,168,56,0.1)]">
             {purchaseModal.step === 'confirm' && (
               <>
                 <div className="mb-8">
@@ -585,9 +503,9 @@ export default function MarketplacePage() {
                   </div>
 
                   {purchaseModal.listing.maxResalePrice && (
-                    <div className="p-4 rounded-lg bg-[#39ff14]/5 border border-[#39ff14]/30">
+                    <div className="p-4 rounded-lg bg-[#e8a838]/5 border border-[#e8a838]/30">
                       <p className="text-sm text-gray-400">
-                        <span className="text-[#39ff14] font-bold">Anti-Scalp Protected:</span> Max
+                        <span className="text-[#e8a838] font-bold">Anti-Scalp Protected:</span> Max
                         resale price is ${purchaseModal.listing.maxResalePrice}
                       </p>
                     </div>
@@ -644,9 +562,9 @@ export default function MarketplacePage() {
                   </div>
 
                   {/* Step 3 */}
-                  <div className="flex items-start gap-4 p-4 rounded-lg bg-[#151210] border border-[#39ff14]/30">
-                    <div className="settle-pulse w-8 h-8 rounded-full bg-[#39ff14]/30 border border-[#39ff14] flex items-center justify-center flex-shrink-0">
-                      <div className="w-4 h-4 border-2 border-[#39ff14]/30 border-t-[#39ff14] rounded-full animate-spin" />
+                  <div className="flex items-start gap-4 p-4 rounded-lg bg-[#151210] border border-[#e8a838]/20">
+                    <div className="settle-pulse w-8 h-8 rounded-full bg-[#e8a838]/20 border border-[#e8a838]/60 flex items-center justify-center flex-shrink-0">
+                      <div className="w-4 h-4 border-2 border-[#e8a838]/30 border-t-[#e8a838] rounded-full animate-spin" />
                     </div>
                     <div>
                       <p className="font-semibold text-white">Recording on Blockscout...</p>
@@ -655,9 +573,9 @@ export default function MarketplacePage() {
                   </div>
 
                   {/* Step 4 */}
-                  <div className="flex items-start gap-4 p-4 rounded-lg bg-[#151210] border border-[#6c2bd9]/30">
-                    <div className="settle-pulse w-8 h-8 rounded-full bg-[#6c2bd9]/30 border border-[#6c2bd9] flex items-center justify-center flex-shrink-0">
-                      <div className="w-4 h-4 border-2 border-[#6c2bd9]/30 border-t-[#6c2bd9] rounded-full animate-spin" />
+                  <div className="flex items-start gap-4 p-4 rounded-lg bg-[#151210] border border-[#d4632a]/20">
+                    <div className="settle-pulse w-8 h-8 rounded-full bg-[#d4632a]/20 border border-[#d4632a]/60 flex items-center justify-center flex-shrink-0">
+                      <div className="w-4 h-4 border-2 border-[#d4632a]/30 border-t-[#d4632a] rounded-full animate-spin" />
                     </div>
                     <div>
                       <p className="font-semibold text-white">Transferring ownership...</p>
@@ -675,10 +593,10 @@ export default function MarketplacePage() {
             {purchaseModal.step === 'success' && (
               <>
                 <div className="mb-8 text-center">
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#39ff14]/20 border-2 border-[#39ff14] mb-4">
-                    <span className="text-5xl text-[#39ff14]">✓</span>
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#e8a838]/15 border-2 border-[#e8a838] mb-4">
+                    <span className="text-5xl text-[#e8a838]">✓</span>
                   </div>
-                  <h2 className="text-3xl font-black text-[#39ff14] mb-2">PURCHASE COMPLETE</h2>
+                  <h2 className="text-3xl font-black text-[#e8a838] mb-2">PURCHASE COMPLETE</h2>
                   <p className="text-gray-400">Your ticket has been transferred to your wallet</p>
                 </div>
 
@@ -695,9 +613,9 @@ export default function MarketplacePage() {
                     <p className="font-bold text-white">{purchaseModal.listing.ticketName}</p>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-[#39ff14]/10 border border-[#39ff14]/30">
+                  <div className="p-4 rounded-lg bg-[#e8a838]/10 border border-[#e8a838]/30">
                     <p className="text-xs text-gray-500 mb-1">Paid</p>
-                    <p className="font-bold text-[#39ff14] text-lg">
+                    <p className="font-bold text-[#e8a838] text-lg">
                       ${purchaseModal.listing.listingPrice}
                     </p>
                   </div>
@@ -708,7 +626,7 @@ export default function MarketplacePage() {
                     href={`https://32f.blockv.io/tx/${purchaseModal.transactionHash}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 py-3 rounded-lg font-bold border border-[#39ff14]/50 text-[#39ff14] hover:border-[#39ff14] hover:bg-[#39ff14]/10 transition-all flex items-center justify-center gap-2"
+                    className="flex-1 py-3 rounded-lg font-bold border border-[#e8a838]/50 text-[#e8a838] hover:border-[#e8a838] hover:bg-[#e8a838]/10 transition-all flex items-center justify-center gap-2"
                   >
                     <span className="material-symbols-outlined">open_in_new</span>
                     View on Blockscout
