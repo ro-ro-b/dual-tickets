@@ -69,16 +69,18 @@ export async function POST(req: NextRequest) {
     const result = await client.ebus.execute(actionPayload);
     const objectIds = result.steps?.[0]?.output?.ids || [];
 
-    // Post-mint: set token_uri on each minted object so Blockscout can read metadata
+    // Post-mint: set full metadata on each minted object for DUAL console + Blockscout
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://dual-tickets.vercel.app';
     for (const objId of objectIds) {
       try {
-        await client.objects.updateObject(objId, {
-          metadata: {
-            token_uri: `${appUrl}/api/metadata/${objId}`,
-            ...(rawData.imageUrl ? { image: { url: rawData.imageUrl } } : {}),
-          },
-        });
+        const postMintMeta: Record<string, any> = {
+          token_uri: `${appUrl}/api/metadata/${objId}`,
+        };
+        if (rawData.name) postMintMeta.name = rawData.name;
+        if (rawData.description) postMintMeta.description = rawData.description;
+        if (rawData.imageUrl) postMintMeta.image = { url: rawData.imageUrl };
+
+        await client.objects.updateObject(objId, { metadata: postMintMeta });
       } catch {
         // Non-critical — metadata endpoint still works via data provider lookup
       }
