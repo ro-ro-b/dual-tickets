@@ -371,6 +371,7 @@ export default function EventDetailPage({
 }) {
   const mockEvent = MOCK_EVENTS[params.id]
   const [event, setEvent] = useState<Event | null>(mockEvent || null)
+  const [loading, setLoading] = useState(!mockEvent)
   const [selectedTier, setSelectedTier] = useState<string | null>(null)
   const [liveData, setLiveData] = useState<any>(null)
   const [minting, setMinting] = useState(false)
@@ -445,6 +446,7 @@ export default function EventDetailPage({
         }
       })
       .catch(() => {})
+      .finally(() => setLoading(false))
   }, [params.id, mockEvent])
 
   const handleMintTicket = async (tierId: string) => {
@@ -534,6 +536,25 @@ export default function EventDetailPage({
 
   const closePurchase = () => {
     setPurchase({ isOpen: false, tier: null, step: 'confirm' })
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen">
+        {/* Skeleton hero */}
+        <div className="h-96 bg-gradient-to-b from-[#1a1510] to-[#0d0b08] animate-pulse" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="h-4 w-32 bg-[#2a2420] rounded mb-6 animate-pulse" />
+          <div className="h-12 w-2/3 bg-[#2a2420] rounded mb-6 animate-pulse" />
+          <div className="grid grid-cols-3 gap-6 mb-8">
+            <div className="h-16 bg-[#2a2420] rounded animate-pulse" />
+            <div className="h-16 bg-[#2a2420] rounded animate-pulse" />
+            <div className="h-16 bg-[#2a2420] rounded animate-pulse" />
+          </div>
+          <div className="h-20 w-3/4 bg-[#2a2420] rounded animate-pulse" />
+        </div>
+      </div>
+    )
   }
 
   if (!event) {
