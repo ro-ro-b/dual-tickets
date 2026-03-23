@@ -76,7 +76,7 @@ export default function HomePage() {
             <span>{liveCount} live listings with on-chain price enforcement</span>
             <span className="mx-8 text-[#474747] opacity-30">|</span>
             <span className="inline-block w-2 h-2 bg-[#39ff14] animate-pulse" />
-            <span>DUAL Network — ERC-721 tokenised tickets with anti-scalp enforcement</span>
+            <span><DualInline className="text-[#c6c6c6]" /> Network — ERC-721 tokenised tickets with anti-scalp enforcement</span>
             <span className="mx-8 text-[#474747] opacity-30">|</span>
             <span className="inline-block w-2 h-2 bg-[#39ff14] animate-pulse" />
             <span>Contract: 0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06</span>
@@ -85,7 +85,7 @@ export default function HomePage() {
             <span>{liveCount} live listings with on-chain price enforcement</span>
             <span className="mx-8 text-[#474747] opacity-30">|</span>
             <span className="inline-block w-2 h-2 bg-[#39ff14] animate-pulse" />
-            <span>DUAL Network — ERC-721 tokenised tickets with anti-scalp enforcement</span>
+            <span><DualInline className="text-[#c6c6c6]" /> Network — ERC-721 tokenised tickets with anti-scalp enforcement</span>
           </span>
         </div>
       </div>

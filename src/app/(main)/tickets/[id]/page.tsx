@@ -656,7 +656,7 @@ export default function EventDetailPage({
               <span className="material-symbols-outlined text-[#39ff14]">verified</span>
               <div>
                 <p className="text-sm text-[#919191] mb-1">Verification</p>
-                <p className="font-semibold text-[#39ff14]">DUAL Verified</p>
+                <p className="font-semibold text-[#39ff14]"><DualInline className="text-[#39ff14]" /> Verified</p>
               </div>
             </div>
           </div>
