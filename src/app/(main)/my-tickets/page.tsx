@@ -88,24 +88,12 @@ export default function MyTicketsPage() {
       })
       const data = await res.json()
       if (data.success) {
-        setActionResult({
-          type: 'transfer',
-          success: true,
-          message: `Transferred to ${transferEmail}`,
-        })
+        setActionResult({ type: 'transfer', success: true, message: `Transferred to ${transferEmail}` })
       } else {
-        setActionResult({
-          type: 'transfer',
-          success: false,
-          message: data.error || 'Transfer failed',
-        })
+        setActionResult({ type: 'transfer', success: false, message: data.error || 'Transfer failed' })
       }
     } catch {
-      setActionResult({
-        type: 'transfer',
-        success: false,
-        message: 'Network error',
-      })
+      setActionResult({ type: 'transfer', success: false, message: 'Network error' })
     }
     setTransferring(false)
     setTransferModal(null)
@@ -119,59 +107,36 @@ export default function MyTicketsPage() {
       const res = await fetch(`/api/tickets/${ticketId}/verify`, { method: 'POST' })
       const data = await res.json()
       if (data.success) {
-        setActionResult({
-          type: 'verify',
-          success: true,
-          message: 'Ticket verified on-chain!',
-        })
+        setActionResult({ type: 'verify', success: true, message: 'Ticket verified on-chain!' })
       } else {
-        setActionResult({
-          type: 'verify',
-          success: false,
-          message: data.error || 'Verification failed',
-        })
+        setActionResult({ type: 'verify', success: false, message: data.error || 'Verification failed' })
       }
     } catch {
-      setActionResult({
-        type: 'verify',
-        success: false,
-        message: 'Network error',
-      })
+      setActionResult({ type: 'verify', success: false, message: 'Network error' })
     }
     setVerifying(null)
     setTimeout(() => setActionResult(null), 5000)
   }
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'valid':
-        return {
-          bg: 'bg-[#39ff14]/20',
-          border: 'border-[#39ff14]/50',
-          text: 'text-[#39ff14]',
-          glow: 'shadow-[0_0_20px_rgba(57,255,20,0.3)]',
-        }
-      case 'scanned':
-        return {
-          bg: 'bg-amber-600/20',
-          border: 'border-amber-500/50',
-          text: 'text-amber-400',
-          glow: 'shadow-[0_0_20px_rgba(217,119,6,0.3)]',
-        }
-      case 'collectible':
-        return {
-          bg: 'bg-gradient-to-r from-pink-600/20 to-purple-600/20',
-          border: 'border-pink-500/50',
-          text: 'text-pink-400',
-          glow: 'shadow-[0_0_20px_rgba(236,72,153,0.3)]',
-        }
+  const getTierStyle = (tier: string) => {
+    switch (tier) {
+      case 'backstage':
+        return 'bg-gradient-to-r from-[#d4632a] to-[#6c2bd9] text-white'
+      case 'vip':
+        return 'bg-[#d4632a]/20 border border-[#d4632a]/40 text-[#d4632a]'
+      case 'premium':
+        return 'bg-[#6c2bd9]/20 border border-[#6c2bd9]/40 text-[#6c2bd9]'
       default:
-        return {
-          bg: 'bg-gray-600/20',
-          border: 'border-gray-500/50',
-          text: 'text-gray-400',
-          glow: 'shadow-[0_0_20px_rgba(107,114,128,0.3)]',
-        }
+        return 'bg-[#e8a838]/15 border border-[#e8a838]/30 text-[#e8a838]'
+    }
+  }
+
+  const getTierLabel = (tier: string) => {
+    switch (tier) {
+      case 'backstage': return 'Backstage'
+      case 'vip': return 'VIP'
+      case 'premium': return 'Premium'
+      default: return 'General'
     }
   }
 
@@ -192,203 +157,142 @@ export default function MyTicketsPage() {
         .ticket-back {
           transform: rotateY(180deg);
         }
-        @keyframes holographic-border {
-          0% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 50%;
-          }
-        }
-        .holographic-border {
-          background-size: 200% 200%;
-          animation: holographic-border 3s ease infinite;
-        }
-        @keyframes pulse-ring {
-          0% {
-            box-shadow: 0 0 0 0 rgba(57, 255, 20, 0.4);
-          }
-          70% {
-            box-shadow: 0 0 0 10px rgba(57, 255, 20, 0);
-          }
-          100% {
-            box-shadow: 0 0 0 0 rgba(57, 255, 20, 0);
-          }
-        }
-        .pulse-ring {
-          animation: pulse-ring 2s infinite;
-        }
         .ticket-slot {
           opacity: 0;
-          animation: slideIn 0.6s ease forwards;
+          animation: slideIn 0.5s ease forwards;
         }
         @keyframes slideIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(16px); }
+          to { opacity: 1; transform: translateY(0); }
         }
-        .ticket-slot:nth-child(1) {
-          animation-delay: 0s;
-        }
-        .ticket-slot:nth-child(2) {
-          animation-delay: 0.1s;
-        }
-        .ticket-slot:nth-child(3) {
-          animation-delay: 0.2s;
-        }
-        .ticket-slot:nth-child(4) {
-          animation-delay: 0.3s;
-        }
-        .ticket-slot:nth-child(5) {
-          animation-delay: 0.4s;
-        }
-        .ticket-slot:nth-child(6) {
-          animation-delay: 0.5s;
-        }
-        @keyframes shift {
-          0% {
-            background-position: 0% 0%;
-          }
-          50% {
-            background-position: 100% 100%;
-          }
-          100% {
-            background-position: 0% 0%;
-          }
-        }
+        .ticket-slot:nth-child(1) { animation-delay: 0s; }
+        .ticket-slot:nth-child(2) { animation-delay: 0.08s; }
+        .ticket-slot:nth-child(3) { animation-delay: 0.16s; }
+        .ticket-slot:nth-child(4) { animation-delay: 0.24s; }
+        .ticket-slot:nth-child(5) { animation-delay: 0.32s; }
+        .ticket-slot:nth-child(6) { animation-delay: 0.4s; }
       `}</style>
 
+      {/* Toast notification */}
       {actionResult && (
         <div
-          className={`fixed top-6 right-6 z-50 px-6 py-4 rounded-xl border backdrop-blur-xl shadow-2xl flex items-center gap-3 transition-all ${
+          className={`fixed top-6 right-6 z-50 px-5 py-3 rounded-xl border backdrop-blur-xl shadow-2xl flex items-center gap-2.5 transition-all ${
             actionResult.success
-              ? 'bg-[#39ff14]/10 border-[#39ff14]/50 text-[#39ff14]'
-              : 'bg-[#d4632a]/10 border-[#d4632a]/50 text-[#d4632a]'
+              ? 'bg-[#39ff14]/10 border-[#39ff14]/30 text-[#39ff14]'
+              : 'bg-[#d4632a]/10 border-[#d4632a]/30 text-[#d4632a]'
           }`}
         >
-          <span className="material-symbols-outlined">
+          <span className="material-symbols-outlined text-lg">
             {actionResult.success ? 'check_circle' : 'error'}
           </span>
-          <span className="font-semibold">{actionResult.message}</span>
+          <span className="font-medium text-sm">{actionResult.message}</span>
         </div>
       )}
 
+      {/* Transfer Modal */}
       {transferModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
-          <div className="bg-[#0d0b08] border border-[#e8a838]/30 rounded-2xl p-8 max-w-md w-full mx-4 shadow-[0_0_60px_rgba(232,168,56,0.15)]">
-            <h3 className="text-2xl font-black text-white mb-2">Transfer Ticket</h3>
-            <p className="text-gray-400 mb-6">Transfer this NFT ticket to another wallet via email</p>
+          <div className="bg-[#151210] border border-[#2a2420] rounded-2xl p-8 max-w-md w-full mx-4 shadow-[0_0_60px_rgba(232,168,56,0.1)]">
+            <h3 className="text-xl font-bold text-white mb-2">Transfer Ticket</h3>
+            <p className="text-gray-500 text-sm mb-6">Transfer this NFT ticket to another wallet via email</p>
             <input
               type="email"
               placeholder="Recipient email address"
               value={transferEmail}
               onChange={(e) => setTransferEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg bg-[#151210] border border-[#2a2420] text-white placeholder-gray-500 focus:border-[#e8a838] focus:outline-none mb-4"
+              className="w-full px-4 py-3 rounded-xl bg-[#0d0b08] border border-[#2a2420] text-white text-sm placeholder-gray-600 focus:border-[#e8a838]/50 focus:outline-none mb-4"
             />
             <div className="flex gap-3">
               <button
-                onClick={() => {
-                  setTransferModal(null)
-                  setTransferEmail('')
-                }}
-                className="flex-1 py-3 rounded-lg border border-[#2a2420] text-gray-400 font-semibold hover:bg-[#151210] transition-colors"
+                onClick={() => { setTransferModal(null); setTransferEmail('') }}
+                className="flex-1 py-3 rounded-xl border border-[#2a2420] text-gray-400 text-sm font-medium hover:bg-[#1a1612] transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleTransfer(transferModal)}
                 disabled={transferring || !transferEmail}
-                className="flex-1 py-3 rounded-lg bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold hover:shadow-[0_0_20px_rgba(232,168,56,0.3)] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold text-sm hover:shadow-[0_0_20px_rgba(232,168,56,0.3)] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {transferring ? (
-                  <>
-                    <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />{' '}
-                    Transferring...
-                  </>
+                  <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
                 ) : (
-                  <>
-                    <span className="material-symbols-outlined text-sm">send</span> Transfer
-                  </>
+                  <span className="material-symbols-outlined text-sm">send</span>
                 )}
+                {transferring ? 'Sending...' : 'Transfer'}
               </button>
             </div>
-            <p className="text-xs text-gray-500 mt-4 text-center">
-              This executes an on-chain transfer via <DualInline /> ebus.execute()
+            <p className="text-xs text-gray-600 mt-4 text-center">
+              On-chain transfer via <DualInline /> ebus.execute()
             </p>
           </div>
         </div>
       )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-12">
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-4 bg-gradient-to-r from-[#e8a838] via-[#f0c040] to-[#d4632a] bg-clip-text text-transparent">
+        {/* Header */}
+        <div className="mb-10">
+          <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-3 bg-gradient-to-r from-[#e8a838] via-[#f0c040] to-[#d4632a] bg-clip-text text-transparent">
             My Tickets
           </h1>
-          <p className="text-lg text-gray-300">
-            Your collection of on-chain verified event tickets and collectibles
+          <p className="text-gray-500">
+            Your collection of on-chain verified event tickets
           </p>
         </div>
 
-        {!loading && allTickets.length === 0 ? (
+        {loading ? (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-20 rounded-xl bg-[#151210] border border-[#2a2420] animate-pulse" />
+            ))}
+          </div>
+        ) : allTickets.length === 0 ? (
           <div className="text-center py-20">
-            <span className="material-symbols-outlined text-8xl text-[#e8a838]/30 block mb-6">
+            <span className="material-symbols-outlined text-7xl text-[#2a2420] block mb-6">
               confirmation_number
             </span>
-            <h2 className="text-3xl font-bold text-white mb-4">No Tickets Yet</h2>
-            <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-              You haven't purchased any tickets yet. Explore upcoming events and join the web3 ticketing
-              revolution.
+            <h2 className="text-2xl font-bold text-white mb-3">No Tickets Yet</h2>
+            <p className="text-gray-500 mb-8 max-w-md mx-auto text-sm">
+              You haven't minted any tickets yet. Explore upcoming events to get started.
             </p>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold rounded-lg hover:shadow-[0_0_20px_rgba(232,168,56,0.3)] transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-black font-bold text-sm rounded-xl hover:shadow-[0_0_20px_rgba(232,168,56,0.3)] transition-all"
             >
-              <span className="material-symbols-outlined">explore</span>
+              <span className="material-symbols-outlined text-sm">explore</span>
               Browse Events
             </Link>
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-12">
-              <div className="p-4 rounded-xl border border-[#e8a838]/30 bg-[#e8a838]/5">
-                <p className="text-sm text-gray-400 mb-2">Total Tickets</p>
-                <p className="text-3xl font-black text-[#e8a838]">{allTickets.length}</p>
+            {/* Stats Row */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+              <div className="p-4 rounded-xl border border-[#2a2420] bg-[#151210]">
+                <p className="text-xs text-gray-600 mb-1">Total Tickets</p>
+                <p className="text-2xl font-black text-white">{allTickets.length}</p>
               </div>
-              <div className="p-4 rounded-xl border border-[#39ff14]/30 bg-[#39ff14]/5">
-                <p className="text-sm text-gray-400 mb-2">On-Chain</p>
-                <p className="text-3xl font-black text-[#39ff14]">{allTickets.length}</p>
+              <div className="p-4 rounded-xl border border-[#2a2420] bg-[#151210]">
+                <p className="text-xs text-gray-600 mb-1">On-Chain</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-2xl font-black text-white">{allTickets.filter(t => t.isLive).length}</p>
+                  <span className="w-2 h-2 rounded-full bg-[#39ff14] animate-pulse" />
+                </div>
               </div>
-              <div className="p-4 rounded-xl border border-[#39ff14]/30 bg-[#39ff14]/5">
-                <p className="text-sm text-gray-400 mb-2">Valid</p>
-                <p className="text-3xl font-black text-[#39ff14]">
-                  {allTickets.filter((t) => t.status === 'valid').length}
-                </p>
+              <div className="p-4 rounded-xl border border-[#2a2420] bg-[#151210]">
+                <p className="text-xs text-gray-600 mb-1">Valid</p>
+                <p className="text-2xl font-black text-[#e8a838]">{allTickets.filter(t => t.status === 'valid').length}</p>
               </div>
-              <div className="p-4 rounded-xl border border-amber-500/30 bg-amber-600/5">
-                <p className="text-sm text-gray-400 mb-2">Already Used</p>
-                <p className="text-3xl font-black text-amber-400">
-                  {allTickets.filter((t) => t.status === 'scanned').length}
-                </p>
-              </div>
-              <div className="p-4 rounded-xl border border-pink-500/30 bg-pink-600/5">
-                <p className="text-sm text-gray-400 mb-2">Collectibles</p>
-                <p className="text-3xl font-black text-pink-400">
-                  {allTickets.filter((t) => t.status === 'collectible').length}
+              <div className="p-4 rounded-xl border border-[#2a2420] bg-[#151210]">
+                <p className="text-xs text-gray-600 mb-1">Used / Collectible</p>
+                <p className="text-2xl font-black text-gray-500">
+                  {allTickets.filter(t => t.status === 'scanned' || t.status === 'collectible').length}
                 </p>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Ticket Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {allTickets.map((ticket) => {
-                const colors = getStatusColor(ticket.status)
                 const isFlipped = flipped[ticket.id]
 
                 return (
@@ -397,128 +301,81 @@ export default function MyTicketsPage() {
                       className={`ticket-card relative cursor-pointer ${isFlipped ? 'flipped' : ''}`}
                       onClick={() => toggleFlip(ticket.id)}
                     >
+                      {/* ── FRONT ── */}
                       <div className="ticket-front">
-                        <div
-                          className={`relative rounded-2xl overflow-hidden border-2 ${colors.border} p-8 ${colors.glow} ${colors.bg} backdrop-blur-sm transition-all duration-300`}
-                        >
-                          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent" />
-                          <div className="relative z-10">
-                            <div className="flex items-center justify-between mb-6">
+                        <div className="rounded-2xl overflow-hidden border border-[#2a2420] bg-[#151210] hover:border-[#3a332c] transition-all duration-300">
+                          {/* Top accent bar */}
+                          <div className="h-1 bg-gradient-to-r from-[#e8a838] via-[#f0c040] to-[#d4632a]" />
+
+                          <div className="p-6">
+                            {/* Status row */}
+                            <div className="flex items-center justify-between mb-4">
                               <div className="flex items-center gap-2">
-                                <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full ${colors.bg} border ${colors.border}`}>
-                                  <span
-                                    className={`w-2 h-2 rounded-full ${
-                                      ticket.status === 'valid'
-                                        ? 'bg-[#39ff14] pulse-ring'
-                                        : ticket.status === 'scanned'
-                                          ? 'bg-amber-400'
-                                          : 'bg-pink-400'
-                                    }`}
-                                  />
-                                  <span className={`text-xs font-bold uppercase tracking-wide ${colors.text}`}>
-                                    {ticket.status}
-                                  </span>
-                                </div>
                                 {ticket.isLive && (
-                                  <div className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-[#39ff14]/10 border border-[#39ff14]/30">
+                                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#39ff14]/10 border border-[#39ff14]/20">
                                     <span className="w-1.5 h-1.5 rounded-full bg-[#39ff14] animate-pulse" />
-                                    <span className="text-xs font-bold text-[#39ff14]">ON-CHAIN</span>
+                                    <span className="text-[10px] font-bold text-[#39ff14] uppercase tracking-wide">On-Chain</span>
                                   </div>
                                 )}
+                                <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide ${getTierStyle(ticket.tier)}`}>
+                                  {getTierLabel(ticket.tier)}
+                                </span>
                               </div>
-                              <span className="material-symbols-outlined text-gray-400">flip</span>
+                              <span className="material-symbols-outlined text-gray-600 text-sm">flip</span>
                             </div>
 
-                            <div className="mb-6">
-                              <h3 className="text-2xl font-black text-white mb-2 line-clamp-2">
-                                {ticket.eventName}
-                              </h3>
-                              <div className="space-y-1 text-sm text-gray-300">
-                                <div className="flex items-center gap-2">
-                                  <span className="material-symbols-outlined text-sm text-[#e8a838]">
-                                    calendar_month
-                                  </span>
-                                  {new Date(ticket.date).toLocaleDateString('en-US', {
-                                    month: 'short',
-                                    day: 'numeric',
-                                    year: 'numeric',
-                                  })}
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <span className="material-symbols-outlined text-sm text-[#d4632a]">
-                                    location_on
-                                  </span>
-                                  {ticket.venue}
-                                </div>
+                            {/* Event name */}
+                            <h3 className="text-xl font-bold text-white mb-3 leading-snug">
+                              {ticket.eventName}
+                            </h3>
+
+                            {/* Date & Venue */}
+                            <div className="flex items-center gap-4 text-sm text-gray-400 mb-5">
+                              <div className="flex items-center gap-1.5">
+                                <span className="material-symbols-outlined text-xs text-[#e8a838]">calendar_month</span>
+                                {new Date(ticket.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                              </div>
+                              <div className="flex items-center gap-1.5">
+                                <span className="material-symbols-outlined text-xs text-[#e8a838]">location_on</span>
+                                <span className="truncate max-w-[140px]">{ticket.venue}</span>
                               </div>
                             </div>
 
-                            <div className="mb-6 inline-flex gap-2">
-                              <span
-                                className={`px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wide ${
-                                  ticket.tier === 'backstage'
-                                    ? 'bg-gradient-to-r from-[#d4632a] to-[#6c2bd9] text-white'
-                                    : ticket.tier === 'vip'
-                                      ? 'bg-[#d4632a]/30 border border-[#d4632a]/50 text-[#d4632a]'
-                                      : 'bg-[#e8a838]/30 border border-[#e8a838]/50 text-[#e8a838]'
-                                }`}
-                              >
-                                {ticket.tier === 'backstage'
-                                  ? 'Backstage Pass'
-                                  : ticket.tier === 'vip'
-                                    ? 'VIP'
-                                    : 'General Admission'}
-                              </span>
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-4 mb-6">
-                              <div className="p-4 rounded-lg bg-[#151210] border border-[#2a2420]">
-                                <p className="text-xs text-gray-400 mb-1">Section</p>
-                                <p className="font-black text-lg text-[#e8a838]">{ticket.section}</p>
+                            {/* Section & Seat */}
+                            <div className="grid grid-cols-2 gap-3 mb-5">
+                              <div className="p-3 rounded-lg bg-[#0d0b08] border border-[#2a2420]">
+                                <p className="text-[10px] text-gray-600 uppercase tracking-wider mb-0.5">Section</p>
+                                <p className="font-bold text-sm text-white">{ticket.section}</p>
                               </div>
-                              <div className="p-4 rounded-lg bg-[#151210] border border-[#2a2420]">
-                                <p className="text-xs text-gray-400 mb-1">Seat</p>
-                                <p className="font-black text-lg text-[#39ff14]">{ticket.seat}</p>
+                              <div className="p-3 rounded-lg bg-[#0d0b08] border border-[#2a2420]">
+                                <p className="text-[10px] text-gray-600 uppercase tracking-wider mb-0.5">Seat</p>
+                                <p className="font-bold text-sm text-white">{ticket.seat}</p>
                               </div>
                             </div>
 
-                            <div className="mb-6 flex justify-center">
-                              <div className="w-32 h-32 rounded-xl bg-[#2a2420] border-2 border-dashed border-[#e8a838]/50 flex items-center justify-center">
-                                <div className="text-center">
-                                  <span className="material-symbols-outlined text-4xl text-[#e8a838]/50">
-                                    qr_code
-                                  </span>
-                                  <p className="text-xs text-gray-500 mt-2">{ticket.qrCode}</p>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="grid grid-cols-3 gap-3" onClick={(e) => e.stopPropagation()}>
+                            {/* Action buttons */}
+                            <div className="grid grid-cols-3 gap-2" onClick={(e) => e.stopPropagation()}>
                               <button
-                                onClick={() => (ticket.isLive ? setTransferModal(ticket.id) : null)}
-                                className={`px-4 py-2 rounded-lg bg-[#e8a838]/20 border border-[#e8a838]/50 text-[#e8a838] font-bold text-sm hover:bg-[#e8a838]/30 transition-all flex items-center justify-center gap-2 ${
-                                  !ticket.isLive ? 'opacity-50 cursor-not-allowed' : ''
-                                }`}
+                                onClick={() => ticket.isLive ? setTransferModal(ticket.id) : null}
+                                className={`py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 border border-[#2a2420] text-gray-400 hover:border-[#e8a838]/30 hover:text-[#e8a838] ${!ticket.isLive ? 'opacity-40 cursor-not-allowed' : ''}`}
                               >
-                                <span className="material-symbols-outlined text-sm">send</span>
+                                <span className="material-symbols-outlined text-xs">send</span>
                                 Transfer
                               </button>
                               <button
-                                onClick={() => (ticket.isLive ? handleVerify(ticket.id) : null)}
+                                onClick={() => ticket.isLive ? handleVerify(ticket.id) : null}
                                 disabled={verifying === ticket.id}
-                                className={`px-4 py-2 rounded-lg bg-[#39ff14]/20 border border-[#39ff14]/50 text-[#39ff14] font-bold text-sm hover:bg-[#39ff14]/30 transition-all flex items-center justify-center gap-2 ${
-                                  !ticket.isLive ? 'opacity-50 cursor-not-allowed' : ''
-                                }`}
+                                className={`py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 border border-[#2a2420] text-gray-400 hover:border-[#39ff14]/30 hover:text-[#39ff14] ${!ticket.isLive ? 'opacity-40 cursor-not-allowed' : ''}`}
                               >
                                 {verifying === ticket.id ? (
-                                  <span className="w-4 h-4 border-2 border-[#39ff14]/30 border-t-[#39ff14] rounded-full animate-spin" />
+                                  <span className="w-3 h-3 border-2 border-gray-600 border-t-[#39ff14] rounded-full animate-spin" />
                                 ) : (
-                                  <span className="material-symbols-outlined text-sm">verified</span>
+                                  <span className="material-symbols-outlined text-xs">verified</span>
                                 )}
                                 Verify
                               </button>
-                              <button className="px-4 py-2 rounded-lg bg-[#d4632a]/20 border border-[#d4632a]/50 text-[#d4632a] font-bold text-sm hover:bg-[#d4632a]/30 transition-all flex items-center justify-center gap-2">
-                                <span className="material-symbols-outlined text-sm">sell</span>
+                              <button className="py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 border border-[#2a2420] text-gray-400 hover:border-[#d4632a]/30 hover:text-[#d4632a]">
+                                <span className="material-symbols-outlined text-xs">sell</span>
                                 List
                               </button>
                             </div>
@@ -526,83 +383,78 @@ export default function MyTicketsPage() {
                         </div>
                       </div>
 
-                      <div className="ticket-back absolute inset-0 rounded-2xl border-2 border-[#6c2bd9]/50">
-                        <div className="h-full rounded-2xl overflow-hidden bg-gradient-to-br from-[#6c2bd9]/20 to-[#e8a838]/10 p-8 flex flex-col justify-between border border-[#6c2bd9]/50">
-                          <div
-                            className="absolute inset-0"
-                            style={{
-                              backgroundImage: `linear-gradient(45deg, transparent 30%, rgba(108, 43, 217, 0.1) 50%, transparent 70%)`,
-                              backgroundSize: '200% 200%',
-                              animation: 'shift 3s infinite',
-                            }}
-                          />
-                          <div className="relative z-10">
-                            {ticket.isLive && (
-                              <div className="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#39ff14]/10 border border-[#39ff14]/30">
-                                <span className="w-2 h-2 rounded-full bg-[#39ff14] animate-pulse" />
-                                <span className="text-xs font-bold text-[#39ff14]">LIVE ON <DualInline /> NETWORK</span>
+                      {/* ── BACK ── */}
+                      <div className="ticket-back absolute inset-0">
+                        <div className="h-full rounded-2xl overflow-hidden border border-[#2a2420] bg-[#151210] flex flex-col">
+                          {/* Top accent bar */}
+                          <div className="h-1 bg-gradient-to-r from-[#6c2bd9] via-[#e8a838] to-[#6c2bd9]" />
+
+                          <div className="p-6 flex flex-col flex-1">
+                            {/* Header */}
+                            <div className="flex items-center justify-between mb-5">
+                              <div className="flex items-center gap-2">
+                                <span className="material-symbols-outlined text-[#e8a838] text-lg">token</span>
+                                <span className="text-sm font-bold text-white">On-Chain Details</span>
                               </div>
-                            )}
-                            <div className="mb-6">
-                              <p className="text-xs text-gray-400 mb-1">
-                                {ticket.isLive ? 'Integrity Hash' : 'Transaction Hash'}
-                              </p>
-                              <p className="font-mono text-sm text-[#6c2bd9] break-all">
+                              <span className="material-symbols-outlined text-gray-600 text-sm">flip</span>
+                            </div>
+
+                            {/* Integrity Hash */}
+                            <div className="mb-4">
+                              <p className="text-[10px] text-gray-600 uppercase tracking-wider mb-1.5">Integrity Hash</p>
+                              <p className="font-mono text-xs text-[#e8a838] break-all leading-relaxed bg-[#0d0b08] rounded-lg p-3 border border-[#2a2420]">
                                 {ticket.transactionHash}
                               </p>
                             </div>
-                            <div className="mb-6 p-4 rounded-lg border border-[#e8a838]/30 bg-[#e8a838]/5">
-                              <p className="text-xs text-gray-400 mb-2">On-Chain Details</p>
-                              <div className="space-y-2 text-sm text-gray-300">
-                                <div className="flex items-center justify-between">
-                                  <span>Contract:</span>
-                                  <span className="font-mono text-[#e8a838]">
-                                    {DUAL_CONTRACT.slice(0, 6)}...{DUAL_CONTRACT.slice(-4)}
+
+                            {/* Details Grid */}
+                            <div className="space-y-2.5 mb-5">
+                              <div className="flex items-center justify-between text-sm">
+                                <span className="text-gray-500">Contract</span>
+                                <span className="font-mono text-xs text-gray-300">
+                                  {DUAL_CONTRACT.slice(0, 6)}...{DUAL_CONTRACT.slice(-4)}
+                                </span>
+                              </div>
+                              <div className="flex items-center justify-between text-sm">
+                                <span className="text-gray-500">Standard</span>
+                                <span className="font-mono text-xs text-gray-300">ERC-721</span>
+                              </div>
+                              <div className="flex items-center justify-between text-sm">
+                                <span className="text-gray-500">Chain</span>
+                                <span className="text-xs text-gray-300"><DualInline /> Network</span>
+                              </div>
+                              {ticket.ownerId && (
+                                <div className="flex items-center justify-between text-sm">
+                                  <span className="text-gray-500">Owner</span>
+                                  <span className="font-mono text-xs text-gray-300">
+                                    {ticket.ownerId.slice(0, 8)}...{ticket.ownerId.slice(-4)}
                                   </span>
                                 </div>
-                                <div className="flex items-center justify-between">
-                                  <span>Token Standard:</span>
-                                  <span className="font-mono text-[#39ff14]">ERC-721</span>
-                                </div>
-                                <div className="flex items-center justify-between">
-                                  <span>Chain:</span>
-                                  <span className="font-mono text-[#d4632a]"><DualInline /> Network</span>
-                                </div>
-                                {ticket.ownerId && (
-                                  <div className="flex items-center justify-between">
-                                    <span>Owner:</span>
-                                    <span className="font-mono text-[#6c2bd9] text-xs">
-                                      {ticket.ownerId.slice(0, 8)}...{ticket.ownerId.slice(-4)}
-                                    </span>
-                                  </div>
-                                )}
+                              )}
+                              <div className="flex items-center justify-between text-sm">
+                                <span className="text-gray-500">Minted</span>
+                                <span className="text-xs text-gray-300">
+                                  {new Date(ticket.mintedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                </span>
                               </div>
                             </div>
-                            <div className="mb-4">
-                              <p className="text-xs text-gray-400 mb-1">Minted</p>
-                              <p className="text-sm text-gray-300">
-                                {new Date(ticket.mintedDate).toLocaleDateString('en-US', {
-                                  month: 'long',
-                                  day: 'numeric',
-                                  year: 'numeric',
-                                })}
-                              </p>
+
+                            {/* Blockscout link */}
+                            <div className="mt-auto">
+                              {ticket.isLive && ticket.explorerUrl && (
+                                <a
+                                  href={ticket.explorerUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#0d0b08] border border-[#2a2420] text-[#e8a838] text-xs font-semibold hover:border-[#e8a838]/30 transition-colors"
+                                >
+                                  <span className="material-symbols-outlined text-xs">open_in_new</span>
+                                  View on Blockscout
+                                </a>
+                              )}
+                              <p className="text-center text-[10px] text-gray-700 mt-3">Click to flip back</p>
                             </div>
-                            {ticket.isLive && ticket.explorerUrl && (
-                              <a
-                                href={ticket.explorerUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={(e) => e.stopPropagation()}
-                                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#e8a838]/10 border border-[#e8a838]/30 text-[#e8a838] text-sm font-semibold hover:bg-[#e8a838]/20 transition-colors"
-                              >
-                                <span className="material-symbols-outlined text-sm">open_in_new</span>
-                                View on Blockscout
-                              </a>
-                            )}
-                          </div>
-                          <div className="relative z-10 text-center text-xs text-gray-500">
-                            Click to flip back
                           </div>
                         </div>
                       </div>
@@ -612,19 +464,20 @@ export default function MyTicketsPage() {
               })}
             </div>
 
-            <div className="mt-16 p-8 rounded-2xl border border-[#39ff14]/30 bg-gradient-to-r from-[#39ff14]/10 to-transparent">
+            {/* Marketplace CTA */}
+            <div className="mt-14 p-6 rounded-2xl border border-[#2a2420] bg-[#151210]">
               <div className="flex items-center justify-between gap-4 flex-col md:flex-row">
                 <div>
-                  <h3 className="text-2xl font-black text-white mb-2">Explore the Marketplace</h3>
-                  <p className="text-gray-300">
+                  <h3 className="text-lg font-bold text-white mb-1">Explore the Marketplace</h3>
+                  <p className="text-gray-500 text-sm">
                     Discover and trade verified tickets from other collectors
                   </p>
                 </div>
                 <Link
                   href="/tickets/marketplace"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-[#39ff14]/30 to-[#e8a838]/30 border border-[#39ff14]/50 hover:border-[#39ff14] text-[#39ff14] font-bold hover:shadow-[0_0_20px_rgba(57,255,20,0.3)] transition-all whitespace-nowrap"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[#2a2420] text-[#e8a838] text-sm font-semibold hover:border-[#e8a838]/30 hover:shadow-[0_0_15px_rgba(232,168,56,0.1)] transition-all whitespace-nowrap"
                 >
-                  <span className="material-symbols-outlined">storefront</span>
+                  <span className="material-symbols-outlined text-sm">storefront</span>
                   Explore Marketplace
                 </Link>
               </div>
