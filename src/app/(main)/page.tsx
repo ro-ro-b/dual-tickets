@@ -22,7 +22,7 @@ interface Event {
 const MOCK_EVENTS: Event[] = [
   {
     id: '1',
-    name: 'Neon Dreams Festival 2026',
+    name: 'Neon Dreams Festival',
     date: '2026-04-15',
     venue: 'San Francisco Bay Area',
     type: 'concert',
@@ -35,7 +35,7 @@ const MOCK_EVENTS: Event[] = [
   },
   {
     id: '2',
-    name: 'Virtual Reality Concert Series',
+    name: 'Virtual Reality Concert',
     date: '2026-05-22',
     venue: 'Los Angeles Convention Center',
     type: 'concert',
@@ -48,7 +48,7 @@ const MOCK_EVENTS: Event[] = [
   },
   {
     id: '3',
-    name: 'Crypto Cup 2026 - Final Match',
+    name: 'Crypto Cup',
     date: '2026-06-10',
     venue: 'MetaStadium NYC',
     type: 'sports',
@@ -113,7 +113,7 @@ const MOCK_EVENTS: Event[] = [
   },
   {
     id: '8',
-    name: 'The Digital Canvas: Immersive Art Experience',
+    name: 'The Digital Canvas: Immersive Art',
     date: '2026-06-30',
     venue: 'London National Gallery (Web3 Wing)',
     type: 'theater',
@@ -154,46 +154,13 @@ const MOCK_EVENTS: Event[] = [
 
 export default function TicketsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
-  const [glitchText, setGlitchText] = useState(false)
-  const [liveTickets, setLiveTickets] = useState<Event[]>([])
+  const [searchQuery, setSearchQuery] = useState('')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/api/tickets')
-      .then((r) => r.json())
-      .then((data) => {
-        const tickets = data.tickets || []
-        const mapped: Event[] = tickets.map((t: any) => ({
-          id: t.id,
-          name: t.ticketData?.eventName || t.ticketData?.name || 'Event Ticket',
-          date: t.ticketData?.eventDate || t.createdAt,
-          venue: t.ticketData?.venue || 'DUAL Network',
-          type: (t.ticketData?.category || 'concert') as any,
-          priceRange: {
-            min: t.ticketData?.price || 0,
-            max: t.ticketData?.maxResalePrice || t.ticketData?.price || 0,
-          },
-          available: 1,
-          total: 1,
-          imageGradient: 'from-[#00f0ff]/40 to-[#39ff14]/40',
-          isLive: true,
-          blockchainTxHash: t.blockchainTxHash,
-          explorerUrl: t.blockchainTxHash
-            ? `https://32f.blockv.io/token/0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06`
-            : undefined,
-        }))
-        setLiveTickets(mapped)
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false))
-  }, [])
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setGlitchText(true)
-      setTimeout(() => setGlitchText(false), 100)
-    }, 4000)
-    return () => clearInterval(interval)
+    // Simulate brief load
+    const timer = setTimeout(() => setLoading(false), 300)
+    return () => clearTimeout(timer)
   }, [])
 
   const categories = [
@@ -204,304 +171,158 @@ export default function TicketsPage() {
     { id: 'conference', label: 'Conferences' },
   ]
 
-  // Use mock events as the primary display (DUAL org has no balance for real tokens)
-  // liveTickets count is used for the network banner only
   const allEvents = MOCK_EVENTS
-  const filteredEvents =
-    selectedCategory === 'all'
-      ? allEvents
-      : allEvents.filter((event) => event.type === selectedCategory)
+
+  const filteredEvents = allEvents.filter((event) => {
+    const matchesCategory = selectedCategory === 'all' || event.type === selectedCategory
+    const matchesSearch = searchQuery === '' ||
+      event.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      event.venue.toLowerCase().includes(searchQuery.toLowerCase())
+    return matchesCategory && matchesSearch
+  })
 
   return (
     <div className="min-h-screen relative">
       <style>{`
-        @keyframes glitch {
-          0% {
-            clip-path: inset(40% 0 61% 0);
-            transform: translate(0);
-          }
-          20% {
-            clip-path: inset(92% 0 1% 0);
-            transform: translate(-2px, 2px);
-          }
-          40% {
-            clip-path: inset(43% 0 1% 0);
-            transform: translate(-2px, -2px);
-          }
-          60% {
-            clip-path: inset(25% 0 58% 0);
-            transform: translate(2px, -2px);
-          }
-          80% {
-            clip-path: inset(54% 0 7% 0);
-            transform: translate(2px, 2px);
-          }
-          100% {
-            clip-path: inset(58% 0 43% 0);
-            transform: translate(0);
-          }
-        }
-        @keyframes scroll-ticker {
-          0% {
-            transform: translateX(100%);
-          }
-          100% {
-            transform: translateX(-100%);
-          }
-        }
-        .glitch-active {
-          animation: glitch 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .scroll-ticker {
-          animation: scroll-ticker 20s linear infinite;
-        }
-        .ticker-content:hover {
-          animation-play-state: paused;
-        }
-        @keyframes pulse-glow {
-          0%, 100% {
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3), 0 0 20px rgba(255, 45, 120, 0.1);
-          }
-          50% {
-            text-shadow: 0 0 20px rgba(0, 240, 255, 0.8), 0 0 40px rgba(255, 45, 120, 0.3);
-          }
-        }
-        .pulse-glow {
-          animation: pulse-glow 3s ease-in-out infinite;
-        }
         @keyframes shimmer {
-          0% {
-            background-position: -200% 0;
-          }
-          100% {
-            background-position: 200% 0;
-          }
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
         }
         .shimmer {
-          background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0.03) 75%);
+          background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
           background-size: 200% 100%;
           animation: shimmer 1.5s infinite;
         }
       `}</style>
 
-      <div className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h1
-              className={`text-6xl md:text-8xl font-black mb-4 tracking-tight relative inline-block ${
-                glitchText ? 'glitch-active' : ''
-              }`}
-              style={{
-                backgroundImage: 'linear-gradient(135deg, #00f0ff 0%, #ff2d78 50%, #39ff14 100%)',
-                backgroundSize: '200% 200%',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-            >
-              The Future of
-              <br />
-              Live Events
-            </h1>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto mt-6 pulse-glow">
-              Experience on-chain verified tickets with anti-scalp protection and true ownership.
-            </p>
+      {/* Hero Section */}
+      <div className="relative pt-16 pb-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight bg-gradient-to-r from-[#00f0ff] via-[#a855f7] to-[#ff2d78] bg-clip-text text-transparent leading-tight">
+            The Future of{' '}
+            <span className="italic">Live Events</span>
+          </h1>
+
+          {/* Search Bar */}
+          <div className="max-w-xl mx-auto mb-10">
+            <div className="relative">
+              <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-xl">search</span>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search events, artists, venues"
+                className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-[#00f0ff]/50 focus:bg-white/8 focus:outline-none transition-all text-sm"
+              />
+            </div>
           </div>
 
-          <div className="mb-16 overflow-hidden rounded-lg border border-[#00f0ff]/30 bg-[#08080f]/50 backdrop-blur-sm">
-            <div className="py-4 bg-gradient-to-r from-transparent via-[#00f0ff]/10 to-transparent">
-              <div className="flex whitespace-nowrap scroll-ticker ticker-content gap-8 px-4">
-                {Array(3)
-                  .fill(0)
-                  .map((_, i) => (
-                    <span key={i} className="text-lg font-bold tracking-widest">
-                      <span className="text-[#00f0ff]">●</span> NOW ON-CHAIN{' '}
-                      <span className="text-[#ff2d78]">●</span> VERIFIED{' '}
-                      <span className="text-[#39ff14]">●</span> ANTI-SCALP{' '}
-                      <span className="text-[#00f0ff]">●</span> TRANSFERABLE
-                    </span>
-                  ))}
-              </div>
-            </div>
+          {/* Category Filters */}
+          <div className="flex flex-wrap justify-center gap-2 mb-4">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                  selectedCategory === category.id
+                    ? 'bg-white/10 text-white border border-white/20'
+                    : 'text-gray-500 border border-transparent hover:text-gray-300 hover:border-white/10'
+                }`}
+              >
+                {category.label}
+              </button>
+            ))}
           </div>
         </div>
       </div>
 
-      {allEvents.length > 0 && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-          <div className="flex items-center gap-4 p-4 rounded-xl border border-[#39ff14]/30 bg-[#39ff14]/5">
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-[#39ff14] animate-pulse" />
-              <span className="text-[#39ff14] font-bold text-lg">{allEvents.length}</span>
-            </div>
-            <span className="text-gray-300">
-              event{allEvents.length !== 1 ? 's' : ''} live on{' '}
-              <span className="text-[#00f0ff] font-semibold">DUAL Network</span>
-            </span>
-            <a
-              href="https://32f.blockv.io/token/0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ml-auto text-sm text-[#00f0ff] hover:text-white transition-colors flex items-center gap-1"
-            >
-              <span className="material-symbols-outlined text-sm">open_in_new</span>
-              View on Explorer
-            </a>
-          </div>
-        </div>
-      )}
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-        <div className="flex flex-wrap gap-3">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
-              className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 text-sm ${
-                selectedCategory === category.id
-                  ? 'bg-gradient-to-r from-[#00f0ff] to-[#ff2d78] text-black shadow-[0_0_20px_rgba(0,240,255,0.5)]'
-                  : 'bg-white/5 text-gray-300 border border-white/10 hover:border-[#00f0ff]/50 hover:text-[#00f0ff]'
-              }`}
-            >
-              {category.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
+      {/* Event Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="rounded-xl border border-white/10 bg-[#0a0a12] overflow-hidden">
-                <div className="h-40 shimmer" />
-                <div className="p-6 space-y-4">
-                  <div className="h-6 w-3/4 rounded shimmer" />
+              <div key={i} className="rounded-2xl border border-white/5 bg-white/[0.02] overflow-hidden">
+                <div className="h-52 shimmer" />
+                <div className="p-5 space-y-3">
+                  <div className="h-5 w-3/4 rounded shimmer" />
                   <div className="h-4 w-1/2 rounded shimmer" />
-                  <div className="h-4 w-2/3 rounded shimmer" />
                   <div className="h-10 rounded shimmer" />
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredEvents.map((event) => (
               <Link key={event.id} href={`/tickets/${event.id}`}>
                 <div className="h-full group cursor-pointer">
-                  <div
-                    className="relative overflow-hidden rounded-xl border border-white/10 bg-[#0a0a12] h-full flex flex-col transition-all duration-300 hover:shadow-[0_0_40px_rgba(0,240,255,0.2)] hover:-translate-y-1"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, rgba(0, 240, 255, 0.05), rgba(255, 45, 120, 0.05))`,
-                    }}
-                  >
-                    <div
-                      className={`h-48 relative overflow-hidden ${event.imageUrl ? '' : `bg-gradient-to-br ${event.imageGradient}`} group-hover:scale-105 transition-transform duration-300`}
-                    >
+                  <div className="relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] h-full flex flex-col transition-all duration-300 hover:border-white/15 hover:bg-white/[0.04] hover:-translate-y-1">
+                    {/* Image */}
+                    <div className="h-52 relative overflow-hidden">
                       {event.imageUrl ? (
-                        <img src={event.imageUrl} alt={event.name} className="absolute inset-0 w-full h-full object-cover" />
+                        <img src={event.imageUrl} alt={event.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                       ) : (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="material-symbols-outlined text-5xl text-white/40">
-                            {event.type === 'concert'
-                              ? 'music_note'
-                              : event.type === 'sports'
-                                ? 'sports_soccer'
-                                : event.type === 'theater'
-                                  ? 'theater_comedy'
-                                  : 'school'}
-                          </span>
-                        </div>
+                        <div className={`absolute inset-0 bg-gradient-to-br ${event.imageGradient}`} />
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a12] via-transparent to-transparent" />
-                      {event.isLive ? (
-                        <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-[#39ff14]/90 text-black text-xs font-black flex items-center gap-1 shadow-[0_0_15px_rgba(57,255,20,0.5)]">
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#08080f] via-transparent to-transparent" />
+
+                      {/* Live Badge */}
+                      {event.isLive && (
+                        <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-[#39ff14]/90 text-black text-[10px] font-black flex items-center gap-1 shadow-[0_0_12px_rgba(57,255,20,0.4)]">
                           <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />
                           LIVE ON-CHAIN
-                        </div>
-                      ) : (
-                        <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-white/10 backdrop-blur text-gray-300 text-xs font-semibold">
-                          DEMO
                         </div>
                       )}
                     </div>
 
-                    <div className="p-6 flex flex-col flex-1">
+                    {/* Content */}
+                    <div className="p-5 flex flex-col flex-1">
+                      <h3 className="font-bold text-base mb-2 leading-snug group-hover:text-[#00f0ff] transition-colors">
+                        {event.name}
+                      </h3>
+
+                      <div className="flex items-center gap-4 text-xs text-gray-500 mb-4">
+                        <div className="flex items-center gap-1">
+                          <span className="material-symbols-outlined text-xs">calendar_month</span>
+                          {new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <span className="material-symbols-outlined text-xs">location_on</span>
+                          <span className="truncate max-w-[140px]">{event.venue}</span>
+                        </div>
+                      </div>
+
+                      {/* Availability Bar */}
                       <div className="mb-4">
-                        <div className="flex items-start justify-between gap-2 mb-2">
-                          <h3 className="font-bold text-lg leading-tight flex-1 group-hover:text-[#00f0ff] transition-colors">
-                            {event.name}
-                          </h3>
+                        <div className="flex items-center justify-between text-[11px] mb-1.5">
+                          <span className="text-gray-500">Ticket availability for {Math.round((event.available / event.total) * 100)}%</span>
+                          <span className="text-gray-500">Price availability</span>
                         </div>
-                        <div className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-[#00f0ff]/10 border border-[#00f0ff]/30 mb-3">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#00f0ff] animate-pulse" />
-                          <span className="text-xs font-semibold text-[#00f0ff]">
-                            {event.isLive ? 'Anchored on DUAL' : 'Verified on DUAL'}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="space-y-2 mb-4 flex-1">
-                        <div className="flex items-center gap-2 text-sm text-gray-400">
-                          <span className="material-symbols-outlined text-sm">calendar_month</span>
-                          <span>
-                            {new Date(event.date).toLocaleDateString('en-US', {
-                              month: 'short',
-                              day: 'numeric',
-                              year: 'numeric',
-                            })}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-400">
-                          <span className="material-symbols-outlined text-sm">location_on</span>
-                          <span className="truncate">{event.venue}</span>
-                        </div>
-                        {event.isLive && event.blockchainTxHash && (
-                          <div className="flex items-center gap-2 text-sm text-[#39ff14]">
-                            <span className="material-symbols-outlined text-sm">link</span>
-                            <span className="font-mono truncate text-xs">
-                              {event.blockchainTxHash.slice(0, 16)}...
-                            </span>
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="mb-4 p-3 rounded-lg bg-white/5 border border-[#39ff14]/20">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-xs font-semibold text-gray-400">Available</span>
-                          <span className="text-sm font-bold text-[#39ff14]">
-                            {event.available} of {event.total}
-                          </span>
-                        </div>
-                        <div className="w-full h-1.5 rounded-full bg-white/5 overflow-hidden">
+                        <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden">
                           <div
-                            className="h-full bg-gradient-to-r from-[#39ff14] to-[#00f0ff]"
-                            style={{
-                              width: `${(event.available / event.total) * 100}%`,
-                            }}
+                            className="h-full rounded-full bg-gradient-to-r from-[#00f0ff] to-[#39ff14]"
+                            style={{ width: `${(event.available / event.total) * 100}%` }}
                           />
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                        <div>
-                          <p className="text-xs text-gray-500 mb-1">From</p>
-                          <p className="text-lg font-bold text-[#00f0ff]">
-                            ${event.priceRange.min}
-                            <span className="text-sm text-gray-500 font-normal ml-1">
-                              - ${event.priceRange.max}
-                            </span>
-                          </p>
-                        </div>
-                        <button className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#00f0ff]/20 to-[#ff2d78]/20 border border-[#00f0ff]/30 text-[#00f0ff] font-semibold text-sm hover:from-[#00f0ff]/40 hover:to-[#ff2d78]/40 hover:shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all duration-300">
-                          View Event
-                        </button>
-                      </div>
+                      {/* View Event Button */}
+                      <button className="w-full py-2.5 rounded-lg border border-white/15 text-white text-sm font-medium hover:bg-white/5 hover:border-white/25 transition-all duration-200 mt-auto">
+                        View Event
+                      </button>
                     </div>
                   </div>
                 </div>
               </Link>
             ))}
+          </div>
+        )}
+
+        {!loading && filteredEvents.length === 0 && (
+          <div className="text-center py-20">
+            <span className="material-symbols-outlined text-6xl text-gray-700 block mb-4">search_off</span>
+            <h2 className="text-xl font-bold text-gray-400 mb-2">No events found</h2>
+            <p className="text-gray-600 text-sm">Try adjusting your search or filter criteria</p>
           </div>
         )}
       </div>
