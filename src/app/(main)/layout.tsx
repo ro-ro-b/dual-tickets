@@ -42,7 +42,7 @@ export default function TicketsLayout({
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 group">
               <DualLogo height={22} className="text-white" />
-              <span className="text-xl font-bold text-gray-500">Tickets</span>
+              <span className="text-sm font-medium text-gray-500">Tickets</span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -122,7 +122,7 @@ export default function TicketsLayout({
               <div>
                 <div className="flex items-center gap-2 mb-4">
                   <DualLogo height={18} className="text-white" />
-                  <span className="text-lg font-bold text-gray-500">Tickets</span>
+                  <span className="text-xs font-medium text-gray-500">Tickets</span>
                 </div>
                 <p className="text-sm text-gray-600">
                   The future of live events on-chain. Transparent, secure, fair.
