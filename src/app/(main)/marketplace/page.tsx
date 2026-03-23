@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { DualInline } from '../DualLogo'
 
 interface MarketplaceListing {
   id: string
@@ -372,7 +373,7 @@ export default function MarketplacePage() {
             Safe Trading with Anti-Scalp Protection
           </h3>
           <p className="text-[#c7c6c6] mb-4">
-            Every transaction on DUAL Marketplace is protected by smart contracts that enforce price
+            Every transaction on <DualInline className="text-[#c7c6c6]" /> Marketplace is protected by smart contracts that enforce price
             boundaries. Sellers cannot list above the price ceiling, and buyers cannot undercut below the
             price floor.
           </p>
@@ -555,7 +556,7 @@ export default function MarketplacePage() {
                       <div className="w-4 h-4 border-2 border-[#d4632a]/30 border-t-[#d4632a] animate-spin" />
                     </div>
                     <div>
-                      <p className="font-semibold text-white">Settling on DUAL Network...</p>
+                      <p className="font-semibold text-white">Settling on <DualInline className="text-white" /> Network...</p>
                       <p className="text-sm text-[#c7c6c6]">Executing smart contract</p>
                     </div>
                   </div>

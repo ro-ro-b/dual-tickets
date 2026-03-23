@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { DualInline } from './DualLogo'
 
 interface Event {
   id: string
@@ -75,7 +76,7 @@ export default function HomePage() {
             <span>{liveCount} live listings with on-chain price enforcement</span>
             <span className="mx-8 text-[#474747] opacity-30">|</span>
             <span className="inline-block w-2 h-2 bg-[#39ff14] animate-pulse" />
-            <span>DUAL Network: ERC-721 tokenised tickets with anti-scalp enforcement</span>
+            <span>DUAL Network — ERC-721 tokenised tickets with anti-scalp enforcement</span>
             <span className="mx-8 text-[#474747] opacity-30">|</span>
             <span className="inline-block w-2 h-2 bg-[#39ff14] animate-pulse" />
             <span>Contract: 0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06</span>
@@ -84,7 +85,7 @@ export default function HomePage() {
             <span>{liveCount} live listings with on-chain price enforcement</span>
             <span className="mx-8 text-[#474747] opacity-30">|</span>
             <span className="inline-block w-2 h-2 bg-[#39ff14] animate-pulse" />
-            <span>DUAL Network: ERC-721 tokenised tickets with anti-scalp enforcement</span>
+            <span>DUAL Network — ERC-721 tokenised tickets with anti-scalp enforcement</span>
           </span>
         </div>
       </div>
@@ -99,7 +100,7 @@ export default function HomePage() {
           </div>
           <div className="col-span-12 lg:col-span-5 flex flex-col justify-end pb-4 border-l border-[#474747]/20 pl-8">
             <p className="text-[#c6c6c6] text-lg leading-relaxed mb-8 max-w-sm">
-              Curated high-stakes digital access for global events. Secured by the architectural integrity of the DUAL Network&apos;s on-chain enforcement.
+              Curated high-stakes digital access for global events. Secured by the architectural integrity of <DualInline className="text-white" /> Network&apos;s on-chain enforcement.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link href="/events">
@@ -154,7 +155,7 @@ export default function HomePage() {
           <div className="text-center py-20">
             <span className="material-symbols-outlined text-6xl text-[#353535] block mb-4">cloud_off</span>
             <h2 className="font-headline text-xl font-bold text-[#919191] uppercase tracking-widest mb-2">Unable to load events</h2>
-            <p className="text-[#c6c6c6] text-sm">Could not connect to the DUAL network. Please try again later.</p>
+            <p className="text-[#c6c6c6] text-sm">Could not connect to the <DualInline className="text-[#c6c6c6]" /> network. Please try again later.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">

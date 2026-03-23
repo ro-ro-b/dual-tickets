@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+import { DualLogo, DualInline, DualIcon } from './DualLogo'
 
 export default function TicketsLayout({
   children,
@@ -29,8 +30,8 @@ export default function TicketsLayout({
     <div className="min-h-screen bg-[#131313] text-white overflow-x-hidden selection:bg-white selection:text-black">
       {/* Navigation Bar */}
       <nav className="fixed top-0 w-full z-50 flex justify-between items-center px-8 h-20 bg-[#131313]">
-        <Link href="/" className="text-2xl font-bold tracking-tighter text-white uppercase font-headline">
-          DUAL
+        <Link href="/" className="text-white">
+          <DualLogo height={28} className="text-white" />
         </Link>
 
         {/* Desktop Navigation */}
@@ -92,7 +93,7 @@ export default function TicketsLayout({
         <div className="max-w-[1440px] mx-auto px-8 py-16">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             <div>
-              <p className="text-2xl font-bold tracking-tighter text-white uppercase font-headline mb-4">DUAL</p>
+              <div className="mb-4"><DualLogo height={28} className="text-white" /></div>
               <p className="text-sm text-[#c7c6c6] leading-relaxed">
                 The tokenised future of live events. On-chain. Verified. Secure.
               </p>
@@ -122,7 +123,7 @@ export default function TicketsLayout({
             </div>
           </div>
           <div className="border-t border-[#474747]/20 pt-8 flex items-center justify-between">
-            <p className="text-xs text-[#474747]">© 2026 DUAL. All rights reserved.</p>
+            <p className="text-xs text-[#474747] flex items-center gap-1">© 2026 <DualInline className="text-[#474747]" />. All rights reserved.</p>
             <div className="flex gap-6">
               <a href="https://32f.blockv.io/token/0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06" target="_blank" rel="noopener noreferrer" className="text-xs text-[#474747] hover:text-white transition-colors font-headline uppercase tracking-widest">Blockscout</a>
             </div>

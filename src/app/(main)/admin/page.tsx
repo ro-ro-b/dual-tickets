@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { DualInline } from '../DualLogo';
 
 type AuthState = 'checking' | 'unauthenticated' | 'otp_sent' | 'authenticated';
 
@@ -287,7 +288,7 @@ export default function TicketsAdminPage() {
             <div className="w-16 h-16 rounded-full bg-[#39ff14]/20 flex items-center justify-center mx-auto mb-6">
               <span className="material-symbols-outlined text-[#39ff14] text-3xl">lock</span>
             </div>
-            <h2 className="text-xl font-bold text-white text-center mb-2">DUAL Network Auth</h2>
+            <h2 className="text-xl font-bold text-white text-center mb-2 flex items-center justify-center gap-2"><DualInline className="text-white" /> Network Auth</h2>
             <p className="text-sm text-[#c7c6c6] text-center mb-6">
               {authState === 'unauthenticated'
                 ? 'Enter your email to receive a one-time code for minting tickets.'
@@ -448,7 +449,7 @@ export default function TicketsAdminPage() {
               <span className="material-symbols-outlined text-[#39ff14] text-5xl">verified</span>
             </div>
             <h2 className="text-3xl font-bold text-white mb-2">Ticket Minted Successfully</h2>
-            <p className="text-[#c7c6c6]">Your event ticket NFT has been anchored on the DUAL Network</p>
+            <p className="text-[#c7c6c6]">Your event ticket NFT has been anchored on the <DualInline className="text-[#c7c6c6]" /> Network</p>
           </div>
 
           <div className="bg-[#1b1b1b] border border-[#474747]/20 p-8 space-y-6">
@@ -570,7 +571,7 @@ export default function TicketsAdminPage() {
               Mint Event Tickets
             </h1>
           </div>
-          <p className="text-[#c7c6c6]">DUAL Tickets Admin</p>
+          <p className="text-[#c7c6c6] flex items-center gap-1"><DualInline className="text-[#c7c6c6]" /> Tickets Admin</p>
         </div>
 
         {/* Form */}
