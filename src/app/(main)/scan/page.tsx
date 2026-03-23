@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { DualInline } from './DualLogo'
 
 interface VerificationResult {
   status: 'valid' | 'duplicate' | 'invalid' | null
@@ -258,7 +259,7 @@ export default function ScannerPage() {
           <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-3 bg-gradient-to-r from-[#e8a838] via-[#f0c040] to-[#d4632a] bg-clip-text text-transparent">
             VENUE SCANNER
           </h1>
-          <p className="text-lg text-gray-300">DUAL TICKET VERIFICATION SYSTEM</p>
+          <p className="text-lg text-gray-300"><><DualInline /> TICKET VERIFICATION SYSTEM</></p>
         </div>
 
         {/* Main Content */}
@@ -371,7 +372,7 @@ export default function ScannerPage() {
                       )}
                     </div>
                     <div className={verificationStep >= 2 ? 'text-white' : 'text-gray-500'}>
-                      <p className="font-semibold">Querying DUAL Network...</p>
+                      <p className="font-semibold">Querying <DualInline /> Network...</p>
                       <p className="text-sm text-gray-400">Connecting to blockchain</p>
                     </div>
                   </div>

@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { DualInline } from '../DualLogo'
 
 interface TicketTier {
   id: string
@@ -549,7 +550,7 @@ export default function EventDetailPage({
           {event.isLive && (
             <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#39ff14]/10 border border-[#39ff14]/30">
               <span className="w-2 h-2 rounded-full bg-[#39ff14] animate-pulse" />
-              <span className="text-sm font-bold text-[#39ff14]">LIVE ON DUAL NETWORK</span>
+              <span className="text-sm font-bold text-[#39ff14]">LIVE ON <DualInline /> NETWORK</span>
               {event.explorerUrl && (
                 <a
                   href={event.explorerUrl}
@@ -590,7 +591,7 @@ export default function EventDetailPage({
               <span className="material-symbols-outlined text-[#39ff14]">verified</span>
               <div>
                 <p className="text-sm text-gray-400 mb-1">Verification</p>
-                <p className="font-semibold text-[#39ff14]">DUAL Verified</p>
+                <p className="font-semibold text-[#39ff14]"><><DualInline /> Verified</></p>
               </div>
             </div>
           </div>
@@ -820,7 +821,7 @@ export default function EventDetailPage({
                   </p>
                   <p>
                     <strong className="text-white">Chain:</strong>{' '}
-                    <span className="font-mono text-[#d4632a]">DUAL Network</span>
+                    <span className="font-mono text-[#d4632a]"><><DualInline /> Network</></span>
                   </p>
                 </div>
               </div>
@@ -848,7 +849,7 @@ export default function EventDetailPage({
               <div className="mb-2">
                 <h4 className="font-bold text-lg mb-4 text-white">Audit Trail</h4>
                 <div className="space-y-2 text-sm text-gray-300">
-                  <p>All mints, transfers, and metadata changes are permanently recorded on the DUAL Network blockchain.</p>
+                  <p>All mints, transfers, and metadata changes are permanently recorded on the <><DualInline /> Network</> blockchain.</p>
                   <p className="text-xs text-gray-500">Last updated: {new Date().toLocaleString()}</p>
                 </div>
               </div>
@@ -882,7 +883,7 @@ export default function EventDetailPage({
                   </div>
                   <div className="p-3 rounded-lg bg-[#e8a838]/5 border border-[#e8a838]/20 text-xs text-gray-400">
                     <span className="material-symbols-outlined text-[#e8a838] text-sm align-middle mr-1">info</span>
-                    This ticket will be minted as an ERC-721 token on the DUAL Network and stored in your wallet.
+                    This ticket will be minted as an ERC-721 token on the <><DualInline /> Network</> and stored in your wallet.
                   </div>
                 </div>
                 <div className="flex gap-3">
@@ -900,7 +901,12 @@ export default function EventDetailPage({
                 <div className="w-16 h-16 mx-auto mb-6 rounded-full border-4 border-[#e8a838]/20 border-t-[#e8a838] animate-spin" />
                 <h3 className="text-xl font-black mb-8 text-white">Minting Your Ticket</h3>
                 <div className="space-y-4 text-left">
-                  {['Initiating transaction...', 'Minting on DUAL Network...', 'Recording on Blockscout...', 'Finalising ownership...'].map((step, i) => (
+                  {[
+                    'Initiating transaction...',
+                    <span key="mining">Minting on <DualInline /> Network...</span>,
+                    'Recording on Blockscout...',
+                    'Finalising ownership...'
+                  ].map((step, i) => (
                     <div key={i} className="flex items-center gap-3 text-sm">
                       <div className={`w-6 h-6 rounded-full flex items-center justify-center ${i < 3 ? 'bg-[#39ff14]/20' : 'bg-[#2a2420]'}`}>
                         {i < 3 ? <span className="text-[#39ff14] text-xs">✓</span> : <span className="w-3 h-3 border-2 border-[#e8a838]/30 border-t-[#e8a838] rounded-full animate-spin" />}
@@ -919,7 +925,7 @@ export default function EventDetailPage({
                   <span className="material-symbols-outlined text-[#39ff14] text-4xl">check_circle</span>
                 </div>
                 <h3 className="text-2xl font-black mb-2 text-[#39ff14]">TICKET MINTED</h3>
-                <p className="text-gray-400 mb-6">Your ticket has been minted on the DUAL Network</p>
+                <p className="text-gray-400 mb-6">Your ticket has been minted on the <><DualInline /> Network</></p>
                 {purchase.transactionHash && (
                   <div className="p-3 rounded-lg bg-[#151210] border border-[#2a2420] mb-6">
                     <p className="text-xs text-gray-500 mb-1">Transaction Hash</p>

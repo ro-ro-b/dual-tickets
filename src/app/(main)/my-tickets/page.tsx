@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { DualInline } from './DualLogo'
 
 interface Ticket {
   id: string
@@ -377,7 +378,7 @@ export default function MyTicketsPage() {
               </button>
             </div>
             <p className="text-xs text-gray-500 mt-4 text-center">
-              This executes an on-chain transfer via DUAL ebus.execute()
+              This executes an on-chain transfer via <DualInline /> ebus.execute()
             </p>
           </div>
         </div>
@@ -596,7 +597,7 @@ export default function MyTicketsPage() {
                             {ticket.isLive && (
                               <div className="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#39ff14]/10 border border-[#39ff14]/30">
                                 <span className="w-2 h-2 rounded-full bg-[#39ff14] animate-pulse" />
-                                <span className="text-xs font-bold text-[#39ff14]">LIVE ON DUAL NETWORK</span>
+                                <span className="text-xs font-bold text-[#39ff14]">LIVE ON <DualInline /> NETWORK</span>
                               </div>
                             )}
                             <div className="mb-6">
@@ -622,7 +623,7 @@ export default function MyTicketsPage() {
                                 </div>
                                 <div className="flex items-center justify-between">
                                   <span>Chain:</span>
-                                  <span className="font-mono text-[#d4632a]">DUAL Network</span>
+                                  <span className="font-mono text-[#d4632a]"><DualInline /> Network</span>
                                 </div>
                                 {ticket.ownerId && (
                                   <div className="flex items-center justify-between">

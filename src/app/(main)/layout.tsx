@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import { DualIcon, DualLogo } from './DualLogo'
+import { DualIcon, DualLogo, DualInline } from './DualLogo'
 
 export default function TicketsLayout({
   children,
@@ -154,7 +154,7 @@ export default function TicketsLayout({
               </div>
             </div>
             <div className="border-t border-[#2a2420] pt-8 flex items-center justify-between">
-              <p className="text-xs text-gray-700">&copy; 2026 DUAL Tickets. All rights reserved.</p>
+              <p className="text-xs text-gray-700">© 2026 <DualInline /> Tickets. All rights reserved.</p>
               <div className="flex gap-4">
                 <a href="https://32f.blockv.io/token/0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-600 hover:text-[#e8a838] transition-colors">Blockscout</a>
                 <a href="#" className="text-xs text-gray-600 hover:text-[#e8a838] transition-colors">GitHub</a>
