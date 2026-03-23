@@ -2,34 +2,23 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { DualLogo } from './DualLogo'
 
 interface Event {
   id: string
   name: string
   date: string
   venue: string
-  type: 'concert' | 'sports' | 'theater' | 'conference'
-  priceRange: { min: number; max: number }
-  available: number
-  total: number
+  tier: string
+  price: number
+  originalPrice: number
   imageUrl?: string
   isLive?: boolean
+  contractAddress?: string
 }
 
-// Map DUAL ticket category strings to the Event type union
-function mapCategory(cat: string): Event['type'] {
-  const lower = (cat || '').toLowerCase()
-  if (lower.includes('sport') || lower.includes('esport')) return 'sports'
-  if (lower.includes('theater') || lower.includes('theatre') || lower.includes('art') || lower.includes('immersive')) return 'theater'
-  if (lower.includes('conference') || lower.includes('summit') || lower.includes('tech')) return 'conference'
-  return 'concert' // default: concert, festival, music, etc.
-}
-
-export default function TicketsPage() {
+export default function HomePage() {
   const [events, setEvents] = useState<Event[]>([])
-  const [selectedCategory, setSelectedCategory] = useState<string>('all')
-  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedFilter, setSelectedFilter] = useState('all')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -41,7 +30,6 @@ export default function TicketsPage() {
         const data = await res.json()
         const tickets = data.tickets || []
 
-        // Map DUAL tickets to Event interface
         const mapped: Event[] = tickets.map((t: any) => {
           const td = t.ticketData || {}
           return {
@@ -49,15 +37,12 @@ export default function TicketsPage() {
             name: td.eventName || td.name || 'Event',
             date: td.eventDate || t.createdAt || '',
             venue: td.venue || '',
-            type: mapCategory(td.category),
-            priceRange: {
-              min: td.price || td.originalPrice || 0,
-              max: td.maxResalePrice || td.price || 0,
-            },
-            available: 1,
-            total: 1,
+            tier: td.tier || td.ticketTier || 'General',
+            price: td.price || td.originalPrice || 0,
+            originalPrice: td.originalPrice || td.price || 0,
             imageUrl: td.imageUrl,
             isLive: !!t.blockchainTxHash,
+            contractAddress: t.contractAddress || '0x41Cf...5aFF06',
           }
         })
 
@@ -72,218 +57,188 @@ export default function TicketsPage() {
     fetchEvents()
   }, [])
 
-  const categories = [
-    { id: 'all', label: 'All Events' },
-    { id: 'concert', label: 'Concerts' },
-    { id: 'sports', label: 'Sports' },
-    { id: 'theater', label: 'Theater' },
-    { id: 'conference', label: 'Conferences' },
-  ]
+  const uniqueTiers = ['all', ...Array.from(new Set(events.map((e) => e.tier)))]
 
   const filteredEvents = events.filter((event) => {
-    const matchesCategory = selectedCategory === 'all' || event.type === selectedCategory
-    const matchesSearch = searchQuery === '' ||
-      event.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      event.venue.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesCategory && matchesSearch
+    return selectedFilter === 'all' || event.tier === selectedFilter
   })
 
+  const liveCount = events.filter((e) => e.isLive).length
+
   return (
-    <div className="min-h-screen relative">
-      <style>{`
-        @keyframes shimmer {
-          0% { background-position: -200% 0; }
-          100% { background-position: 200% 0; }
-        }
-        .shimmer {
-          background: linear-gradient(90deg, rgba(255,255,255,0.02) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.02) 75%);
-          background-size: 200% 100%;
-          animation: shimmer 1.5s infinite;
-        }
-        .card-glow:hover {
-          box-shadow: 0 0 30px rgba(232, 168, 56, 0.1), 0 0 60px rgba(212, 99, 42, 0.05);
-        }
-      `}</style>
-
-      {/* Mountain Landscape Header */}
-      <div className="relative overflow-hidden">
-        {/* Purple mountain silhouettes */}
-        <div className="absolute inset-x-0 top-0 h-80 pointer-events-none">
-          <svg className="absolute bottom-0 w-full h-64" viewBox="0 0 1440 256" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-            {/* Far mountains - darkest purple */}
-            <path d="M0 256L0 180L120 130L240 160L360 100L480 140L600 80L720 120L840 60L960 100L1080 70L1200 110L1320 90L1440 130L1440 256Z" fill="url(#mountain-far)" />
-            {/* Mid mountains */}
-            <path d="M0 256L0 200L180 150L300 180L420 120L540 170L660 110L780 160L900 100L1020 150L1140 120L1260 160L1380 140L1440 170L1440 256Z" fill="url(#mountain-mid)" />
-            {/* Front mountains */}
-            <path d="M0 256L0 220L100 190L250 210L400 170L550 200L700 160L850 195L1000 175L1150 200L1300 185L1440 210L1440 256Z" fill="url(#mountain-front)" />
-            <defs>
-              <linearGradient id="mountain-far" x1="0" y1="60" x2="0" y2="256">
-                <stop offset="0%" stopColor="#3d2a18" stopOpacity="0.6" />
-                <stop offset="100%" stopColor="#0d0b08" stopOpacity="0" />
-              </linearGradient>
-              <linearGradient id="mountain-mid" x1="0" y1="100" x2="0" y2="256">
-                <stop offset="0%" stopColor="#4a3020" stopOpacity="0.4" />
-                <stop offset="100%" stopColor="#0d0b08" stopOpacity="0" />
-              </linearGradient>
-              <linearGradient id="mountain-front" x1="0" y1="160" x2="0" y2="256">
-                <stop offset="0%" stopColor="#2a1c10" stopOpacity="0.5" />
-                <stop offset="100%" stopColor="#0d0b08" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-          </svg>
-          {/* Warm glow at the peaks */}
-          <div className="absolute top-8 left-1/2 -translate-x-1/2 w-[800px] h-[200px] rounded-full bg-gradient-to-b from-[#e8a838]/8 via-[#d4632a]/5 to-transparent blur-[60px]" />
-        </div>
-
-        {/* Hero Section */}
-        <div className="relative pt-14 pb-8 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* DUAL Logo + Tagline */}
-            <div className="flex flex-col items-center gap-4 mb-8">
-              <DualLogo height={48} className="text-white" />
-              <p className="text-lg md:text-xl font-light tracking-[0.2em] uppercase text-white/90">
-                The Tokenised Future of Events and Tickets
-              </p>
-            </div>
-
-            {/* Search Bar */}
-            <div className="max-w-lg mx-auto mb-8">
-              <div className="relative">
-                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 text-lg">search</span>
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search events, artists, venues"
-                  className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#1a1612] border border-[#3a332c] text-white text-sm placeholder-gray-600 focus:border-[#e8a838]/50 focus:outline-none focus:shadow-[0_0_15px_rgba(232,168,56,0.1)] transition-all"
-                />
-              </div>
-            </div>
-
-            {/* Category Filters */}
-            <div className="flex flex-wrap justify-center gap-2">
-              {categories.map((category) => (
-                <button
-                  key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={`px-5 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
-                    selectedCategory === category.id
-                      ? 'bg-gradient-to-r from-[#e8a838] to-[#d4632a] text-white font-semibold shadow-[0_0_15px_rgba(232,168,56,0.3)]'
-                      : 'text-gray-500 border border-[#3a332c] hover:border-[#e8a838]/30 hover:text-gray-300'
-                  }`}
-                >
-                  {category.label}
-                </button>
-              ))}
-            </div>
-          </div>
+    <div className="min-h-screen">
+      {/* Live Ticker */}
+      <div className="w-full bg-[#0e0e0e] border-y border-[#474747]/20 py-3 overflow-hidden whitespace-nowrap">
+        <div className="inline-block animate-marquee">
+          <span className="font-headline text-xs tracking-[0.2em] uppercase text-[#c6c6c6] flex items-center space-x-4">
+            <span className="inline-block w-2 h-2 bg-white animate-pulse" />
+            <span>{liveCount} live listings with on-chain price enforcement</span>
+            <span className="mx-8 text-[#474747] opacity-30">|</span>
+            <span className="inline-block w-2 h-2 bg-white animate-pulse" />
+            <span>DUAL Network: ERC-721 tokenised tickets with anti-scalp enforcement</span>
+            <span className="mx-8 text-[#474747] opacity-30">|</span>
+            <span className="inline-block w-2 h-2 bg-white animate-pulse" />
+            <span>Contract: 0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06</span>
+            <span className="mx-8 text-[#474747] opacity-30">|</span>
+            <span className="inline-block w-2 h-2 bg-white animate-pulse" />
+            <span>{liveCount} live listings with on-chain price enforcement</span>
+            <span className="mx-8 text-[#474747] opacity-30">|</span>
+            <span className="inline-block w-2 h-2 bg-white animate-pulse" />
+            <span>DUAL Network: ERC-721 tokenised tickets with anti-scalp enforcement</span>
+          </span>
         </div>
       </div>
 
-      {/* Event Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 pt-6">
+      <div className="max-w-[1440px] mx-auto px-8 mt-12">
+        {/* Hero / Editorial Header */}
+        <header className="grid grid-cols-12 gap-8 mb-16">
+          <div className="col-span-12 lg:col-span-7">
+            <h1 className="font-headline text-6xl md:text-8xl font-bold uppercase tracking-tight leading-none mb-6">
+              Primary<br />Market<br />Access.
+            </h1>
+          </div>
+          <div className="col-span-12 lg:col-span-5 flex flex-col justify-end pb-4 border-l border-[#474747]/20 pl-8">
+            <p className="text-[#c6c6c6] text-lg leading-relaxed mb-8 max-w-sm">
+              Curated high-stakes digital access for global events. Secured by the architectural integrity of the DUAL Network&apos;s on-chain enforcement.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link href="/events">
+                <button className="bg-white text-[#1a1c1c] font-headline font-bold text-xs uppercase tracking-widest px-8 py-4 transition-all hover:bg-[#d4d4d4]">
+                  View Collections
+                </button>
+              </Link>
+              <Link href="/marketplace">
+                <button className="bg-transparent border-2 border-white text-white font-headline font-bold text-xs uppercase tracking-widest px-8 py-4 transition-all hover:bg-white hover:text-[#1a1c1c]">
+                  Marketplace
+                </button>
+              </Link>
+            </div>
+          </div>
+        </header>
+
+        {/* Filters */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 space-y-6 md:space-y-0">
+          <div className="flex flex-wrap gap-3">
+            <span className="font-headline text-[10px] uppercase tracking-[0.3em] text-[#c6c6c6] w-full mb-2">Filter by Tier</span>
+            {uniqueTiers.map((tier) => (
+              <button
+                key={tier}
+                onClick={() => setSelectedFilter(tier)}
+                className={`px-6 py-2 font-headline text-xs uppercase tracking-widest transition-colors ${
+                  selectedFilter === tier
+                    ? 'bg-white text-black font-bold'
+                    : 'bg-[#353535] text-white hover:bg-white hover:text-black'
+                }`}
+              >
+                {tier === 'all' ? 'All' : tier}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Event Grid */}
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="rounded-2xl border border-[#2a2420] bg-[#151210] overflow-hidden">
-                <div className="h-48 shimmer" />
-                <div className="p-5 space-y-3">
-                  <div className="h-5 w-3/4 rounded shimmer" />
-                  <div className="h-4 w-1/2 rounded shimmer" />
-                  <div className="h-10 rounded shimmer" />
+              <div key={i} className="flex flex-col">
+                <div className="aspect-[4/5] bg-[#1f1f1f] mb-6" />
+                <div className="space-y-4">
+                  <div className="h-6 w-3/4 bg-[#1f1f1f]" />
+                  <div className="h-4 w-1/2 bg-[#1f1f1f]" />
+                  <div className="h-12 bg-[#1f1f1f]" />
                 </div>
               </div>
             ))}
           </div>
         ) : error ? (
           <div className="text-center py-20">
-            <span className="material-symbols-outlined text-6xl text-[#2a2420] block mb-4">cloud_off</span>
-            <h2 className="text-xl font-bold text-gray-500 mb-2">Unable to load events</h2>
-            <p className="text-gray-700 text-sm">Could not connect to the DUAL network. Please try again later.</p>
+            <span className="material-symbols-outlined text-6xl text-[#353535] block mb-4">cloud_off</span>
+            <h2 className="font-headline text-xl font-bold text-[#919191] uppercase tracking-widest mb-2">Unable to load events</h2>
+            <p className="text-[#c6c6c6] text-sm">Could not connect to the DUAL network. Please try again later.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredEvents.map((event) => {
-              const availPct = event.total > 0 ? Math.round((event.available / event.total) * 100) : 100
-              return (
-                <Link key={event.id} href={`/tickets/${event.id}`}>
-                  <div className="h-full group cursor-pointer">
-                    <div className="card-glow relative overflow-hidden rounded-2xl border border-[#2a2420] bg-[#151210] h-full flex flex-col transition-all duration-300 hover:border-[#3a332c] hover:-translate-y-1">
-                      {/* Image */}
-                      <div className="h-48 relative overflow-hidden rounded-t-2xl">
-                        {event.imageUrl ? (
-                          <img src={event.imageUrl} alt={event.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                        ) : (
-                          <div className="absolute inset-0 bg-gradient-to-br from-[#2a2015] via-[#1a1510] to-[#0d0b08] flex items-center justify-center">
-                            <span className="material-symbols-outlined text-4xl text-[#e8a838]/30">confirmation_number</span>
-                          </div>
-                        )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#151210] via-transparent to-transparent" />
-
-                        {/* LIVE ON-CHAIN Badge */}
-                        {event.isLive && (
-                          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-[#e8a838] text-black text-[10px] font-black flex items-center gap-1 shadow-[0_0_10px_rgba(232,168,56,0.4)]">
-                            <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />
-                            LIVE ON-CHAIN
-                          </div>
-                        )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            {filteredEvents.map((event) => (
+              <Link key={event.id} href={`/tickets/${event.id}`}>
+                <article className="flex flex-col group cursor-pointer">
+                  {/* Image */}
+                  <div className="aspect-[4/5] overflow-hidden mb-6 relative">
+                    {event.imageUrl ? (
+                      <img
+                        src={event.imageUrl}
+                        alt={event.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-[#1f1f1f] flex items-center justify-center">
+                        <span className="material-symbols-outlined text-6xl text-[#353535]">confirmation_number</span>
                       </div>
-
-                      {/* Content */}
-                      <div className="px-5 pt-4 pb-5 flex flex-col flex-1">
-                        {/* Event Name */}
-                        <h3 className="font-bold text-[15px] text-white mb-2 leading-snug group-hover:text-[#e8a838] transition-colors">
-                          {event.name}
-                        </h3>
-
-                        {/* Date & Venue */}
-                        <div className="flex items-center gap-3 text-xs text-gray-500 mb-4">
-                          {event.date && (
-                            <div className="flex items-center gap-1">
-                              <span className="material-symbols-outlined text-[11px] text-gray-600">calendar_month</span>
-                              {new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                            </div>
-                          )}
-                          {event.venue && (
-                            <div className="flex items-center gap-1">
-                              <span className="material-symbols-outlined text-[11px] text-[#e8a838]">location_on</span>
-                              <span className="truncate max-w-[120px]">{event.venue}</span>
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Availability */}
-                        <div className="mb-4">
-                          <div className="flex items-center justify-between text-[10px] mb-1">
-                            <span className="text-[#e8a838]">Minted on DUAL Network</span>
-                            <span className="text-gray-600">ERC-721</span>
-                          </div>
-                          <div className="w-full h-1 rounded-full bg-[#2a2420] overflow-hidden">
-                            <div
-                              className="h-full rounded-full bg-gradient-to-r from-[#e8a838] to-[#d4632a]"
-                              style={{ width: `${availPct}%` }}
-                            />
-                          </div>
-                        </div>
-
-                        {/* View Event Button */}
-                        <button className="w-full py-2.5 rounded-xl border border-[#3a332c] text-white text-sm font-medium hover:border-[#e8a838]/40 hover:shadow-[0_0_12px_rgba(232,168,56,0.1)] transition-all duration-200 mt-auto">
-                          View Event
-                        </button>
-                      </div>
+                    )}
+                    {/* Tier Badge */}
+                    <div className="absolute top-0 right-0 bg-white text-black px-4 py-2 font-headline font-bold text-xs uppercase tracking-widest">
+                      {event.tier}
                     </div>
                   </div>
-                </Link>
-              )
-            })}
+
+                  {/* Card Content */}
+                  <div className="space-y-4">
+                    <h3 className="font-headline text-2xl font-bold uppercase tracking-tight group-hover:text-[#d4d4d4] transition-colors">
+                      {event.name}
+                    </h3>
+
+                    {/* Date & Venue */}
+                    {(event.date || event.venue) && (
+                      <div className="flex items-center gap-4 text-xs text-[#919191] font-headline uppercase tracking-widest">
+                        {event.date && (
+                          <span>{new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                        )}
+                        {event.venue && <span>{event.venue}</span>}
+                      </div>
+                    )}
+
+                    {/* Pricing */}
+                    <div className="flex justify-between items-end">
+                      <div>
+                        <p className="text-[10px] uppercase tracking-widest text-[#c6c6c6] font-headline">Original Price</p>
+                        {event.originalPrice !== event.price && event.originalPrice > 0 && (
+                          <p className="text-[#c7c6c6] line-through text-sm">${event.originalPrice.toFixed(2)}</p>
+                        )}
+                      </div>
+                      <div className="text-right">
+                        <p className="text-[10px] uppercase tracking-widest text-white font-headline">Current Floor</p>
+                        <p className="text-3xl font-headline font-bold">${event.price.toFixed(2)}</p>
+                      </div>
+                    </div>
+
+                    {/* Contract Address */}
+                    <div className="p-4 bg-[#1b1b1b] border border-[#474747]/20">
+                      <p className="text-[9px] text-[#c6c6c6] font-mono uppercase mb-1">Contract Address</p>
+                      <p className="text-[10px] text-white font-mono break-all opacity-80">{event.contractAddress}</p>
+                    </div>
+
+                    {/* CTA Button */}
+                    <button className="w-full bg-white text-black py-4 font-headline font-bold text-xs uppercase tracking-[0.2em] hover:bg-[#d4d4d4] transition-colors">
+                      View Event
+                    </button>
+                  </div>
+                </article>
+              </Link>
+            ))}
           </div>
         )}
 
         {!loading && !error && filteredEvents.length === 0 && (
           <div className="text-center py-20">
-            <span className="material-symbols-outlined text-6xl text-[#2a2420] block mb-4">search_off</span>
-            <h2 className="text-xl font-bold text-gray-500 mb-2">No events found</h2>
-            <p className="text-gray-700 text-sm">Try adjusting your search or filter criteria</p>
+            <span className="material-symbols-outlined text-6xl text-[#353535] block mb-4">search_off</span>
+            <h2 className="font-headline text-xl font-bold text-[#919191] uppercase tracking-widest mb-2">No events found</h2>
+            <p className="text-[#c6c6c6] text-sm">Try adjusting your filter criteria</p>
+          </div>
+        )}
+
+        {/* End of Feed */}
+        {!loading && !error && filteredEvents.length > 0 && (
+          <div className="mt-20 mb-12 border-t border-[#474747]/20 pt-8 text-center">
+            <p className="font-headline text-[10px] uppercase tracking-[0.3em] text-[#474747]">End of Live Feed</p>
           </div>
         )}
       </div>

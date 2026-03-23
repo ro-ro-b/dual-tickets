@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import { DualIcon, DualLogo, DualInline } from './DualLogo'
 
 export default function TicketsLayout({
   children,
@@ -14,7 +13,8 @@ export default function TicketsLayout({
   const pathname = usePathname()
 
   const navLinks = [
-    { href: '/', label: 'Events' },
+    { href: '/', label: 'Home' },
+    { href: '/events', label: 'Events' },
     { href: '/my-tickets', label: 'My Tickets' },
     { href: '/marketplace', label: 'Marketplace' },
     { href: '/scan', label: 'Scan' },
@@ -26,143 +26,133 @@ export default function TicketsLayout({
   }
 
   return (
-    <div className="min-h-screen bg-[#0d0b08] text-white overflow-x-hidden">
-      {/* Background */}
-      <div className="fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute inset-0 bg-[#0d0b08]" />
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full bg-[#5c2848]/8 blur-[120px]" />
-        <div className="absolute bottom-0 right-1/3 w-[500px] h-[500px] rounded-full bg-[#e8a838]/5 blur-[100px]" />
-        <div className="absolute top-1/3 right-0 w-[400px] h-[400px] rounded-full bg-[#d4632a]/4 blur-[100px]" />
-      </div>
-
+    <div className="min-h-screen bg-[#131313] text-white overflow-x-hidden selection:bg-white selection:text-black">
       {/* Navigation Bar */}
-      <nav className="sticky top-0 z-50 border-b border-[#2a2420]">
-        <div className="bg-[#0d0b08]/95 backdrop-blur-xl">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <DualLogo height={22} className="text-white" />
-              <span className="text-sm font-medium text-gray-500">Tickets</span>
-            </Link>
+      <nav className="fixed top-0 w-full z-50 flex justify-between items-center px-8 h-20 bg-[#131313]">
+        <Link href="/" className="text-2xl font-bold tracking-tighter text-white uppercase font-headline">
+          DUAL
+        </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
-                    isActive(link.href)
-                      ? 'text-[#e8a838] border border-[#e8a838]/40 bg-[#e8a838]/5'
-                      : 'text-gray-400 hover:text-white'
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <div className="w-px h-5 bg-[#2a2420] mx-3" />
-              <Link
-                href="/admin"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium text-gray-400 hover:text-white transition-all"
-              >
-                <span className="material-symbols-outlined text-base">account_circle</span>
-                Profile
-              </Link>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden text-gray-400 hover:text-white p-2"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center space-x-12">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`font-headline text-sm tracking-widest uppercase transition-colors ${
+                isActive(link.href)
+                  ? 'text-white border-b-2 border-white pb-1 font-bold'
+                  : 'text-[#c7c6c6] hover:text-white'
+              }`}
             >
-              <span className="material-symbols-outlined">{mobileMenuOpen ? 'close' : 'menu'}</span>
-            </button>
-          </div>
+              {link.label}
+            </Link>
+          ))}
+        </div>
 
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden border-t border-[#2a2420] px-4 py-3 flex flex-col gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                    isActive(link.href)
-                      ? 'text-[#e8a838] bg-[#e8a838]/10 border border-[#e8a838]/30'
-                      : 'text-gray-400 hover:text-white'
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <Link
-                href="/admin"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium text-gray-400 hover:text-white"
-              >
-                <span className="material-symbols-outlined text-base">account_circle</span>
-                Profile
-              </Link>
-            </div>
-          )}
+        <div className="flex items-center space-x-6">
+          <Link href="/admin">
+            <span className="material-symbols-outlined text-white cursor-pointer" style={{ fontVariationSettings: "'FILL' 0" }}>account_circle</span>
+          </Link>
+          <button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            <span className="material-symbols-outlined text-white">{mobileMenuOpen ? 'close' : 'menu'}</span>
+          </button>
         </div>
       </nav>
 
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="fixed top-20 left-0 right-0 z-40 bg-[#131313] border-t border-[#474747]/20 md:hidden">
+          <div className="flex flex-col p-4 space-y-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`px-4 py-4 font-headline text-sm tracking-widest uppercase transition-colors ${
+                  isActive(link.href)
+                    ? 'text-white bg-white/5'
+                    : 'text-[#c7c6c6] hover:text-white'
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Main Content */}
-      <main className="relative z-10">
+      <main className="pt-20 pb-24 md:pb-12">
         {children}
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-[#2a2420] mt-20">
-        <div className="bg-[#0d0b08]/90 backdrop-blur-xl">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-              <div>
-                <div className="flex items-center gap-2 mb-4">
-                  <DualLogo height={18} className="text-white" />
-                  <span className="text-xs font-medium text-gray-500">Tickets</span>
-                </div>
-                <p className="text-sm text-gray-600">
-                  The future of live events on-chain. Transparent, secure, fair.
-                </p>
-              </div>
-              <div>
-                <h4 className="text-gray-300 font-semibold mb-4 text-sm">Platform</h4>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li><a href="#" className="hover:text-[#e8a838] transition-colors">About</a></li>
-                  <li><a href="#" className="hover:text-[#e8a838] transition-colors">Features</a></li>
-                  <li><a href="#" className="hover:text-[#e8a838] transition-colors">Security</a></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-gray-300 font-semibold mb-4 text-sm">Learn</h4>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li><a href="#" className="hover:text-[#e8a838] transition-colors">Blog</a></li>
-                  <li><a href="#" className="hover:text-[#e8a838] transition-colors">Docs</a></li>
-                  <li><a href="#" className="hover:text-[#e8a838] transition-colors">FAQ</a></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-gray-300 font-semibold mb-4 text-sm">Legal</h4>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li><a href="#" className="hover:text-[#e8a838] transition-colors">Privacy</a></li>
-                  <li><a href="#" className="hover:text-[#e8a838] transition-colors">Terms</a></li>
-                  <li><a href="#" className="hover:text-[#e8a838] transition-colors">Cookies</a></li>
-                </ul>
-              </div>
+      <footer className="border-t border-[#474747]/20 bg-[#0e0e0e]">
+        <div className="max-w-[1440px] mx-auto px-8 py-16">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <div>
+              <p className="text-2xl font-bold tracking-tighter text-white uppercase font-headline mb-4">DUAL</p>
+              <p className="text-sm text-[#c7c6c6] leading-relaxed">
+                The tokenised future of live events. On-chain. Verified. Secure.
+              </p>
             </div>
-            <div className="border-t border-[#2a2420] pt-8 flex items-center justify-between">
-              <p className="text-xs text-gray-700">© 2026 <DualInline /> Tickets. All rights reserved.</p>
-              <div className="flex gap-4">
-                <a href="https://32f.blockv.io/token/0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-600 hover:text-[#e8a838] transition-colors">Blockscout</a>
-                <a href="#" className="text-xs text-gray-600 hover:text-[#e8a838] transition-colors">GitHub</a>
-              </div>
+            <div>
+              <h4 className="font-headline text-[10px] uppercase tracking-[0.3em] text-[#919191] mb-6">Platform</h4>
+              <ul className="space-y-3 text-sm text-[#c7c6c6]">
+                <li><a href="#" className="hover:text-white transition-colors">About</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Security</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-headline text-[10px] uppercase tracking-[0.3em] text-[#919191] mb-6">Learn</h4>
+              <ul className="space-y-3 text-sm text-[#c7c6c6]">
+                <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-headline text-[10px] uppercase tracking-[0.3em] text-[#919191] mb-6">Legal</h4>
+              <ul className="space-y-3 text-sm text-[#c7c6c6]">
+                <li><a href="#" className="hover:text-white transition-colors">Privacy</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Terms</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-[#474747]/20 pt-8 flex items-center justify-between">
+            <p className="text-xs text-[#474747]">© 2026 DUAL. All rights reserved.</p>
+            <div className="flex gap-6">
+              <a href="https://32f.blockv.io/token/0x41Cf00E593c5623B00F812bC70Ee1A737C5aFF06" target="_blank" rel="noopener noreferrer" className="text-xs text-[#474747] hover:text-white transition-colors font-headline uppercase tracking-widest">Blockscout</a>
             </div>
           </div>
         </div>
       </footer>
+
+      {/* Mobile Bottom Nav */}
+      <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 bg-[#0e0e0e] md:hidden border-t border-[#474747]/20">
+        {[
+          { href: '/', icon: 'home', label: 'Home' },
+          { href: '/events', icon: 'event_note', label: 'Events' },
+          { href: '/marketplace', icon: 'storefront', label: 'Market' },
+          { href: '/scan', icon: 'qr_code_scanner', label: 'Scan' },
+          { href: '/admin', icon: 'person', label: 'Profile' },
+        ].map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={`flex flex-col items-center justify-center p-3 transition-colors ${
+              isActive(item.href)
+                ? 'bg-white text-[#131313]'
+                : 'text-[#c7c6c6] hover:text-white'
+            }`}
+          >
+            <span className="material-symbols-outlined">{item.icon}</span>
+            <span className="font-headline text-[10px] uppercase tracking-widest mt-1">{item.label}</span>
+          </Link>
+        ))}
+      </nav>
     </div>
   )
 }
