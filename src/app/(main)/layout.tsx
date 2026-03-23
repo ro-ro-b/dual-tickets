@@ -41,7 +41,7 @@ export default function TicketsLayout({
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 group">
-              <DualLogo height={22} className="text-[#e8a838]" />
+              <DualLogo height={22} className="text-white" />
               <span className="text-xl font-bold text-gray-500">Tickets</span>
             </Link>
 
@@ -121,7 +121,7 @@ export default function TicketsLayout({
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
               <div>
                 <div className="flex items-center gap-2 mb-4">
-                  <DualLogo height={18} className="text-[#e8a838]" />
+                  <DualLogo height={18} className="text-white" />
                   <span className="text-lg font-bold text-gray-500">Tickets</span>
                 </div>
                 <p className="text-sm text-gray-600">

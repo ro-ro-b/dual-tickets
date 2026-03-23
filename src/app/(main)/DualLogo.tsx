@@ -1,7 +1,7 @@
 // DUAL official logo SVG — icon (interlocking D shapes) + wordmark (D U A L)
 
 // Inline text-sized logo for use within sentences — renders at ~1.1em height to sit on the baseline
-export function DualInline({ className = 'text-[#e8a838]' }: { className?: string }) {
+export function DualInline({ className = 'text-white' }: { className?: string }) {
   return (
     <svg width="3.8em" height="1em" viewBox="0 0 117 31" fill="none" className={`inline-block align-baseline ${className}`} style={{ verticalAlign: '-0.1em' }}>
       <path d="M111.233 25.3938C110.072 25.3938 109.05 25.1381 108.164 24.6267C107.299 24.0957 106.62 23.3876 106.129 22.5025C105.657 21.6174 105.421 20.634 105.421 19.5522V4.7417H108.961V19.9948C108.961 20.6242 109.168 21.1651 109.581 21.6174C110.013 22.0698 110.564 22.296 111.233 22.296H116.72V25.3938H111.233Z" fill="currentColor"/>

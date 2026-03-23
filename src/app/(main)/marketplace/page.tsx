@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { DualInline } from './DualLogo'
+import { DualInline } from '../DualLogo'
 
 interface MarketplaceListing {
   id: string

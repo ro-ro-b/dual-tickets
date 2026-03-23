@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { DualInline } from './DualLogo'
+import { DualInline } from '../DualLogo'
 
 interface VerificationResult {
   status: 'valid' | 'duplicate' | 'invalid' | null
